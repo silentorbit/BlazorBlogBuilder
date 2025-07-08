@@ -20,7 +20,7 @@
     },
     "Generate Static": {
       "commandName": "Project",
-      "commandLineArgs": "build",
+      "commandLineArgs": "build ../generated/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

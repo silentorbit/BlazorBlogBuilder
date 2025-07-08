@@ -9,17 +9,14 @@ public class Program
     public static void Main(string[] args)
     {
         //Static Online: Build entire site
-        if (string.Join(",", args) == "build")
+        if (args.Length > 1 && args[0] == "build")
         {
+            var config = new DemoSiteConfig();
+
             var workingDir = DirPath.GetCurrentDirectory();
+            var target = workingDir.CombineDir(args[1]);
 
-            var config = new DemoSiteConfig
-            {
-                TargetDir = workingDir.Parent.CombineDir("generated"),
-                WwwRoot = workingDir.CombineDir("wwwroot"),
-            };
-
-            config.Build().Wait();
+            config.Build(target).Wait();
             return;
         }
 
