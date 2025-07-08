@@ -1,0 +1,28 @@
+﻿@using SilentOrbit.StaticOnline.Building
+@using SilentOrbit.StaticOnline.Config
+@inject SiteBuilder Site
+@inject SitePage Page
+<base href="/@(Site.Config.BaseURL.GetRelativePath(Site.Config.BaseURL.HostURL))" />
+@if (Site.Config.Favicon != null)
+{
+    @nl
+    <link rel="icon" type="@Site.Config.Favicon.MimeType" href="@Site.Config.Favicon.URL" />
+}
+@{
+    var robotsContent = Page.Robots.GetContent(Site.Config);
+}
+@if (robotsContent != null)
+{
+    @nl
+    <meta name="robots" content="@robotsContent" />
+}
+@foreach (var feed in Site.Feed)
+{
+    @nl
+    @FeedLink(feed)
+}
+@if (Page.Redirect != null)
+{
+    @nl
+    <meta http-equiv="refresh" content="0; url=@Page.Redirect">
+}

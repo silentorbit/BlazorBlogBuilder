@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SilentOrbit.StaticOnline": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62072;http://localhost:62073"
+    }
+  }
+}
