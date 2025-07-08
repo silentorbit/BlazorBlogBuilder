@@ -1,0 +1,7 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Demo</title>
+  <subtitle>This is a Demo</subtitle>
+  <id>https://www.silentorbit.com/static-online</id>
+  <link href="https://www.silentorbit.com/static-online" />
+  <link href="https://www.silentorbit.com/static-online/atom.xml" rel="self" />
+</feed>

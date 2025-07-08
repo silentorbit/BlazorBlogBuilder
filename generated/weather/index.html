@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/static-online" />
+    <link rel="icon" type="image/png" href="https://www.silentorbit.com/favicon.png" />
+    <meta name="robots" content="notranslate" />
+    <link rel="alternate" type="application/rss+xml" title="Demo" href="https://www.silentorbit.com/static-online/rss.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Demo" href="https://www.silentorbit.com/static-online/atom.xml" />
+    <link rel="alternate" type="application/feed+json" title="Demo" href="https://www.silentorbit.com/static-online/feed.json" />
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="Demo.styles.css" />
+    
+    <title>Weather</title></head>
+<body><div class="page"><div class="sidebar"><div class="top-row ps-3 navbar navbar-dark"><div class="container-fluid"><a class="navbar-brand" href>Demo</a></div></div>
+<input type="checkbox" title="Navigation menu" class="navbar-toggler">
+<div class="nav-scrollable" onclick="document.querySelector(&#x27;.navbar-toggler&#x27;).click()"><nav class="nav flex-column"><div class="nav-item px-3"><a href="" class="nav-link"><span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </a></div>
+        <div class="nav-item px-3"><a href="weather" class="nav-link active" aria-current="page"><span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            </a></div></nav></div></div>
+    <main><div class="top-row px-4"><a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a></div>
+        <article class="content px-4">
+<h1>Weather</h1>
+<p>This component demonstrates showing data.</p><table class="table"><thead><tr><th>Date</th>
+                <th aria-label="Temperature in Celsius">Temp. (C)</th>
+                <th aria-label="Temperature in Farenheit">Temp. (F)</th>
+                <th>Summary</th></tr></thead>
+        <tbody><tr><td>2025-07-09</td>
+                    <td>47</td>
+                    <td>116</td>
+                    <td>Balmy</td></tr><tr><td>2025-07-10</td>
+                    <td>8</td>
+                    <td>46</td>
+                    <td>Hot</td></tr><tr><td>2025-07-11</td>
+                    <td>-14</td>
+                    <td>7</td>
+                    <td>Mild</td></tr><tr><td>2025-07-12</td>
+                    <td>-4</td>
+                    <td>25</td>
+                    <td>Mild</td></tr><tr><td>2025-07-13</td>
+                    <td>31</td>
+                    <td>87</td>
+                    <td>Warm</td></tr></tbody></table></article></main></div>
+        <blazor-focus-on-navigate selector="h1"></blazor-focus-on-navigate></body></html>

@@ -1,0 +1,13 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Demo",
+  "description": "This is a Demo",
+  "home_page_url": "https://www.silentorbit.com/static-online",
+  "feed_url": "https://www.silentorbit.com/static-online/feed.json",
+  "authors": [
+    {
+      "name": "Silent Orbit"
+    }
+  ],
+  "items": []
+}

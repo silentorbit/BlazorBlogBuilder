@@ -1,0 +1,8 @@
+<rss version="2.0">
+  <channel>
+    <title>Demo</title>
+    <description>This is a Demo</description>
+    <link>https://www.silentorbit.com/static-online</link>
+    <link rel="self" href="https://www.silentorbit.com/static-online/rss.xml" type="application/rss+xml" xmlns="http://www.w3.org/2005/Atom" />
+  </channel>
+</rss>
