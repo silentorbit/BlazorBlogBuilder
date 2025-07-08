@@ -3,4 +3,11 @@
         <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
+    @* 
+        Static Online: 
+        Aborts site generation if missing page is identified 
+    *@
+    <NotFound>
+        <StaticOnlineNotFound />
+    </NotFound>
 </Router>
