@@ -42,13 +42,17 @@ public abstract class SiteConfig
         Code = "en"
     };
 
+    /// <summary>
+    /// Default title for updates generates with <see cref="Components.Update"/>
+    /// </summary>
     public virtual string UpdateTitle(SitePage page) => $"Update {page.Title}";
 
+    /// <summary>
+    /// Use <see cref="SiteConfig{App}"/> to create an instance
+    /// </summary>
     private protected SiteConfig()
     {
     }
-
-    public abstract Task Build(DirPath target);
 }
 
 public class SiteConfig<App> : SiteConfig
@@ -84,30 +88,24 @@ public class SiteConfig<App> : SiteConfig
         if (dir.Path.EndsWith(@"\bin\Debug\net9.0"))
             dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
         if (dir.Exists())
+        {
+            Console.WriteLine($"Found {dir} in project root above {asmPath}");
             return dir;
+        }
 
         return null;
     }
 
     /// <summary>
-    /// Called before starting live Blazor website
+    /// Called before starting a live Blazor website
     /// </summary>
-    public void Init()
+    public SiteBuilder Init()
     {
         var sg = new SiteBuilder(this, null!);
         sg.Scan();
         sg.PreScan().Wait();
+        return sg;
     }
 
-    public override async Task Build(DirPath target)
-    {
-        target.DeleteDir();
-        target.CreateDirectory();
-
-        var sg = new SiteBuilder(this, target);
-        sg.Scan();
-        await sg.Build();
-
-        Console.WriteLine("Done");
-    }
 }
+

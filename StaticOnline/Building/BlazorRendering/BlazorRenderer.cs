@@ -30,7 +30,7 @@ partial class BlazorRenderer
         services.AddSingleton<INavigationInterception>(nav);
         services.AddSingleton<IScrollToLocationHash>(nav);
         services.AddSingleton<IJSRuntime>(new StaticJsRuntime());
-        services.AddSingleton<SiteBuilder>(SiteBuilder.Instance);
+        services.AddSingleton<SiteBuilder>(site);
         services.AddTransient<SitePage>(provider => buildPage ?? throw new NullReferenceException());
 
         serviceProvider = services.BuildServiceProvider();

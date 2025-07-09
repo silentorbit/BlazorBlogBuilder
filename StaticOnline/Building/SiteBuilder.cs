@@ -29,8 +29,8 @@ public class SiteBuilder
 
     public SiteBuilder(SiteConfig config, DirPath targetDir)
     {
-        Debug.Assert(Instance == null, "SiteGenerator instance already exists.");
-
+        if (Instance != null)
+            throw new Exception($"{nameof(SiteBuilder)} instance already created.");
         Instance = this;
 
         //public
