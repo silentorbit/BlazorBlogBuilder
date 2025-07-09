@@ -1,34 +1,37 @@
 ﻿using SilentOrbit.Disk;
+using System.Buffers.Text;
+using System.Security.Policy;
 
 namespace SilentOrbit.StaticOnline.Building;
 
 /// <summary>
 /// Copy static files from wwwroot to output.
 /// </summary>
-class WWWRootBuilder(SiteBuilder site)
+class WWWRootBuilder
 {
-    readonly DirPath sourceBase = site.Config.WwwRoot ??
-            new FilePath(site.Config.Type.Assembly.Location)
-            .Parent.CombineDir("wwwroot");
+    readonly SiteBuilder site;
+    readonly DirPath targetRoot;
 
-    internal void Build()
+    public WWWRootBuilder(SiteBuilder site, DirPath target)
     {
-        var source = site.Config.WwwRoot ??
-            new FilePath(site.Config.Type.Assembly.Location)
-            .Parent.CombineDir("wwwroot");
-        Debug.Assert(source.Exists());
-
-        var target = site.Config.TargetDir;
-
-        //Copy all files
-        Copy(source, target);
+        this.site = site;
+        targetRoot = target;
     }
 
-    void Copy(DirPath source, DirPath target)
+    /// <summary>
+    /// Copy all files from wwwroot
+    /// </summary>
+    internal void Build()
+    {
+        CopyDir(site.Config.WwwRoot, targetRoot);
+    }
+
+    void CopyDir(DirPath source, DirPath target)
     {
         foreach (var file in source.GetFiles())
         {
-            var url = site.Config.BaseURL.Append(file - sourceBase);
+            var url = site.Config.BaseURL
+                .Append(file - site.Config.WwwRoot);
             var hashUrl = site.Hasher.GetHashPath(file, url);
             site.Target.StoreStatic(hashUrl, file);
             site.Pages.DoneStatic(hashUrl);
@@ -36,6 +39,6 @@ class WWWRootBuilder(SiteBuilder site)
 
         //Subdirectories
         foreach (var dir in source.GetDirectories())
-            Copy(dir, target.CombineDir(dir.Name));
+            CopyDir(dir, target.CombineDir(dir.Name));
     }
 }

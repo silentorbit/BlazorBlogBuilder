@@ -15,7 +15,6 @@ public abstract class SiteConfig
     /// Specify explicitly when <see cref="Type"/> is not a dll next to the wwwroot folder.
     /// </summary>
     public DirPath WwwRoot { get; set; } = null!;
-    public DirPath TargetDir { get; set; } = null!;
     public Url BaseURL { get; set; } = null!;
     public Favicon? Favicon { get; set; }
     public string Title { get; set; } = null!;
@@ -49,7 +48,7 @@ public abstract class SiteConfig
     {
     }
 
-    public abstract Task Build();
+    public abstract Task Build(DirPath target);
 }
 
 public class SiteConfig<App> : SiteConfig
@@ -58,6 +57,36 @@ public class SiteConfig<App> : SiteConfig
     public SiteConfig()
     {
         Type = typeof(App);
+
+        var asmPath = new FilePath(Type.Assembly.Location);
+
+        //Find wwwroot
+        WwwRoot = FindWwwRoot(asmPath)!;
+        if (WwwRoot == null)
+        {
+            Console.Error.WriteLine($"Failed to find wwwroot next to {asmPath}");
+            Console.Error.WriteLine($"You have to manually configure it in your config.{nameof(WwwRoot)}");
+        }
+
+    }
+
+    DirPath? FindWwwRoot(FilePath asmPath)
+    {
+        var dir = asmPath.Parent.CombineDir("wwwroot");
+        if (dir.Exists())
+        {
+            Console.WriteLine($"Found {dir} next to {asmPath}");
+            return dir;
+        }
+
+        //Try to find wwwroot when running in Debug
+        dir = asmPath.Parent;
+        if (dir.Path.EndsWith(@"\bin\Debug\net9.0"))
+            dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
+        if (dir.Exists())
+            return dir;
+
+        return null;
     }
 
     /// <summary>
@@ -65,17 +94,17 @@ public class SiteConfig<App> : SiteConfig
     /// </summary>
     public void Init()
     {
-        var sg = new SiteBuilder(this);
+        var sg = new SiteBuilder(this, null!);
         sg.Scan();
         sg.PreScan().Wait();
     }
 
-    public override async Task Build()
+    public override async Task Build(DirPath target)
     {
-        TargetDir.DeleteDir();
-        TargetDir.CreateDirectory();
+        target.DeleteDir();
+        target.CreateDirectory();
 
-        var sg = new SiteBuilder(this);
+        var sg = new SiteBuilder(this, target);
         sg.Scan();
         await sg.Build();
 

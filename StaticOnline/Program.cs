@@ -27,14 +27,14 @@ class Program
                 throw new Exception($"Expected one subclass of {nameof(SiteConfig)}<App>, found {configTypes.Length}.");
 
             var config = (SiteConfig)Activator.CreateInstance(configTypes[0])!;
-            config.TargetDir = DirPath.GetCurrentDirectory().CombineDir(args[1].Trim());
+            var targetDir = DirPath.GetCurrentDirectory().CombineDir(args[1].Trim());
             Console.WriteLine($@"Target ""{args[1]}""");
-            Console.WriteLine($@"Target ""{config.TargetDir}""");
+            Console.WriteLine($@"Target ""{targetDir}""");
 
             Console.WriteLine($"URL: {config.BaseURL}");
 
             //Generating with found app
-            await config.Build();
+            await config.Build(targetDir);
             return 0;
         }
         catch (Exception ex)

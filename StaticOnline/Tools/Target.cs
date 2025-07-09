@@ -3,9 +3,9 @@ using SilentOrbit.StaticOnline.Building;
 
 namespace SilentOrbit.StaticOnline.Tools;
 
-class Target(SiteBuilder site)
+class Target(SiteBuilder site, DirPath targetDir)
 {
-    readonly DirPath rootDir = site.Config.TargetDir;
+    readonly DirPath rootDir = targetDir;
     readonly Url baseURL = site.Config.BaseURL;
 
     internal void Store(Url url, string content)
@@ -33,4 +33,5 @@ class Target(SiteBuilder site)
         target.Parent.CreateDirectory();
         file.CopyTo(target);
     }
+
 }

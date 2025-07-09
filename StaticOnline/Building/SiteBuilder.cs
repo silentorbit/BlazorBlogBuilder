@@ -1,4 +1,5 @@
-﻿using SilentOrbit.StaticOnline.BlazorRendering;
+﻿using SilentOrbit.Disk;
+using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 using SilentOrbit.StaticOnline.Tools;
 
@@ -26,7 +27,7 @@ public class SiteBuilder
     readonly WWWRootBuilder wwwroot;
     readonly LinkScanner linkScanner;
 
-    public SiteBuilder(SiteConfig config)
+    public SiteBuilder(SiteConfig config, DirPath targetDir)
     {
         Debug.Assert(Instance == null, "SiteGenerator instance already exists.");
 
@@ -38,14 +39,14 @@ public class SiteBuilder
         Pages = new(this);
 
         //internal
-        Target = new(this);
+        Target = new(this, targetDir);
         Hasher = new();
         Blazor = new(this);
 
         //private
         fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
-        wwwroot = new(this);
+        wwwroot = new(this, targetDir);
         linkScanner = new(this);
     }
 
