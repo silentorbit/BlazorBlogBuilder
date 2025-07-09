@@ -2,7 +2,18 @@
 @using SilentOrbit.StaticOnline.Config
 @inject SiteBuilder Site
 @inject SitePage Page
-<base href="/@(Site.Config.BaseURL.GetRelativePath(Site.Config.BaseURL.HostURL))/" />
+@code {
+    string GetBaseHref()
+    {
+        var path = Site.Config.BaseURL.GetRelativePath(Site.Config.BaseURL.HostURL);
+
+        if (path != "")
+            path += "/";
+
+        return "/" + path;
+    }
+}
+<base href="@GetBaseHref()" />
 @if (Site.Config.Favicon != null)
 {
     @nl
