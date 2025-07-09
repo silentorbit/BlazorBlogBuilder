@@ -2,7 +2,7 @@
 @using SilentOrbit.StaticOnline.Config
 @inject SiteBuilder Site
 @inject SitePage Page
-<base href="/@(Site.Config.BaseURL.GetRelativePath(Site.Config.BaseURL.HostURL))" />
+<base href="/@(Site.Config.BaseURL.GetRelativePath(Site.Config.BaseURL.HostURL))/" />
 @if (Site.Config.Favicon != null)
 {
     @nl
