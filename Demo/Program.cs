@@ -1,16 +1,38 @@
 using Demo.Components;
+using SilentOrbit.Disk;
 using SilentOrbit.StaticOnline;
+using SilentOrbit.StaticOnline.Building;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Demo;
 
 public class Program
 {
-    public static int Main(string[] args)
+    public static void Main(string[] args)
     {
+        var exeName = Path.GetFileName(Assembly.GetEntryAssembly()!.Location);
+        Console.WriteLine($@"Usage: {exeName} build <output path>");
+
         var config = new DemoSiteConfig();
 
-        //Static Online: Run before staring web server to generate index of pages
-        var site = config.InitLive();
+        //Static Online
+        SiteBuilder site;
+        if (args.Length == 0 || args[0] != "build")
+        {
+            site = new SiteBuilder(config, null!);
+            site.PreScan().Wait();
+        }
+        else
+        {
+            var target = DirPath.GetCurrentDirectory().CombineDir(args[1]);
+            Console.WriteLine($@"Target: ""{args[1]}"" ==> ""{target}""");
+            target.EmptyDirectory();
+
+            site = new SiteBuilder(config, target);
+            site.Build().Wait();
+            return;
+        }
 
         var builder = WebApplication.CreateBuilder(args);
 
@@ -39,10 +61,6 @@ public class Program
         app.MapStaticAssets();
         app.MapRazorComponents<App>();
 
-        if (ProgramStaticOnline.BuildMain(args, config, out int exitCode))
-            return exitCode;
-
         app.Run();
-        return 0;
     }
 }
