@@ -10,9 +10,9 @@ public abstract class SiteConfig
     /// Root component type for the Blazor application.
     /// Use <see cref="SiteConfig{App}"/> to specify the Blazor component type.
     /// </summary>
-    public Type Type { get; set; } = null!;
+    public Type AppType { get; set; } = null!;
     /// <summary>
-    /// Specify explicitly when <see cref="Type"/> is not a dll next to the wwwroot folder.
+    /// Specify explicitly when <see cref="AppType"/> is not a dll next to the wwwroot folder.
     /// </summary>
     public DirPath WwwRoot { get; set; } = null!;
     public Url BaseURL { get; set; } = null!;
@@ -48,6 +48,11 @@ public abstract class SiteConfig
     public virtual string UpdateTitle(SitePage page) => $"Update {page.Title}";
 
     /// <summary>
+    /// Change the configuration to serve the site live during debugging.
+    /// </summary>
+    protected virtual void ConfigureLive() { }
+
+    /// <summary>
     /// Use <see cref="SiteConfig{App}"/> to create an instance
     /// </summary>
     private protected SiteConfig()
@@ -60,47 +65,16 @@ public class SiteConfig<App> : SiteConfig
 {
     public SiteConfig()
     {
-        Type = typeof(App);
-
-        var asmPath = new FilePath(Type.Assembly.Location);
-
-        //Find wwwroot
-        WwwRoot = FindWwwRoot(asmPath)!;
-        if (WwwRoot == null)
-        {
-            Console.Error.WriteLine($"Failed to find wwwroot next to {asmPath}");
-            Console.Error.WriteLine($"You have to manually configure it in your config.{nameof(WwwRoot)}");
-        }
-
-    }
-
-    DirPath? FindWwwRoot(FilePath asmPath)
-    {
-        var dir = asmPath.Parent.CombineDir("wwwroot");
-        if (dir.Exists())
-        {
-            Console.WriteLine($"Found {dir} next to {asmPath}");
-            return dir;
-        }
-
-        //Try to find wwwroot when running in Debug
-        dir = asmPath.Parent;
-        if (dir.Path.EndsWith(@"\bin\Debug\net9.0"))
-            dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
-        if (dir.Exists())
-        {
-            Console.WriteLine($"Found {dir} in project root above {asmPath}");
-            return dir;
-        }
-
-        return null;
+        AppType = typeof(App);
     }
 
     /// <summary>
     /// Called before starting a live Blazor website
     /// </summary>
-    public SiteBuilder Init()
+    public SiteBuilder InitLive()
     {
+        ConfigureLive();
+
         var sg = new SiteBuilder(this, null!);
         sg.Scan();
         sg.PreScan().Wait();

@@ -14,7 +14,7 @@ public class BlazorIndex(SiteBuilder site)
     /// </summary>
     public void Scan()
     {
-        foreach (var type in site.Config.Type.Assembly.GetTypes())
+        foreach (var type in site.Config.AppType.Assembly.GetTypes())
         {
             var urls = GetUrls(type);
             foreach (var url in urls)

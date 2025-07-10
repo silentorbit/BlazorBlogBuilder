@@ -14,8 +14,7 @@ public static class ProgramStaticOnline
     /// Return true if the program should exit.
     /// Return false if the program should continue with running the live website.
     /// </summary>
-    public static bool BuildMain<TSiteConfig>(string[] args, out int exitCode)
-        where TSiteConfig : SiteConfig, new()
+    public static bool BuildMain(string[] args, SiteConfig config, out int exitCode)
     {
         PrintArgs(args);
 
@@ -28,8 +27,7 @@ public static class ProgramStaticOnline
             }
 
             var target = ParseTargetDir(args);
-            var config = new TSiteConfig();
-            Build(target, config);
+            Build(config, target);
 
             exitCode = 0;
             return true;
@@ -54,6 +52,8 @@ public static class ProgramStaticOnline
         {
             if (args.Length != 2)
                 throw new ArgumentException($"Expected 2 arguments, got {args.Length}");
+
+            //Parse Dll from args
             var asmPath =
                 Path.GetFullPath(
                 Path.Combine(
@@ -62,14 +62,20 @@ public static class ProgramStaticOnline
             Console.WriteLine(@$"Loading ""{args[0]}""");
             Console.WriteLine(@$"Loading ""{asmPath}""");
             var asm = Assembly.LoadFile(asmPath);
+            //Find the Type of SiteConfig to build
             var types = asm.GetTypes();
             var configTypes = types.Where(t => t.IsAssignableTo(typeof(SiteConfig))).ToArray();
             if (configTypes.Length != 1)
                 throw new Exception($"Expected one subclass of {nameof(SiteConfig)}<App>, found {configTypes.Length}.");
 
+            //Create config
             var config = (SiteConfig)Activator.CreateInstance(configTypes[0])!;
+
+            //Parse target from args
             var target = ParseTargetDir(args);
-            Build(target, config);
+
+            //Build site
+            Build(config, target);
         }
         catch (Exception ex)
         {
@@ -87,8 +93,8 @@ public static class ProgramStaticOnline
 
         var workingDir = DirPath.GetCurrentDirectory();
         var target = workingDir.CombineDir(args[1]);
-        Console.WriteLine($@"Target argument: ""{args[1]}""");
-        Console.WriteLine($@"Target parsed:   ""{target}""");
+        Console.WriteLine($@"Target: ""{args[1]}""
+   ==> ""{target}""");
 
         return target;
     }
@@ -100,17 +106,52 @@ public static class ProgramStaticOnline
 
     static string ExeName => Path.GetFileName(Assembly.GetEntryAssembly()!.Location);
 
-    static void Build(DirPath target, SiteConfig config)
+    public static void Build(SiteConfig config, DirPath target)
     {
+        var sg = new SiteBuilder(config, target);
+
+        config.WwwRoot ??= FindWwwRoot(config);
+
+        Console.WriteLine($"Generating: {config.BaseURL}");
+
+        sg.Scan();
+
         target.DeleteDir();
         target.CreateDirectory();
 
-        var sg = new SiteBuilder(config, target);
-        Console.WriteLine($"Generating: {config.BaseURL}");
-        sg.Scan();
         sg.Build().Wait();
 
         Console.WriteLine("Done");
+    }
+
+    static DirPath FindWwwRoot(SiteConfig site)
+    {
+        var asmPath = new FilePath(site.AppType.Assembly.Location);
+
+        var dir = asmPath.Parent.CombineDir("wwwroot");
+        if (dir.Exists())
+        {
+            Console.WriteLine($"Found {dir} next to {asmPath}");
+            return dir;
+        }
+
+        //Try to find wwwroot when running in Visual Studio
+        dir = asmPath.Parent;
+        if (dir.Path.EndsWith(@"\bin\Debug\net9.0") ||
+            dir.Path.EndsWith(@"\bin\Release\net9.0"))
+        {
+            dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
+            if (dir.Exists())
+            {
+                Console.WriteLine($"Found {dir}\n   in project root above {asmPath}");
+                return dir;
+            }
+        }
+
+        Debug.Fail($"Failed to find wwwroot near\n   {asmPath}");
+        Console.Error.WriteLine($"Failed to find wwwroot near:\n   {asmPath}");
+        Console.Error.WriteLine($"You must configure {nameof(SiteConfig.WwwRoot)} in code.");
+        throw new ArgumentException("Missing wwwroot path in config.");
     }
 
 }

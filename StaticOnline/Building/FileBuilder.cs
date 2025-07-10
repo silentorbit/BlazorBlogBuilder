@@ -43,7 +43,7 @@ class FileBuilder
     public IEnumerable<FileGeneratorBase> GetGenerators()
     {
         //Scan site assmebly
-        var types = site.Config.Type.Assembly.GetTypes();
+        var types = site.Config.AppType.Assembly.GetTypes();
         foreach (var type in types)
         {
             if (type.IsAssignableTo(typeof(FileGeneratorBase)))

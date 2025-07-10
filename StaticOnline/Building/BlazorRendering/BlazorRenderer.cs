@@ -49,7 +49,7 @@ partial class BlazorRenderer
         await using var htmlRenderer = new HtmlRenderer(serviceProvider, loggerFactory);
         var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
         {
-            var output = await htmlRenderer.RenderComponentAsync(site.Config.Type);
+            var output = await htmlRenderer.RenderComponentAsync(site.Config.AppType);
             if (presScan)
                 return null;
 
