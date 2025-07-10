@@ -2,12 +2,20 @@
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 using SilentOrbit.StaticOnline.Tools;
+using System.Security.AccessControl;
 
 namespace SilentOrbit.StaticOnline.Building;
 
 public class SiteBuilder
 {
+
     internal static SiteBuilder Instance { get; private set; } = null!;
+
+    /// <summary>
+    /// True: is running as a live Blazor website.
+    /// False: is generating static files.
+    /// </summary>
+    public bool IsLive { get; }
 
     public SiteConfig Config { get; }
     public TagBuilder Tags { get; }
@@ -27,11 +35,15 @@ public class SiteBuilder
     readonly WWWRootBuilder wwwroot;
     readonly LinkScanner linkScanner;
 
-    public SiteBuilder(SiteConfig config, DirPath targetDir)
+    public SiteBuilder(SiteConfig config, DirPath? targetDir)
     {
         if (Instance != null)
             throw new Exception($"{nameof(SiteBuilder)} instance already created.");
         Instance = this;
+
+        if (targetDir == null)
+            config.ConfigureLive();
+        config.WwwRoot ??= FindWwwRoot(config);
 
         //public
         Config = config;
@@ -39,44 +51,91 @@ public class SiteBuilder
         Pages = new(this);
 
         //internal
-        Target = new(this, targetDir);
+        if (targetDir != null)
+            Target = new(this, targetDir);
         Hasher = new();
         Blazor = new(this);
 
         //private
         fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
-        wwwroot = new(this, targetDir);
+        if (targetDir != null)
+            wwwroot = new(this, targetDir);
         linkScanner = new(this);
     }
+
+    static DirPath FindWwwRoot(SiteConfig config)
+    {
+        var asmPath = new FilePath(config.AppType.Assembly.Location);
+
+        var dir = asmPath.Parent.CombineDir("wwwroot");
+        if (dir.Exists())
+        {
+            Console.WriteLine($"Found {dir} next to {asmPath}");
+            return dir;
+        }
+
+        //Try to find wwwroot when running in Visual Studio
+        dir = asmPath.Parent;
+        if (dir.Path.EndsWith(@"\bin\Debug\net9.0") ||
+            dir.Path.EndsWith(@"\bin\Release\net9.0"))
+        {
+            dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
+            if (dir.Exists())
+            {
+                Console.WriteLine($"Found {dir}\n   in project root above {asmPath}");
+                return dir;
+            }
+        }
+
+        Debug.Fail($"Failed to find wwwroot near\n   {asmPath}");
+        Console.Error.WriteLine($"Failed to find wwwroot near:\n   {asmPath}");
+        Console.Error.WriteLine($"You must configure {nameof(SiteConfig.WwwRoot)} in code.");
+        throw new ArgumentException("Missing wwwroot path in config.");
+    }
+
 
     public void AddPage(Url url)
     {
         Pages.AddLink(url);
     }
 
-    internal void Scan()
+    /// <summary>
+    /// Only used in live mode, where <see cref="Build"/> is not called.
+    /// <see cref="Build"/> will 
+    /// </summary>
+    public async Task PreScan()
     {
-        blazorIndex.Scan();
+        if (Target != null)
+            throw new Exception($"No need to call {nameof(PreScan)}, call {nameof(Build)} directly.");
 
-        fileRenderer.Scan();
-    }
+        Scan();
 
-    internal async Task PreScan()
-    {
         await BuildBlazorPages(onlyPrescan: true);
     }
 
-    internal async Task Build()
+    public async Task Build()
     {
+        if (Target == null)
+            throw new Exception($"Missing target in new {nameof(SiteBuilder)}().");
+
         //Static files first to be able to hash them
         wwwroot.Build();
+
+        Scan();
 
         //Render all Blazor pages
         await BuildBlazorPages(onlyPrescan: false);
 
         //Render indexes(feeds) last
         fileRenderer.Generate();
+    }
+
+    void Scan()
+    {
+        blazorIndex.Scan();
+
+        fileRenderer.Scan();
     }
 
     async Task BuildBlazorPages(bool onlyPrescan)

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SilentOrbit.Disk;
 using SilentOrbit.StaticOnline.Building;
+using System.Reflection;
+using System.Xml.Linq;
 
 namespace SilentOrbit.StaticOnline.Config;
 
@@ -50,7 +52,7 @@ public abstract class SiteConfig
     /// <summary>
     /// Change the configuration to serve the site live during debugging.
     /// </summary>
-    protected virtual void ConfigureLive() { }
+    internal protected virtual void ConfigureLive() { }
 
     /// <summary>
     /// Use <see cref="SiteConfig{App}"/> to create an instance
@@ -67,19 +69,5 @@ public class SiteConfig<App> : SiteConfig
     {
         AppType = typeof(App);
     }
-
-    /// <summary>
-    /// Called before starting a live Blazor website
-    /// </summary>
-    public SiteBuilder InitLive()
-    {
-        ConfigureLive();
-
-        var sg = new SiteBuilder(this, null!);
-        sg.Scan();
-        sg.PreScan().Wait();
-        return sg;
-    }
-
 }
 
