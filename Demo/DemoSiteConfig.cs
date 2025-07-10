@@ -5,22 +5,12 @@ namespace Demo;
 
 public class DemoSiteConfig : SiteConfig<App>
 {
-    public DemoSiteConfig() : this(localhost: false) { }
-
-    public DemoSiteConfig(bool localhost)
+    public DemoSiteConfig()
     {
         Title = "Demo";
         Description = "This is a Demo";
-        if (localhost)
-        {
-            //Live testing on root
-            BaseURL = "https://localhost:7127/";
-        }
-        else
-        {
-            //Build static files to be served in the subdirectory
-            BaseURL = "https://www.silentorbit.com/static-online";
-        }
+        //Build static files to be served in the subdirectory
+        BaseURL = "https://www.silentorbit.com/static-online";
         Favicon = new()
         {
             URL = "https://www.silentorbit.com/favicon.png",
@@ -46,5 +36,11 @@ public class DemoSiteConfig : SiteConfig<App>
             Title = "Count 10",
             Link = BaseURL.Append("/mod10")
         });
+    }
+
+    protected override void ConfigureLive()
+    {
+        //Live testing on root
+        BaseURL = "https://localhost:7127/";
     }
 }

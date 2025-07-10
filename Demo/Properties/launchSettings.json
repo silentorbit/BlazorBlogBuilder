@@ -18,7 +18,7 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7127;http://localhost:5228"
     },
-    "Generate Static": {
+    "Build Static": {
       "commandName": "Project",
       "commandLineArgs": "build ../generated/",
       "environmentVariables": {
