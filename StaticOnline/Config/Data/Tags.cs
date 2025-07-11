@@ -35,11 +35,8 @@ public class Tags : IEnumerable<Tag>
     IEnumerator IEnumerable.GetEnumerator()
         => list.GetEnumerator();
 
-    public static implicit operator Tags?(string multiple_tags)
+    public static implicit operator Tags(string multiple_tags)
     {
-        if (string.IsNullOrWhiteSpace(multiple_tags))
-            return null;
-
         var tags = new Tags();
         tags.Add(multiple_tags);
         return tags;
