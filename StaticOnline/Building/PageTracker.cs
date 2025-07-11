@@ -7,11 +7,11 @@ public class PageTracker(SiteBuilder site)
 {
     readonly Url baseUrl = site.Config.BaseURL;
 
-    readonly Dictionary<Url, SitePage> urlPage = new();
+    readonly ConcurrentDictionary<Url, PageData> urlPage = new();
 
-    readonly Queue<SitePage> queuePreScan = new();
-    readonly Queue<SitePage> queueFinalBuild = new();
-    readonly Queue<SitePage> queueBuildLast = new();
+    readonly Queue<PageData> queuePreScan = new();
+    readonly Queue<PageData> queueFinalBuild = new();
+    readonly Queue<PageData> queueBuildLast = new();
     readonly List<Url> all = new();
 
     #region Adding
@@ -48,7 +48,7 @@ public class PageTracker(SiteBuilder site)
     /// Next page to run a prescan
     /// </summary>
     /// <returns></returns>
-    internal SitePage? NextPreScan()
+    internal PageData? NextPreScan()
     {
         if (queuePreScan.Count == 0)
             return null;
@@ -58,10 +58,13 @@ public class PageTracker(SiteBuilder site)
         return page;
     }
 
-    internal void DonePreScan(SitePage page)
+    internal void DonePreScan(PageData page)
     {
         Debug.Assert(page.BuildStage == BuildStage.PreScan);
         page.BuildStage = BuildStage.PreScanDone;
+
+        if (page.IsDraft)
+            return;
 
         if (page.BuildLast)
             queueBuildLast.Enqueue(page);
@@ -69,7 +72,7 @@ public class PageTracker(SiteBuilder site)
             queueFinalBuild.Enqueue(page);
     }
 
-    internal SitePage? NextFinalBuild()
+    internal PageData? NextFinalBuild()
     {
         if (queueFinalBuild.TryDequeue(out var page))
         {
@@ -91,19 +94,20 @@ public class PageTracker(SiteBuilder site)
 
     #region Result
 
-    internal void UpdatePageUrl(Url oldURL, SitePage page)
+    internal void UpdatePageUrl(Url oldURL, PageData page)
     {
         //Update URL set by the page's own code.
-        urlPage.Remove(oldURL);
+        urlPage.TryRemove(oldURL, out var oldPage);
+        Debug.Assert(oldPage == page);
         urlPage[page.URL] = page;
     }
 
-    internal void FailBlazor(SitePage page)
+    internal void FailBlazor(PageData page)
     {
         page.BuildStage = BuildStage.Fail;
     }
 
-    internal void DoneFinalBuild(SitePage page)
+    internal void DoneFinalBuild(PageData page)
     {
         Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
         page.BuildStage = BuildStage.FinalBuildDone;
@@ -124,24 +128,24 @@ public class PageTracker(SiteBuilder site)
 
     #region Enumeration
 
-    public IEnumerable<SitePage> All => urlPage.Values
-        .Where(p => !p.IsUpdate);
+    public IEnumerable<PageData> All => urlPage.Values
+        .Where(p => !p.IsUpdate && p.IsBlazor);
 
-    public IEnumerable<SitePage> Updates => urlPage.Values
+    public IEnumerable<PageData> Updates => urlPage.Values
         .Where(p => p.IsUpdate)
         .OrderByDescending(p => p.Published);
 
-    public IEnumerable<SitePage> BlogPosts => urlPage.Values
+    public IEnumerable<PageData> BlogPosts => urlPage.Values
         .Where(p => p.InFeed && !p.IsUpdate)
         .OrderByDescending(p => p.Published);
 
-    public IEnumerable<SitePage> Feed => urlPage.Values
+    public IEnumerable<PageData> Feed => urlPage.Values
         .Where(p => p.InFeed)
         .OrderByDescending(p => p.Published);
 
     #endregion
 
-    public SitePage GetOrCreate(Url url, bool build = true)
+    public PageData GetOrCreate(Url url, bool build = true)
     {
         if (urlPage.TryGetValue(url, out var page))
         {
@@ -149,8 +153,8 @@ public class PageTracker(SiteBuilder site)
             return page;
         }
 
-        page = new SitePage { URL = url, FromURL = true };
-        urlPage.Add(page.URL, page);
+        page = new PageData { URL = url };
+        urlPage.TryAdd(page.URL, page);
         all.Add(page.URL);
 
         if (url.HasQueryOrFragment)
@@ -166,5 +170,12 @@ public class PageTracker(SiteBuilder site)
                 queuePreScan.Enqueue(page);
         }
         return page;
+    }
+
+    internal void RemoveDraft(PageData page)
+    {
+        page.BuildStage = BuildStage.Fail;
+        urlPage.TryRemove(page.URL, out var removed);
+        Debug.Assert(removed == page);
     }
 }

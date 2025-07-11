@@ -1,12 +1,8 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Security.Policy;
-
-namespace SilentOrbit.StaticOnline.Config;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 /// <summary>
-/// Replace <see cref="DateTime"/> with implicit cast from strings.
+/// Replaces <see cref="DateTime"/> with implicit cast from strings.
+/// To simplify entry of <see cref="PageData"/> entries.
 /// </summary>
 public class Timestamp : IComparable<Timestamp>, IEquatable<Timestamp>
 {

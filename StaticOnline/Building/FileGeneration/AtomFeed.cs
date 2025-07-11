@@ -72,7 +72,7 @@ class AtomFeed : FileGeneratorBase
             published.ToString(Rfc3339UTCDateTimeFormat)));
     }
 
-    XElement GetAuthor(SitePage post)
+    XElement GetAuthor(PageData post)
     {
         var author = new XElement(ns + "author");
 

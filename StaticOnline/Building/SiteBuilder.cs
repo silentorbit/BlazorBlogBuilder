@@ -26,14 +26,13 @@ public class SiteBuilder
     internal Target Target { get; }
     internal Hasher Hasher { get; }
     internal BlazorRenderer Blazor { get; }
-    internal HttpClient HttpClient { get; private set; }
 
     readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
     readonly LinkScanner linkScanner;
 
-    public SiteBuilder(SiteConfig config)
+    internal SiteBuilder(SiteConfig config)
     {
         if (Instance != null)
             throw new Exception($"{nameof(SiteBuilder)} instance already created.");
@@ -88,29 +87,28 @@ public class SiteBuilder
         throw new ArgumentException("Missing wwwroot path in config.");
     }
 
+    internal PageData TransientPage(IServiceProvider provider)
+    {
+        var nm = provider.GetService<NavigationManager>()!;
+        var path = new Uri(nm.Uri).AbsolutePath;
+        var url = Config.BaseURL.Append(path.TrimEnd('/'));
+
+        var page = Config.SiteBuilder.Pages.GetOrCreate(url);
+        
+        //Only Blazor pages would inject a SitePage
+        page.IsBlazor = true;
+
+        return page;
+    }
 
     public void AddPage(Url url)
     {
         Pages.AddLink(url);
     }
 
-    /// <summary>
-    /// Only used in live mode, where <see cref="Build"/> is not called.
-    /// <see cref="Build"/> will 
-    /// </summary>
-    public async Task PreScan()
-    {
-        if (Target != null)
-            throw new Exception($"No need to call {nameof(PreScan)}, call {nameof(Build)} directly.");
-
-        Scan();
-
-        await BuildBlazorPages(onlyPrescan: true);
-    }
-
     public async Task Build(WebApplication app)
     {
-        HttpClient = new HttpClient()
+        var httpClient = new HttpClient()
         {
             BaseAddress = new Uri(app.Urls.First())
         };
@@ -120,33 +118,37 @@ public class SiteBuilder
         if (Target == null)
             throw new Exception($"Missing target in new {nameof(SiteBuilder)}().");
 
-        //Static files first to be able to hash them
-        wwwroot.Build();
+        if (Config.NoGeneration)
+        {
+            //PreRender all Blazor pages
+            //Otherwise the live pages need to be loaded twice
+            await BuildBlazorPages(null!);
+        }
+        else
+        {
+            //Static files first to be able to hash them
+            wwwroot.Build();
 
-        Scan();
+            blazorIndex.Scan();
 
-        //Render all Blazor pages
-        await BuildBlazorPages(onlyPrescan: false);
+            fileRenderer.Scan();
 
-        //Render indexes(feeds) last
-        fileRenderer.Generate();
+            //Render all Blazor pages
+            await BuildBlazorPages(httpClient);
+
+            //Render indexes(feeds) last
+            fileRenderer.Generate();
+        }
 
         //Change base url to work with live version
-        Config.BaseURL = HttpClient.BaseAddress;
+        Config.BaseURL = httpClient.BaseAddress;
     }
 
-    void Scan()
-    {
-        blazorIndex.Scan();
-
-        fileRenderer.Scan();
-    }
-
-    async Task BuildBlazorPages(bool onlyPrescan)
+    async Task BuildBlazorPages(HttpClient httpClient)
     {
         while (true)
         {
-            //Prescan
+            //PreScan
             var page = Pages.NextPreScan();
             if (page != null)
             {
@@ -171,24 +173,36 @@ public class SiteBuilder
                 continue;
             }
 
-            if (onlyPrescan)
+            if (Config.NoGeneration)
                 return;
 
-            //Build
+            //BuildFinal
             page = Pages.NextFinalBuild();
             if (page != null)
             {
                 var originalUrl = page.URL; //Track change
 
                 var html = await Blazor.Build(page, presScan: false);
-                if (html == null)
+                var url = page.URL.GetRelativePath(Config.BaseURL);
+                try
+                {
+                    html = await httpClient.GetStringAsync(url, CancellationToken.None);
+                }
+                catch (HttpRequestException ex)
                 {
                     Pages.FailBlazor(page);
                     continue;
                 }
 
+                //Before removing in case page both changed URL and is a draft
                 if (page.URL != originalUrl)
                     Pages.UpdatePageUrl(originalUrl, page);
+
+                if (page.IsDraft)
+                {
+                    Pages.RemoveDraft(page);
+                    continue;
+                }
 
                 html = Hasher.RewriteHTML(html);
 

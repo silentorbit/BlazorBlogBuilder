@@ -11,7 +11,7 @@ public class Summary : ComponentBase
     public SiteBuilder Site { get; set; } = null!;
 
     [Inject]
-    public SitePage Page { get; set; } = null!;
+    public PageData Page { get; set; } = null!;
 
     protected override async Task OnParametersSetAsync()
     {

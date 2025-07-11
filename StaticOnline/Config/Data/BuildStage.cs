@@ -1,4 +1,4 @@
-﻿namespace SilentOrbit.StaticOnline.Config;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 public enum BuildStage
 {
@@ -8,4 +8,5 @@ public enum BuildStage
     FinalBuild = 20,
     FinalBuildDone = 21,
     Fail = 30,
+    Draft = 31,
 }

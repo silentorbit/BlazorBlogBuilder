@@ -7,9 +7,9 @@ public class TagBuilder(SiteBuilder site)
 {
     readonly Dictionary<string, Tag> tags = new();
 
-    public SitePage[] GetPages(Tag page)
+    public PageData[] GetPages(Tag page)
     {
-        var pages = new List<SitePage>();
+        var pages = new List<PageData>();
         var list = site.Pages.All.Where(p => p.Tags.Contains(page)).ToArray();
         return list;
     }

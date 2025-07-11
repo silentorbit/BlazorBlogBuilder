@@ -1,6 +1,4 @@
-﻿using SilentOrbit.StaticOnline.Building;
-
-namespace SilentOrbit.StaticOnline.Config;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 public class Tag
 {

@@ -1,11 +1,8 @@
-﻿using SilentOrbit.Disk;
-using SilentOrbit.StaticOnline.Building;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Security.Policy;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
-namespace SilentOrbit.StaticOnline.Config;
-
+/// <summary>
+/// Simplify entry of URLs using string values.
+/// </summary>
 public class Url : IComparable<Url>, IEquatable<Url>
 {
     readonly string fullURL;
@@ -151,10 +148,10 @@ public class Url : IComparable<Url>, IEquatable<Url>
             return true;
 
         if (obj is Url url)
-            return this.fullURL.Equals(url);
+            return fullURL.Equals(url);
 
         if (obj is Uri otherURI)
-            return this.fullURL.Equals(otherURI);
+            return fullURL.Equals(otherURI);
 
         return false;
     }

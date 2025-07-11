@@ -2,7 +2,7 @@
 
 abstract class SitemapBase : FileGeneratorBase
 {
-    protected IEnumerable<SitePage> SitemapPages()
+    protected IEnumerable<PageData> SitemapPages()
     {
         var defaultRobots = Config.DefaultRobots;
 

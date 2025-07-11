@@ -1,4 +1,4 @@
-﻿namespace SilentOrbit.StaticOnline.Config;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 /// <summary>
 /// https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag

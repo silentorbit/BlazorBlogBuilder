@@ -10,19 +10,7 @@ public static class WebApplicationExtensions
         config.SiteBuilder ??= new SiteBuilder(config);
 
         services.AddSingleton<SiteBuilder>(config.SiteBuilder);
-        services.AddTransient<SitePage>((provider) => TransientPage(provider, config));
-    }
-
-    static SitePage TransientPage(IServiceProvider provider, SiteConfig config)
-    {
-        var nm = provider.GetService<NavigationManager>()!;
-        var path = new Uri(nm.Uri).AbsolutePath;
-        var url = config.BaseURL.Append(path.TrimEnd('/'));
-
-        var page = config.SiteBuilder.Pages.GetOrCreate(url);
-        Debug.Assert(page != null);
-
-        return page;
+        services.AddTransient<PageData>(config.SiteBuilder.TransientPage);
     }
 
     /// <summary>
@@ -33,12 +21,14 @@ public static class WebApplicationExtensions
     /// </summary>
     public static void BuildStaticOnline(this WebApplication app, SiteConfig config)
     {
+        //Feeds and sitemap
         var fr = new FileBuilder(config.SiteBuilder);
         foreach (var file in fr.GetGenerators())
         {
             app.MapGet(file.URL.Href, file.Generate);
         }
 
+        //Start building once the webserver is running
         var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
         var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(async () =>
@@ -50,4 +40,5 @@ public static class WebApplicationExtensions
                 lifetime.StopApplication();
         });
     }
+
 }

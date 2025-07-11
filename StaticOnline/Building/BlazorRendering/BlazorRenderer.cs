@@ -27,15 +27,15 @@ partial class BlazorRenderer
         services.AddSingleton<IScrollToLocationHash>(nav);
         services.AddSingleton<IJSRuntime>(new StaticJsRuntime());
         services.AddSingleton<SiteBuilder>(site);
-        services.AddTransient<SitePage>(provider => buildPage ?? throw new NullReferenceException());
+        services.AddTransient<PageData>(provider => buildPage ?? throw new NullReferenceException());
 
         serviceProvider = services.BuildServiceProvider();
         loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
     }
 
-    SitePage? buildPage = null;
+    PageData? buildPage = null;
 
-    public async Task<string?> Build(SitePage page, bool presScan)
+    public async Task<string?> Build(PageData page, bool presScan)
     {
         buildPage = page;
 
@@ -52,7 +52,7 @@ partial class BlazorRenderer
             return output.ToHtmlString();
         });
 
-        if (page.NotFound)
+        if (page.IsDraft)
             return null;
 
         if (html == null)
@@ -64,9 +64,9 @@ partial class BlazorRenderer
     }
 
     /// <summary>
-    /// Running the component once to update its <see cref="SitePage"/>
+    /// Running the component once to update its <see cref="PageData"/>
     /// </summary>
-    public async Task RenderComponent(Type componentType, SitePage page)
+    public async Task RenderComponent(Type componentType, PageData page)
     {
         buildPage = page;
 

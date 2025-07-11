@@ -2,6 +2,18 @@
 
 namespace SilentOrbit.StaticOnline.Config;
 
+public class SiteConfig<App> : SiteConfig
+    where App : IComponent
+{
+    public SiteConfig()
+    {
+        AppType = typeof(App);
+    }
+}
+
+/// <summary>
+/// Create a config using <see cref="SiteConfig{App}"/>.
+/// </summary>
 public abstract class SiteConfig
 {
     /// <summary>
@@ -14,6 +26,11 @@ public abstract class SiteConfig
     /// </summary>
     public DirPath Target { get; set; } = null!;
 
+    /// <summary>
+    /// Don't generate static files, only run web server.
+    /// Default: false; - Will generate files
+    /// </summary>
+    public bool NoGeneration { get; set; }
     public bool ExitAfterBuildComplete { get; set; }
 
     /// <summary>
@@ -43,7 +60,7 @@ public abstract class SiteConfig
     public Url? Facebook { get; set; }
     public Url? Instagram { get; set; }
 
-    public Robots DefaultRobots { get; } = new();
+    public Robots DefaultRobots { get; set; } = new();
 
     public Author Author { get; set; } = new();
 
@@ -55,7 +72,7 @@ public abstract class SiteConfig
     /// <summary>
     /// Default title for updates generates with <see cref="Components.Update"/>
     /// </summary>
-    public virtual string UpdateTitle(SitePage page) => $"Update {page.Title}";
+    public virtual string UpdateTitle(PageData page) => $"Update {page.Title}";
 
     /// <summary>
     /// Use <see cref="SiteConfig{App}"/> to create an instance
@@ -64,13 +81,3 @@ public abstract class SiteConfig
     {
     }
 }
-
-public class SiteConfig<App> : SiteConfig
-    where App : IComponent
-{
-    public SiteConfig()
-    {
-        AppType = typeof(App);
-    }
-}
-

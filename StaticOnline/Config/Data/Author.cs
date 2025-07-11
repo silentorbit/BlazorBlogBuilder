@@ -1,4 +1,4 @@
-﻿namespace SilentOrbit.StaticOnline.Config;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 public class Author
 {
