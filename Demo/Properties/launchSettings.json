@@ -17,15 +17,6 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7127;http://localhost:5228"
-    },
-    "Build Static": {
-      "commandName": "Project",
-      "commandLineArgs": "build ../generated/",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7127;http://localhost:5228"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json"

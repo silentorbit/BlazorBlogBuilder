@@ -1,4 +1,5 @@
 ﻿using Demo.Components;
+using SilentOrbit.Disk;
 using SilentOrbit.StaticOnline.Config;
 
 namespace Demo;
@@ -7,6 +8,9 @@ public class DemoSiteConfig : SiteConfig<App>
 {
     public DemoSiteConfig()
     {
+        Target = new DirPath("../generated/");
+        ExitAfterBuildComplete = false;
+
         Title = "Demo";
         Description = "This is a Demo";
         //Build static files to be served in the subdirectory
@@ -38,9 +42,4 @@ public class DemoSiteConfig : SiteConfig<App>
         });
     }
 
-    protected override void ConfigureLive()
-    {
-        //Live testing on root
-        BaseURL = "https://localhost:7127/";
-    }
 }
