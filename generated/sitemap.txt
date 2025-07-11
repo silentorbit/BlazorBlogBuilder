@@ -1,4 +1,2 @@
 https://www.silentorbit.com/static-online
-https://www.silentorbit.com/static-online/Demo.styles.css
-https://www.silentorbit.com/static-online/Error
 https://www.silentorbit.com/static-online/weather

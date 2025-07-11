@@ -1,6 +1,9 @@
 ﻿@page "/Error"
+@page "/404.html"
 @using System.Diagnostics
-
+@{
+    Page.Robots.Sitemap = false;
+}
 <PageTitle>Error</PageTitle>
 
 <h1 class="text-danger">Error.</h1>
@@ -9,7 +12,7 @@
 @if (ShowRequestId)
 {
     <p>
-        <strong>Request ID:</strong> <code>@RequestId</code>
+        <strong>Request ID:</strong> static @* <code>@RequestId</code> *@
     </p>
 }
 
@@ -24,7 +27,7 @@
     and restarting the app.
 </p>
 
-@code{
+@code {
     [CascadingParameter]
     private HttpContext? HttpContext { get; set; }
 

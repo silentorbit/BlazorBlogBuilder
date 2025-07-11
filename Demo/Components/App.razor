@@ -11,27 +11,7 @@
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["Demo.styles.css"]" />
     @* Static Online: Workaround until we can get ImportMap working during site generation. *@
-    @if (Page.BuildStage == BuildStage.FinalBuild)
-    {
-        @(new MarkupString("\n    "))
-        <script type="importmap">
-            {
-              "imports": {
-                "./lib/bootstrap/dist/js/bootstrap.bundle.js": "./lib/bootstrap/dist/js/bootstrap.bundle.6cfz1n2cew.js",
-                "./lib/bootstrap/dist/js/bootstrap.bundle.min.js": "./lib/bootstrap/dist/js/bootstrap.bundle.min.493y06b0oq.js",
-                "./lib/bootstrap/dist/js/bootstrap.esm.min.js": "./lib/bootstrap/dist/js/bootstrap.esm.min.jj8uyg4cgr.js",
-                "./lib/bootstrap/dist/js/bootstrap.esm.js": "./lib/bootstrap/dist/js/bootstrap.esm.vr1egmr9el.js",
-                "./lib/bootstrap/dist/js/bootstrap.min.js": "./lib/bootstrap/dist/js/bootstrap.min.63fj8s7r0e.js",
-                "./lib/bootstrap/dist/js/bootstrap.js": "./lib/bootstrap/dist/js/bootstrap.notf2xhcfb.js"
-              }
-            }
-        </script>
-        @(new MarkupString("\n    "))
-    }
-    else
-    {
-        <ImportMap />
-    }
+    <ImportMap />
     @* Static Online: Included in StaticBlazorGeneratorHeaders
     <link rel="icon" type="image/png" href="favicon.png" /> *@
     <HeadOutlet />
