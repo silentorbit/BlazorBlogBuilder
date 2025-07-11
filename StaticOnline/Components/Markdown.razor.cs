@@ -1,8 +1,5 @@
 ﻿using MarkdownSharp;
 using Microsoft.AspNetCore.Components;
-using SilentOrbit.StaticOnline.Building;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace SilentOrbit.StaticOnline.Components;
 

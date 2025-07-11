@@ -1,8 +1,4 @@
-﻿using SilentOrbit.Disk;
-using System.Buffers.Text;
-using System.Security.Policy;
-
-namespace SilentOrbit.StaticOnline.Building;
+﻿namespace SilentOrbit.StaticOnline.Building;
 
 /// <summary>
 /// Copy static files from wwwroot to output.

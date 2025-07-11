@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using SilentOrbit.StaticOnline.Building.FileGeneration;
-using System.Collections;
+﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
+using System.Collections.Concurrent;
 
 namespace SilentOrbit.StaticOnline.Building;
 

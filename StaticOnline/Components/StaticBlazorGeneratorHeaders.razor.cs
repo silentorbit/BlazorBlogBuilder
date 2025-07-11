@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SilentOrbit.StaticOnline.Building;
-using System.Web;
 
 namespace SilentOrbit.StaticOnline.Components;
 

@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace SilentOrbit.StaticOnline.Building.BlazorRendering;
+﻿namespace SilentOrbit.StaticOnline.Building.BlazorRendering;
 
 public static partial class HtmlCleanup
 {

@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.DependencyInjection;
-using SilentOrbit.StaticOnline.Building;
-using System.Security.Policy;
-
-namespace SilentOrbit.StaticOnline;
+﻿namespace SilentOrbit.StaticOnline;
 
 public static class WebApplicationExtensions
 {

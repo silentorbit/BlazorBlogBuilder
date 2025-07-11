@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace SilentOrbit.StaticOnline.Extensions;
 
-public static class XmlExtensions
+static class XmlExtensions
 {
     [return: NotNullIfNotNull(nameof(value))]
     public static XElement? AddElement(this XElement root, string name, string? value)

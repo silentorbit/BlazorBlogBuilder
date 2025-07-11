@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace SilentOrbit.StaticOnline.Building;
+﻿namespace SilentOrbit.StaticOnline.Building;
 
 public class FeedList : IEnumerable<FeedList.Item>
 {

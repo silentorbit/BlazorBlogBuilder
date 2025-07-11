@@ -1,7 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Web;
-
-namespace SilentOrbit.StaticOnline.Building;
+﻿namespace SilentOrbit.StaticOnline.Building;
 
 public class LinkScanner(SiteBuilder site)
 {

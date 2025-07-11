@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using SilentOrbit.StaticOnline.Building;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
-using SilentOrbit.StaticOnline.Tools;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
 
 namespace SilentOrbit.StaticOnline.BlazorRendering;
 

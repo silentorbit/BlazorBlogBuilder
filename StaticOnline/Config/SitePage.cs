@@ -1,7 +1,4 @@
-﻿using SilentOrbit.Disk;
-using System.Runtime.CompilerServices;
-
-namespace SilentOrbit.StaticOnline.Config;
+﻿namespace SilentOrbit.StaticOnline.Config;
 
 /// <summary>
 /// Metadata for each rendered page.

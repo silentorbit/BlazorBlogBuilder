@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SilentOrbit.Disk;
-using SilentOrbit.StaticOnline.Building;
-using System.Reflection;
-using System.Xml.Linq;
 
 namespace SilentOrbit.StaticOnline.Config;
 

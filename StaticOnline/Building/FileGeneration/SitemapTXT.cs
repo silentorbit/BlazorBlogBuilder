@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace SilentOrbit.StaticOnline.Building.FileGeneration;
+﻿namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class SitemapTXT : SitemapBase
 {
