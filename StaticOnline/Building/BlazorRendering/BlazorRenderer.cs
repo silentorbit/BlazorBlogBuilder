@@ -26,6 +26,7 @@ partial class BlazorRenderer
         services.AddSingleton<INavigationInterception>(nav);
         services.AddSingleton<IScrollToLocationHash>(nav);
         services.AddSingleton<IJSRuntime>(new StaticJsRuntime());
+        services.AddSingleton<SiteConfig>(site.Config);
         services.AddSingleton<SiteBuilder>(site);
         services.AddTransient<PageData>(provider => buildPage ?? throw new NullReferenceException());
 
@@ -35,6 +36,11 @@ partial class BlazorRenderer
 
     PageData? buildPage = null;
 
+#if DEBUG
+    /// <summary>
+    /// Replaced with HttpClient downloading full page
+    /// </summary>
+    [Obsolete]
     public async Task<string?> Build(PageData page, bool presScan)
     {
         buildPage = page;
@@ -62,6 +68,7 @@ partial class BlazorRenderer
 
         return html;
     }
+#endif
 
     /// <summary>
     /// Running the component once to update its <see cref="PageData"/>

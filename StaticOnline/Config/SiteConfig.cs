@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Options;
 
 namespace SilentOrbit.StaticOnline.Config;
 
@@ -19,7 +20,7 @@ public abstract class SiteConfig
     /// <summary>
     /// Helper to make it easier by only having to pass <see cref="SiteConfig"/> and not the builder as well.
     /// </summary>
-    internal SiteBuilder SiteBuilder { get; set; } = null!;
+    public SiteBuilder Builder { get; set; } = null!;
 
     /// <summary>
     /// Path to generated files.
@@ -72,7 +73,17 @@ public abstract class SiteConfig
     /// <summary>
     /// Default title for updates generates with <see cref="Components.Update"/>
     /// </summary>
-    public virtual string UpdateTitle(PageData page) => $"Update {page.Title}";
+    internal protected virtual string UpdateTitle(PageData update) => $"Update {update.Title}";
+
+    internal protected virtual Url PostURL(PageData post)
+    {
+        var snippet = 
+            post.UrlSnippet ??
+            post.Title?.ToLowerInvariant().Replace(" ", "_") ??
+            post.BlazorType?.Name.ToLowerInvariant();
+
+        return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
+    }
 
     /// <summary>
     /// Use <see cref="SiteConfig{App}"/> to create an instance

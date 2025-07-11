@@ -1,4 +1,8 @@
-﻿namespace SilentOrbit.StaticOnline.Config;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace SilentOrbit.StaticOnline.Config;
 
 /// <summary>
 /// Metadata for each rendered page.
@@ -7,6 +11,13 @@ public sealed class PageData
 {
     public Url URL { get; set; } = null!;
     public string Href => URL.Href;
+    
+    /// <summary>
+    /// Generated URL until the post is first run.
+    /// </summary>
+    internal Url? BlogPostRandomURL { get; set; }
+
+    public string? UrlSnippet { get; set; }
 
     public Url? Image { get; set; }
     public string Title { get; set; } = null!;
@@ -35,7 +46,7 @@ public sealed class PageData
     public int LikeCount { get; set; }
     public int CommentCount { get; set; }
 
-    
+
     public Robots Robots { get; } = new();
 
     public Url? Redirect { get; set; }
@@ -46,6 +57,8 @@ public sealed class PageData
     /// Include this page in the feed.
     /// Automatically set for 
     /// <see cref="BlogPost"/> and <see cref="Components.Update"/>.
+    /// 
+    /// Published must be set, otherwise any post with <see cref="InFeed"/> == true will not be generated.
     /// </summary>
     public bool InFeed { get; set; }
 
@@ -61,6 +74,21 @@ public sealed class PageData
     /// This page will not be generated if set to true;
     /// </summary>
     public bool IsDraft { get; set; }
+
+    internal bool IsDraftOrNotPublished
+    {
+        get
+        {
+            if (IsDraft)
+                return true;
+            //Missing Published only makes BlogPost a draft.
+            if (InFeed && Published == null)
+                return true;
+            if (Published > DateTime.UtcNow ?? false)
+                return true;
+            return false;
+        }
+    }
 
     /// <summary>
     /// Built as a blazor page, as opposed to a static file.
@@ -85,6 +113,19 @@ public sealed class PageData
     public bool FinalBuild { get; set; }
 
     internal Type? BlazorType { get; set; }
+
+    /// <summary>
+    /// Only works on single post pages.
+    /// </summary>
+    public RenderFragment Render()
+    {
+        return RenderTreeBuilder;
+    }
+    void RenderTreeBuilder(RenderTreeBuilder builder)
+    {
+        builder.OpenComponent(1, BlazorType!);
+        builder.CloseComponent();
+    }
 
     #endregion
 

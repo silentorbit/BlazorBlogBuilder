@@ -1,5 +1,6 @@
 ﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
 using System.Collections.Concurrent;
+using System.Runtime;
 
 namespace SilentOrbit.StaticOnline.Building;
 
@@ -44,18 +45,37 @@ public class PageTracker(SiteBuilder site)
 
     #region Run Next
 
-    /// <summary>
-    /// Next page to run a prescan
-    /// </summary>
-    /// <returns></returns>
-    internal PageData? NextPreScan()
+    internal bool Next(out PageData page, out bool finalBuild)
     {
-        if (queuePreScan.Count == 0)
-            return null;
+        finalBuild = false;
 
-        var page = queuePreScan.Dequeue();
-        page.BuildStage = BuildStage.PreScan;
-        return page;
+        if (queuePreScan.TryDequeue(out page!))
+        {
+            page.BuildStage = BuildStage.PreScan;
+            return true;
+        }
+
+        if (site.Config.NoGeneration)
+        {
+            page = null!;
+            return false;
+        }
+
+        if (queueFinalBuild.TryDequeue(out page!))
+        {
+            page.BuildStage = BuildStage.FinalBuild;
+            finalBuild = true;
+            return true;
+        }
+
+        if (queueBuildLast.TryDequeue(out page!))
+        {
+            page.BuildStage = BuildStage.FinalBuild;
+            finalBuild = true;
+            return true;
+        }
+
+        return false;
     }
 
     internal void DonePreScan(PageData page)
@@ -63,7 +83,7 @@ public class PageTracker(SiteBuilder site)
         Debug.Assert(page.BuildStage == BuildStage.PreScan);
         page.BuildStage = BuildStage.PreScanDone;
 
-        if (page.IsDraft)
+        if (page.IsDraftOrNotPublished)
             return;
 
         if (page.BuildLast)
@@ -72,24 +92,6 @@ public class PageTracker(SiteBuilder site)
             queueFinalBuild.Enqueue(page);
     }
 
-    internal PageData? NextFinalBuild()
-    {
-        if (queueFinalBuild.TryDequeue(out var page))
-        {
-            page.BuildStage = BuildStage.FinalBuild;
-            return page;
-        }
-
-        if (queueBuildLast.TryDequeue(out page))
-        {
-            page.BuildStage = BuildStage.FinalBuild;
-            return page;
-        }
-
-        return null;
-    }
-
-
     #endregion
 
     #region Result
@@ -97,8 +99,8 @@ public class PageTracker(SiteBuilder site)
     internal void UpdatePageUrl(Url oldURL, PageData page)
     {
         //Update URL set by the page's own code.
-        urlPage.TryRemove(oldURL, out var oldPage);
-        Debug.Assert(oldPage == page);
+        var removed = urlPage.TryRemove(oldURL, out var oldPage);
+        Debug.Assert(removed && oldPage == page);
         urlPage[page.URL] = page;
     }
 
@@ -129,18 +131,18 @@ public class PageTracker(SiteBuilder site)
     #region Enumeration
 
     public IEnumerable<PageData> All => urlPage.Values
-        .Where(p => !p.IsUpdate && p.IsBlazor);
+        .Where(p => !p.IsDraftOrNotPublished && !p.IsUpdate && p.IsBlazor);
 
     public IEnumerable<PageData> Updates => urlPage.Values
-        .Where(p => p.IsUpdate)
+        .Where(p => !p.IsDraftOrNotPublished && p.IsUpdate)
         .OrderByDescending(p => p.Published);
 
     public IEnumerable<PageData> BlogPosts => urlPage.Values
-        .Where(p => p.InFeed && !p.IsUpdate)
+        .Where(p => !p.IsDraftOrNotPublished && p.InFeed && !p.IsUpdate)
         .OrderByDescending(p => p.Published);
 
     public IEnumerable<PageData> Feed => urlPage.Values
-        .Where(p => p.InFeed)
+        .Where(p => !p.IsDraftOrNotPublished && p.InFeed)
         .OrderByDescending(p => p.Published);
 
     #endregion
@@ -174,8 +176,8 @@ public class PageTracker(SiteBuilder site)
 
     internal void RemoveDraft(PageData page)
     {
-        page.BuildStage = BuildStage.Fail;
-        urlPage.TryRemove(page.URL, out var removed);
-        Debug.Assert(removed == page);
+        page.BuildStage = BuildStage.Draft;
+        urlPage.Remove(page);
     }
 }
+

@@ -22,11 +22,16 @@ public class BlazorIndex(SiteBuilder site)
                 page.BlazorType = type;
             }
 
+            //Don't generate if the post as a specific @page directive.
+            if (urls.Any())
+                continue;
+
             //Blog posts
             if (type.IsAssignableTo(typeof(BlogPost)))
             {
                 var url = BlogPostUrl(type);
                 var page = site.Pages.GetOrCreate(url);
+                page.BlogPostRandomURL = url;
                 page.BlazorType = type;
                 page.InFeed = true;
             }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 
@@ -6,6 +7,8 @@ namespace SilentOrbit.StaticOnline.Building;
 
 public class SiteBuilder
 {
+    ILogger logger;
+
     internal static SiteBuilder Instance { get; private set; } = null!;
 
     /// <summary>
@@ -93,8 +96,8 @@ public class SiteBuilder
         var path = new Uri(nm.Uri).AbsolutePath;
         var url = Config.BaseURL.Append(path.TrimEnd('/'));
 
-        var page = Config.SiteBuilder.Pages.GetOrCreate(url);
-        
+        var page = Config.Builder.Pages.GetOrCreate(url);
+
         //Only Blazor pages would inject a SitePage
         page.IsBlazor = true;
 
@@ -106,9 +109,13 @@ public class SiteBuilder
         Pages.AddLink(url);
     }
 
+    private HttpClient httpClient = null!;
+
     public async Task Build(WebApplication app)
     {
-        var httpClient = new HttpClient()
+        logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger<SiteBuilder>();
+
+        httpClient = new HttpClient()
         {
             BaseAddress = new Uri(app.Urls.First())
         };
@@ -122,7 +129,7 @@ public class SiteBuilder
         {
             //PreRender all Blazor pages
             //Otherwise the live pages need to be loaded twice
-            await BuildBlazorPages(null!);
+            await BuildBlazorPages();
         }
         else
         {
@@ -134,7 +141,7 @@ public class SiteBuilder
             fileRenderer.Scan();
 
             //Render all Blazor pages
-            await BuildBlazorPages(httpClient);
+            await BuildBlazorPages();
 
             //Render indexes(feeds) last
             fileRenderer.Generate();
@@ -144,77 +151,77 @@ public class SiteBuilder
         Config.BaseURL = httpClient.BaseAddress;
     }
 
-    async Task BuildBlazorPages(HttpClient httpClient)
+    async Task BuildBlazorPages()
     {
-        while (true)
+        while (Pages.Next(out var page, out var finalBuild))
         {
+            var prefix = finalBuild ? "Build" : "PreScan";
+            logger.LogInformation($"{prefix}: {page.URL}");
+
+            var originalURL = page.URL;
+            string html = null!;
+
             //PreScan
-            var page = Pages.NextPreScan();
-            if (page != null)
+            if (finalBuild == false)
             {
-                var url = page.URL;
-
                 if (page.BlazorType == null)
-                {
-                    //Render full url
-                    await Blazor.Build(page, presScan: true);
-                }
+                    await RenderPage(page);
                 else
-                {
-                    //Only render the page if known
-                    await Blazor.RenderComponent(page.BlazorType!, page);
-                }
+                    await Blazor.RenderComponent(page.BlazorType!, page); //Only render the component
+            }
+            else
+            {
+                //BuildFinal
+                html = await RenderPage(page);
+            }
 
-                if (page.URL != url)
-                    Pages.UpdatePageUrl(oldURL: url, page);
+            if (page.InFeed && !page.IsDraftOrNotPublished && page.URL == page.BlogPostRandomURL)
+                page.URL = Config.PostURL(page);
 
-                Pages.DonePreScan(page);
-                //Continue with Prescan until empty
+            if (page.URL != originalURL)
+                Pages.UpdatePageUrl(oldURL: originalURL, page);
+
+            if (page.IsDraftOrNotPublished)
+            {
+                Pages.RemoveDraft(page);
                 continue;
             }
 
-            if (Config.NoGeneration)
-                return;
-
-            //BuildFinal
-            page = Pages.NextFinalBuild();
-            if (page != null)
+            if (finalBuild == false)
             {
-                var originalUrl = page.URL; //Track change
+                Pages.DonePreScan(page);
+            }
+            else
+            {
+                //BuildFinal
 
-                var html = await Blazor.Build(page, presScan: false);
-                var url = page.URL.GetRelativePath(Config.BaseURL);
-                try
-                {
-                    html = await httpClient.GetStringAsync(url, CancellationToken.None);
-                }
-                catch (HttpRequestException ex)
-                {
-                    Pages.FailBlazor(page);
-                    continue;
-                }
-
-                //Before removing in case page both changed URL and is a draft
-                if (page.URL != originalUrl)
-                    Pages.UpdatePageUrl(originalUrl, page);
-
-                if (page.IsDraft)
-                {
-                    Pages.RemoveDraft(page);
-                    continue;
-                }
+                if (page.IsBlazor)
+                    html = HtmlCleanup.Clean(html);
+                //Don't cleanup css,js...
 
                 html = Hasher.RewriteHTML(html);
 
                 linkScanner.Scan(html);
 
                 Target.Store(page.URL, html);
+
                 Pages.DoneFinalBuild(page);
-
-                continue;
             }
+        }
+    }
 
-            break;
+    async Task<string> RenderPage(PageData page)
+    {
+        var url = page.URL.GetRelativePath(Config.BaseURL);
+        try
+        {
+            return await httpClient.GetStringAsync(url, CancellationToken.None);
+        }
+        catch (HttpRequestException ex)
+        {
+            logger.LogCritical(ex, null);
+            Pages.FailBlazor(page);
+            throw;
         }
     }
 }

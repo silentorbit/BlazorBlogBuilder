@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SilentOrbit.StaticOnline.Components;
 
@@ -24,6 +25,11 @@ public partial class Update
 
     protected override async Task OnParametersSetAsync()
     {
+        if (Page.BuildStage != BuildStage.FinalBuild)
+            return;
+        if (Page.IsDraftOrNotPublished)
+            return;
+
         var timestamp = (Timestamp)Date;
 
         if (timestamp.DateTime.TimeOfDay.Ticks == 0)
@@ -35,6 +41,7 @@ public partial class Update
 
         var update = Site.Pages.GetOrCreate(url, build: false);
         update.IsUpdate = true;
+        update.IsDraft = Page.IsDraftOrNotPublished;
         update.Published = Date;
         update.SummaryHtml = await Site.Blazor.RenderFragment(ChildContent);
         update.InFeed = true;

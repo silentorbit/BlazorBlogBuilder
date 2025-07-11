@@ -7,10 +7,11 @@ public static class WebApplicationExtensions
     /// </summary>
     public static void AddStaticOnline(this IServiceCollection services, SiteConfig config)
     {
-        config.SiteBuilder ??= new SiteBuilder(config);
+        config.Builder ??= new SiteBuilder(config);
 
-        services.AddSingleton<SiteBuilder>(config.SiteBuilder);
-        services.AddTransient<PageData>(config.SiteBuilder.TransientPage);
+        services.AddSingleton<SiteConfig>(config);
+        services.AddSingleton<SiteBuilder>(config.Builder);
+        services.AddTransient<PageData>(config.Builder.TransientPage);
     }
 
     /// <summary>
@@ -22,18 +23,19 @@ public static class WebApplicationExtensions
     public static void BuildStaticOnline(this WebApplication app, SiteConfig config)
     {
         //Feeds and sitemap
-        var fr = new FileBuilder(config.SiteBuilder);
+        var fr = new FileBuilder(config.Builder);
         foreach (var file in fr.GetGenerators())
         {
             app.MapGet(file.URL.Href, file.Generate);
         }
 
         //Start building once the webserver is running
-        var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
         var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(async () =>
         {
-            await config.SiteBuilder.Build(app);
+            await config.Builder.Build(app);
+            
+            var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
             logger.LogInformation("Generation complete");
 
             if (config.ExitAfterBuildComplete)

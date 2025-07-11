@@ -61,7 +61,6 @@ public class Timestamp : IComparable<Timestamp>, IEquatable<Timestamp>
 
     #endregion
 
-
     #region Equals
 
     bool IEquatable<Timestamp>.Equals(Timestamp? other)
@@ -102,4 +101,30 @@ public class Timestamp : IComparable<Timestamp>, IEquatable<Timestamp>
     }
 
     #endregion
+
+    #region operator < > <= >= == != with Timestamp and DateTime
+
+    public static bool? operator <(Timestamp? left, Timestamp? right)
+    {
+        if (left is null || right is null) return null;
+        return left.DateTime < right.DateTime;
+    }
+    public static bool? operator >(Timestamp? left, Timestamp? right)
+    {
+        if (left is null || right is null) return null;
+        return left.DateTime > right.DateTime;
+    }
+    public static bool? operator <=(Timestamp? left, Timestamp? right)
+    {
+        if (left is null || right is null) return null;
+        return left.DateTime <= right.DateTime;
+    }
+    public static bool? operator >=(Timestamp? left, Timestamp? right)
+    {
+        if (left is null || right is null) return null;
+        return left.DateTime >= right.DateTime;
+    }
+
+    #endregion
+
 }
