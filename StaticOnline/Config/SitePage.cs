@@ -26,7 +26,8 @@ public sealed class SitePage
 
     /// <summary>
     /// Include this page in the feed.
-    /// Automatically set for <see cref="BlogPost"/> and <see cref="Components.Update"/>.
+    /// Automatically set for 
+    /// <see cref="BlogPost"/> and <see cref="Components.Update"/>.
     /// </summary>
     public bool InFeed { get; set; }
 
@@ -36,21 +37,16 @@ public sealed class SitePage
     /// </summary>
     public bool IsUpdate { get; set; }
 
-    public Type? BlazorType { get; set; }
-
     /// <summary>
     /// Build this page among the last ones.
     /// Used for
     /// - Tag index
     /// - Blog post index
     /// - Page index
+    /// 
+    /// Can be set manually.
     /// </summary>
     public bool BuildLast { get; set; }
-
-    /// <summary>
-    /// This page is not found, used to prevent generation from storing the 404 page.
-    /// </summary>
-    internal bool NotFound { get; set; }
 
     public Timestamp? Published { get; set; }
 
@@ -62,33 +58,23 @@ public sealed class SitePage
 
     public string? SummaryHtml { get; internal set; }
 
+    public BuildStage BuildStage { get; internal set; } = BuildStage.Added;
+
+    #region Internal Build properties
+
+    internal Type? BlazorType { get; set; }
+
+    /// <summary>
+    /// This page is not found, used to prevent generation from storing the 404 page.
+    /// </summary>
+    internal bool NotFound { get; set; }
+
     /// <summary>
     /// Generated from the request URL
     /// </summary>
     internal bool FromURL { get; set; }
 
-    public BuildStage BuildStage { get; internal set; } = BuildStage.Added;
-
-#if DEBUG
-    [Obsolete("Will not work in a checkedout repo")]
-    public void SetModified([CallerFilePath] string callerPath = null!)
-    {
-        if (callerPath == null)
-        {
-            Debug.Fail("Caller path missing");
-            return;
-        }
-
-        var file = new FilePath(callerPath);
-        if (file.Exists() == false)
-        {
-            Debug.Fail("File not found " + file);
-            return;
-        }
-
-        Modified = file.FileInfo.LastWriteTimeUtc;
-    }
-#endif
+    #endregion
 
     public override string ToString()
     {

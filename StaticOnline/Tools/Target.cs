@@ -3,14 +3,13 @@ using SilentOrbit.StaticOnline.Building;
 
 namespace SilentOrbit.StaticOnline.Tools;
 
-class Target(SiteBuilder site, DirPath targetDir)
+class Target(SiteBuilder site)
 {
-    readonly DirPath rootDir = targetDir;
-    readonly Url baseURL = site.Config.BaseURL;
-
+    readonly DirPath rootDir = site.Config.Target;
+    
     internal void Store(Url url, string content)
     {
-        var urlPath = url.GetRelativePath(baseURL);
+        var urlPath = url.GetRelativePath(site.Config.BaseURL);
 
         var ext = Path.GetExtension(urlPath);
         FilePath target;
@@ -27,8 +26,7 @@ class Target(SiteBuilder site, DirPath targetDir)
 
     public void StoreStatic(Url url, FilePath file)
     {
-        Debug.Assert(url != "https://www.silentorbit.com/blog/tags");
-        var urlPath = url.GetRelativePath(baseURL);
+        var urlPath = url.GetRelativePath(site.Config.BaseURL);
         var target = rootDir.CombineFile(urlPath);
         target.Parent.CreateDirectory();
         file.CopyTo(target);

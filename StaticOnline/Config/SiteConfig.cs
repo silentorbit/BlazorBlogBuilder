@@ -9,6 +9,18 @@ namespace SilentOrbit.StaticOnline.Config;
 public abstract class SiteConfig
 {
     /// <summary>
+    /// Helper to make it easier by only having to pass <see cref="SiteConfig"/> and not the builder as well.
+    /// </summary>
+    internal SiteBuilder SiteBuilder { get; set; } = null!;
+
+    /// <summary>
+    /// Path to generated files.
+    /// </summary>
+    public DirPath Target { get; set; } = null!;
+
+    public bool ExitAfterBuildComplete { get; set; }
+
+    /// <summary>
     /// Root component type for the Blazor application.
     /// Use <see cref="SiteConfig{App}"/> to specify the Blazor component type.
     /// </summary>
@@ -48,11 +60,6 @@ public abstract class SiteConfig
     /// Default title for updates generates with <see cref="Components.Update"/>
     /// </summary>
     public virtual string UpdateTitle(SitePage page) => $"Update {page.Title}";
-
-    /// <summary>
-    /// Change the configuration to serve the site live during debugging.
-    /// </summary>
-    internal protected virtual void ConfigureLive() { }
 
     /// <summary>
     /// Use <see cref="SiteConfig{App}"/> to create an instance

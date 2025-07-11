@@ -12,10 +12,10 @@ class WWWRootBuilder
     readonly SiteBuilder site;
     readonly DirPath targetRoot;
 
-    public WWWRootBuilder(SiteBuilder site, DirPath target)
+    public WWWRootBuilder(SiteBuilder site)
     {
         this.site = site;
-        targetRoot = target;
+        targetRoot = site.Config.Target;
     }
 
     /// <summary>

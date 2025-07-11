@@ -8,7 +8,6 @@ namespace SilentOrbit.StaticOnline.Building;
 
 public class SiteBuilder
 {
-
     internal static SiteBuilder Instance { get; private set; } = null!;
 
     /// <summary>
@@ -29,20 +28,19 @@ public class SiteBuilder
     internal Target Target { get; }
     internal Hasher Hasher { get; }
     internal BlazorRenderer Blazor { get; }
+    internal HttpClient HttpClient { get; private set; }
 
     readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
     readonly LinkScanner linkScanner;
 
-    public SiteBuilder(SiteConfig config, DirPath? targetDir)
+    public SiteBuilder(SiteConfig config)
     {
         if (Instance != null)
             throw new Exception($"{nameof(SiteBuilder)} instance already created.");
         Instance = this;
 
-        if (targetDir == null)
-            config.ConfigureLive();
         config.WwwRoot ??= FindWwwRoot(config);
 
         //public
@@ -51,16 +49,14 @@ public class SiteBuilder
         Pages = new(this);
 
         //internal
-        if (targetDir != null)
-            Target = new(this, targetDir);
+        Target = new(this);
         Hasher = new();
         Blazor = new(this);
 
         //private
         fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
-        if (targetDir != null)
-            wwwroot = new(this, targetDir);
+        wwwroot = new(this);
         linkScanner = new(this);
     }
 
@@ -114,8 +110,15 @@ public class SiteBuilder
         await BuildBlazorPages(onlyPrescan: true);
     }
 
-    public async Task Build()
+    public async Task Build(WebApplication app)
     {
+        HttpClient = new HttpClient()
+        {
+            BaseAddress = new Uri(app.Urls.First())
+        };
+
+        Config.Target.EmptyDirectory();
+
         if (Target == null)
             throw new Exception($"Missing target in new {nameof(SiteBuilder)}().");
 
@@ -129,6 +132,9 @@ public class SiteBuilder
 
         //Render indexes(feeds) last
         fileRenderer.Generate();
+
+        //Change base url to work with live version
+        Config.BaseURL = HttpClient.BaseAddress;
     }
 
     void Scan()
