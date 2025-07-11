@@ -4,5 +4,37 @@
     <description>This is a Demo</description>
     <link>https://www.silentorbit.com/static-online</link>
     <link rel="self" href="https://www.silentorbit.com/static-online/rss.xml" type="application/rss+xml" xmlns="http://www.w3.org/2005/Atom" />
+    <item>
+      <guid>https://www.silentorbit.com/static-online#2025-07-04</guid>
+      <title>Update Welcome Home</title>
+      <link>https://www.silentorbit.com/static-online#2025-07-04</link>
+      <description>
+    Any page can have updates that appear in the feed.
+    Though a new page itself will not appear in the feed.
+</description>
+      <pubDate>Fri, 04 Jul 2025 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03</guid>
+      <title>Update First Post</title>
+      <link>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03</link>
+      <description>
+    This is an update to a previous post.
+    It will generate a new item in the feed.
+</description>
+      <pubDate>Thu, 03 Jul 2025 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/static-online/blog/second</guid>
+      <title>Second post</title>
+      <link>https://www.silentorbit.com/static-online/blog/second</link>
+      <pubDate>Wed, 02 Jul 2025 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/static-online/post/2025-07-01/first_post</guid>
+      <title>First Post</title>
+      <link>https://www.silentorbit.com/static-online/post/2025-07-01/first_post</link>
+      <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+    </item>
   </channel>
 </rss>

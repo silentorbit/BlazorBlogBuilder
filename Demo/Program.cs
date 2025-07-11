@@ -6,6 +6,7 @@ using SilentOrbit.StaticOnline.Config;
 //StaticOnline
 var config = new SiteConfig<App>
 {
+    Language = new() { Code = "en" },
     Title = "Demo",
     Description = "This is a Demo",
     //Build static files to be served in the subdirectory
@@ -42,6 +43,7 @@ else
 {
     //Generation target and options
     config.Target = new DirPath("../generated/");
+    config.ExitAfterBuildComplete = true;
 }
 
 var builder = WebApplication.CreateBuilder(args);

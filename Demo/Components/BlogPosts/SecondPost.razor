@@ -1,0 +1,9 @@
+﻿@page "/blog/second"
+@{
+    Page.Title = "Second post";
+    Page.InFeed = true; //Requires a @page directive to be discovered
+    Page.Published = "2025-07-02";
+}
+
+<p>Without inheriting the type @(nameof(BlogPost)) a razor page need a @@page directive to be found.</p>
+

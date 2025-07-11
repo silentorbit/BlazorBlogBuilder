@@ -1,0 +1,10 @@
+﻿@page "/post/{*PostID}"
+@code {
+    [Parameter]
+    public string PostID { get; set; } = null!;
+}
+<PageTitle>@Page.Title</PageTitle>
+
+<h1>@Page.Title</h1>
+
+@Page.Render()

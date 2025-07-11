@@ -9,5 +9,32 @@
       "name": "Silent Orbit"
     }
   ],
-  "items": []
+  "items": [
+    {
+      "id": "https://www.silentorbit.com/static-online#2025-07-04",
+      "url": "https://www.silentorbit.com/static-online#2025-07-04",
+      "title": "Update Welcome Home",
+      "date_published": "2025-07-04T00:00:00",
+      "content_html": "\r\n    Any page can have updates that appear in the feed.\r\n    Though a new page itself will not appear in the feed.\r\n"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03",
+      "title": "Update First Post",
+      "date_published": "2025-07-03T00:00:00",
+      "content_html": "\r\n    This is an update to a previous post.\r\n    It will generate a new item in the feed.\r\n"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/blog/second",
+      "url": "https://www.silentorbit.com/static-online/blog/second",
+      "title": "Second post",
+      "date_published": "2025-07-02T00:00:00"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post",
+      "title": "First Post",
+      "date_published": "2025-07-01T00:00:00"
+    }
+  ]
 }

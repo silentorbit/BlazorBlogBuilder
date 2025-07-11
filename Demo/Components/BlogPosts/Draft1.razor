@@ -1,0 +1,17 @@
+﻿@inherits BlogPost
+@{
+    Page.Title = "Draft";
+
+    //Anyone of the following 3 lines will mark this as a draft and it won't be generated.
+    Page.IsDraft = true; //Set as draft
+    Page.Published = "3025-07-01"; //Publish date in the future
+    Page.Published = null; //Not specifying publish date or setting it to null;
+
+    //The last one, Published only applies to BlogPost or with InFeed = true
+}
+
+<p>This is a draft</p>
+
+<Update Date="2025-01-01" Render>
+    This update should not appear because it's part of a draft.
+</Update>
