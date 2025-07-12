@@ -45,7 +45,7 @@ class JsonFeed : FileGeneratorBase
                 authors = Generate(post.Author),
                 date_published = post.Published?.ToString(rfc3339),
                 date_modified = post.Modified?.ToString(rfc3339),
-                content_html = post.SummaryHtml
+                content_html = post.Summary?.Value,
             });
         }
         return JsonSerializer.Serialize(feed, options);

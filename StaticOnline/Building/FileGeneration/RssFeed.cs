@@ -40,7 +40,7 @@ class RssFeed : FeedGeneratorBase
                 new XElement("title", post.Title),
                 new XElement("link", post.URL)
             );
-            item.AddElement("description", post.SummaryHtml);
+            item.AddElement("description", post.Summary?.Value);
             AddElementIf(item, "pubDate", post.Published);
             channel.Add(item);
         }

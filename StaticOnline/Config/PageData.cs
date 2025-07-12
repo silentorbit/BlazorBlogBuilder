@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SilentOrbit.StaticOnline.Components;
 
 namespace SilentOrbit.StaticOnline.Config;
 
@@ -11,7 +12,7 @@ public sealed class PageData
 {
     public Url URL { get; set; } = null!;
     public string Href => URL.Href;
-    
+
     /// <summary>
     /// Generated URL until the post is first run.
     /// </summary>
@@ -51,7 +52,7 @@ public sealed class PageData
 
     public Url? Redirect { get; set; }
 
-    public string? SummaryHtml { get; internal set; }
+    public MarkupString? Summary { get; internal set; }
 
     /// <summary>
     /// Include this page in the feed.
@@ -74,6 +75,13 @@ public sealed class PageData
     /// This page will not be generated if set to true;
     /// </summary>
     public bool IsDraft { get; set; }
+
+    /// <summary>
+    /// Parse post as Markdown.
+    /// Requires the page to be rendered using <see cref="Render"/> for example
+    /// Overrides <see cref="SiteConfig.Markdown"/> <see cref="MarkdownConfig.BlogPost"/>
+    /// </summary>
+    public bool? Markdown { get; set; }
 
     internal bool IsDraftOrNotPublished
     {
@@ -115,7 +123,10 @@ public sealed class PageData
     internal Type? BlazorType { get; set; }
 
     /// <summary>
-    /// Only works on single post pages.
+    /// Will render the specific Blazor/razor type.
+    /// Will not work on pages that rely on page parameters.
+    /// 
+    /// Same implementation found in <see cref="PageRender"/>
     /// </summary>
     public RenderFragment Render()
     {
@@ -123,8 +134,23 @@ public sealed class PageData
     }
     void RenderTreeBuilder(RenderTreeBuilder builder)
     {
-        builder.OpenComponent(1, BlazorType!);
-        builder.CloseComponent();
+        Debug.Assert(BlazorType?.IsAssignableTo(typeof(IComponent)) == true);
+
+        if (Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost)
+        {
+            builder.OpenComponent<Markdown>(0);
+            builder.AddAttribute(2, nameof(Components.Markdown.ChildContent), (RenderFragment)((b2) =>
+            {
+                b2.OpenComponent(3, BlazorType!);
+                b2.CloseComponent();
+            }));
+            builder.CloseComponent();
+        }
+        else
+        {
+            builder.OpenComponent(4, BlazorType!);
+            builder.CloseComponent();
+        }
     }
 
     #endregion

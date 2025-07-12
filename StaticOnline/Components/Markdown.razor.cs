@@ -20,18 +20,24 @@ public partial class Markdown
     [Inject]
     public SiteBuilder Site { get; set; } = null!;
 
-    MarkupString html;
+    MarkupString? html;
 
     protected override async Task OnParametersSetAsync()
     {
         var raw = await Site.Blazor.RenderFragment(ChildContent);
+        Debug.Assert(raw != null);
+        if (raw != null)
+            html = Transform((MarkupString)raw);
+    }
 
-        //Trim whitespace from the markdown generated
-        var markdown = TrimBlazorSpace(raw!);
+    public static MarkupString? Transform(MarkupString? summary)
+    {
+        if (summary == null)
+            return null;
 
-        var sharp = markdownSharp.Transform(markdown);
-
-        html = new MarkupString(sharp);
+        var html = TrimBlazorSpace(summary.Value.Value);
+        var sharp = markdownSharp.Transform(html);
+        return (MarkupString)sharp;
     }
 
     /// <summary>
@@ -48,7 +54,7 @@ public partial class Markdown
             if (string.IsNullOrWhiteSpace(line))
                 continue;
 
-            var re = new Regex("^[ \t]+").Match(line);
+            var re = ReLeadingWhitespace().Match(line);
             Debug.Assert(re.Success);
             var lineIndent = re.Groups[0].Value;
             if (indent == null || indent.Length < lineIndent.Length)
@@ -62,7 +68,6 @@ public partial class Markdown
             }
         }
 
-        Debug.Assert(indent != null);
         indent ??= "";
 
         //Trim all lines
@@ -86,4 +91,7 @@ public partial class Markdown
         markdown = markdown.Trim(['\n', '\r']);
         return markdown;
     }
+
+    [GeneratedRegex("^[ \t]*")]
+    private static partial Regex ReLeadingWhitespace();
 }

@@ -21,6 +21,14 @@ public partial class Update
     [Parameter]
     public bool Render { get; set; }
 
+    /// <summary>
+    /// Parse <see cref="ChildContent"/> as Markdown.
+    /// 
+    /// Overrides <see cref="SiteConfig.Markdown"/>.<see cref="MarkdownConfig.Update"/>
+    /// </summary>
+    [Parameter]
+    public bool? Markdown { get; set; }
+
     string anchorName = null!;
 
     protected override async Task OnParametersSetAsync()
@@ -43,7 +51,10 @@ public partial class Update
         update.IsUpdate = true;
         update.IsDraft = Page.IsDraftOrNotPublished;
         update.Published = Date;
-        update.SummaryHtml = await Site.Blazor.RenderFragment(ChildContent);
+        update.Summary = (MarkupString)(await Site.Blazor.RenderFragment(ChildContent))!;
+        if (Markdown ?? Site.Config.Markdown.Update)
+            update.Summary = Components.Markdown.Transform(update.Summary);
+
         update.InFeed = true;
         update.BlazorType = Page.BlazorType;
         update.Title = Title ?? Site.Config.UpdateTitle(Page);

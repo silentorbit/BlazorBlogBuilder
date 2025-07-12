@@ -1,0 +1,15 @@
+﻿@code {
+    [EditorRequired]
+    [Parameter]
+    public PageData Page { get; set; }
+}
+@if (Page.Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost)
+{
+    <Markdown>
+        <DynamicComponent Type="Page.BlazorType" />
+    </Markdown>
+}
+else
+{
+    <DynamicComponent Type="Page.BlazorType" />
+}

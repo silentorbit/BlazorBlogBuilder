@@ -35,6 +35,11 @@ public abstract class SiteConfig
     public bool ExitAfterBuildComplete { get; set; }
 
     /// <summary>
+    /// Default Markdown config.
+    /// </summary>
+    public MarkdownConfig Markdown { get; set; }
+
+    /// <summary>
     /// Root component type for the Blazor application.
     /// Use <see cref="SiteConfig{App}"/> to specify the Blazor component type.
     /// </summary>

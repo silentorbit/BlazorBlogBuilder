@@ -13,9 +13,22 @@ public class Summary : ComponentBase
     [Inject]
     public PageData Page { get; set; } = null!;
 
+    /// <summary>
+    /// Parse content as Markdown.
+    /// Overridden by <see cref="SiteConfig.Markdown"/>.<see cref="MarkdownConfig.Summary"/>
+    /// </summary>
+    [Parameter]
+    public bool? Markdown { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
         var raw = await Site.Blazor.RenderFragment(ChildContent);
-        Page.SummaryHtml = raw;
+        if (raw == null)
+            return;
+
+        Page.Summary = (MarkupString)raw;
+
+        if (Markdown ?? Site.Config.Markdown.Summary)
+            Page.Summary = Components.Markdown.Transform(Page.Summary);
     }
 }

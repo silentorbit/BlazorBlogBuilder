@@ -49,7 +49,7 @@ class AtomFeed : FileGeneratorBase
                 new XElement(ns + "id", post.URL),
                 GetAuthor(post)
             );
-            entry.AddElement("summary", post.SummaryHtml)
+            entry.AddElement("summary", post.Summary?.Value)
                 ?.SetAttributeValue("type", "html");
             AddElementIf(entry, "published", post.Published);
             AddElementIf(entry, "updated", post.Modified);
