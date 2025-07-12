@@ -31,9 +31,8 @@ class WWWRootBuilder
             var relDiskPath = file - site.Config.WwwRoot;
             var path = relDiskPath.RelativePath.Replace('\\', '/');
             var url = site.Config.BaseURL.Append(path);
-            var hashUrl = site.Hasher.GetHashPath(file, url);
-            site.Target.StoreStatic(hashUrl, file);
-            site.Pages.DoneStatic(hashUrl);
+            site.Target.StoreStatic(url, file);
+            site.Pages.DoneStatic(url);
         }
 
         //Subdirectories

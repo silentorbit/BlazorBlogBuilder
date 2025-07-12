@@ -27,8 +27,7 @@ public class SiteBuilder
     /// May be added more as the generated pages link to more urls.
     /// </summary>
     internal Target Target { get; }
-    internal Hasher Hasher { get; }
-    
+
     readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
@@ -49,8 +48,7 @@ public class SiteBuilder
 
         //internal
         Target = new(this);
-        Hasher = new();
-        
+
         //private
         fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
@@ -100,11 +98,6 @@ public class SiteBuilder
         page.IsBlazor = true;
 
         return page;
-    }
-
-    public void AddPage(Url url)
-    {
-        Pages.AddLink(url);
     }
 
     private HttpClient httpClient = null!;
@@ -197,8 +190,6 @@ public class SiteBuilder
                     html = HtmlCleanup.Clean(html);
                 //Don't cleanup css,js...
 
-                html = Hasher.RewriteHTML(html);
-
                 linkScanner.Scan(html);
 
                 Target.Store(page.URL, html);
@@ -211,13 +202,14 @@ public class SiteBuilder
     async Task<string> RenderPage(PageData page)
     {
         var url = "/" + Config.BaseURL.GetRelativePath(page.URL);
+        Debug.Assert(url != null);
         try
         {
             return await httpClient.GetStringAsync(url, CancellationToken.None);
         }
         catch (HttpRequestException ex)
         {
-            logger.LogCritical(ex, null);
+            logger.LogCritical(ex, page.URL.Href);
             Pages.FailBlazor(page);
             throw;
         }

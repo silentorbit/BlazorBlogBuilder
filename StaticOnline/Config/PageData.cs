@@ -20,7 +20,7 @@ public sealed class PageData
 
     public string? UrlSnippet { get; set; }
 
-    public Url? Image { get; set; }
+    public RelUrl? Image { get; set; }
     public string Title { get; set; } = null!;
     public string SubTitle { get; set; } = null!;
 

@@ -46,7 +46,7 @@ public abstract class SiteConfig
     /// <summary>
     /// Default Markdown config.
     /// </summary>
-    public MarkdownConfig Markdown { get; set; }
+    public MarkdownConfig Markdown { get; set; } = new();
 
     /// <summary>
     /// Root component type for the Blazor application.
@@ -89,6 +89,7 @@ public abstract class SiteConfig
             post.UrlSnippet ??
             post.Title?.ToLowerInvariant().Replace(" ", "_") ??
             post.BlazorType?.Name.ToLowerInvariant();
+        snippet = Uri.EscapeDataString(snippet);
 
         return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
     }

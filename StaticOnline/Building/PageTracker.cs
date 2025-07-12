@@ -27,7 +27,7 @@ public class PageTracker(SiteBuilder site)
         all.Add(url);
     }
 
-    internal void AddLink(Url url)
+    public void AddLink(Url url)
     {
         if (all.Contains(url))
             return;
