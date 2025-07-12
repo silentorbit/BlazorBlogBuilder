@@ -56,6 +56,8 @@ builder.Services.AddStaticOnline(config);
 
 var app = builder.Build();
 
+app.UsePathBase(config.BaseURL.Href.TrimEnd('/') + '/');
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

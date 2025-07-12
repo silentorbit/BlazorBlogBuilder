@@ -1,0 +1,4 @@
+[submodule "StaticOnline"]
+	path = StaticOnline
+	url = git@github.com:silentorbit/StaticOnline.git
+	branch = main
