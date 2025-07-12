@@ -12,23 +12,18 @@
     <author>
       <name>Silent Orbit</name>
     </author>
-    <summary type="html">
-    Any page can have updates that appear in the feed.
-    Though a new page itself will not appear in the feed.
+    <summary type="html">&lt;p&gt;Any page can have updates that appear in the feed.
+Though a new page itself will not appear in the feed.&lt;/p&gt;
 </summary>
     <published>2025-07-04T00:00:00Z</published>
   </entry>
   <entry>
-    <title>Update First Post</title>
-    <link href="https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03" />
-    <id>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03</id>
+    <title>Third post</title>
+    <link href="https://www.silentorbit.com/static-online/post/2025-07-03/third_post" />
+    <id>https://www.silentorbit.com/static-online/post/2025-07-03/third_post</id>
     <author>
       <name>Silent Orbit</name>
     </author>
-    <summary type="html">
-    This is an update to a previous post.
-    It will generate a new item in the feed.
-</summary>
     <published>2025-07-03T00:00:00Z</published>
   </entry>
   <entry>

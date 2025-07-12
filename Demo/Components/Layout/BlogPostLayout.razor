@@ -1,0 +1,10 @@
+﻿@layout MainLayout
+@inherits LayoutComponentBase
+@if (Page.Markdown ?? Site.Markdown.BlogPost)
+{
+    <Markdown>@Body</Markdown>
+}
+else
+{
+    @Body
+}

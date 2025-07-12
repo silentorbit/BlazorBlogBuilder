@@ -7,4 +7,12 @@
 
 <h1>@Page.Title</h1>
 
-@Page.Render()
+@* 
+    Both does the same thing.
+    Which syntax is easier to understand and work with?
+
+    <PageRender Page="Page" />
+    
+    @Page.Render()
+*@
+<PageRender Page="Page" />

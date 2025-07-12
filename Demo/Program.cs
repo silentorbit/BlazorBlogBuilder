@@ -26,6 +26,7 @@ var config = new SiteConfig<App>
     {
         Name = "Silent Orbit",
     },
+    Markdown = new(true),
 };
 config.TopMenu = new() {
     new() { Title = "Blog",     Link = config.BaseURL.Append("/")    },
@@ -43,7 +44,7 @@ else
 {
     //Generation target and options
     config.Target = new DirPath("../generated/");
-    config.ExitAfterBuildComplete = true;
+    //config.ExitAfterBuildComplete = true;
 }
 
 var builder = WebApplication.CreateBuilder(args);

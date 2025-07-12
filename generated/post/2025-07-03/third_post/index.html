@@ -20,7 +20,7 @@
     "./lib/bootstrap/dist/js/bootstrap.js": "./lib/bootstrap/dist/js/bootstrap.notf2xhcfb.js"
   }
 }</script>
-    <title>Second post - Demo</title></head>
+    <title>Third post</title></head>
 <body>
 <div class="page"><div class="sidebar"><div class="top-row ps-3 navbar navbar-dark"><div class="container-fluid"><a class="navbar-brand" href>Demo</a></div></div>
 <input type="checkbox" title="Navigation menu" class="navbar-toggler">
@@ -30,10 +30,8 @@
             </a></div>
         <div class="nav-item px-3"><a href="weather" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
             </a></div></nav></div></div>
-    <main><article class="content px-4"><p>Without inheriting the type BlogPost a razor page need:</p>
-<ul>
-<li>A @page directive - to be found.</li>
-<li><code>InFeed = true</code></li>
-</ul>
-<p>This post was written in markdown using <code>@layout MarkdownLayout</code>.</p>
+    <main><article class="content px-4">
+<h1>Second post</h1>
+<h1>Markdown</h1>
+<p>This post was written in markdown using <code>@layout BlogPostLayout</code> located in this Demo project in combination with <code>Page.Markdown = true</code> or <code>SiteConfig.Markdown.BlogPost = true</code>.</p>
 </article></main></div></body></html>
