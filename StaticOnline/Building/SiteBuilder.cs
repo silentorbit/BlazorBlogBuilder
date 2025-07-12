@@ -90,13 +90,14 @@ public class SiteBuilder
     {
         var nm = provider.GetService<NavigationManager>()!;
         var path = new Uri(nm.Uri).AbsolutePath;
-        var url = Config.BaseURL.Append(path.TrimEnd('/'));
-
-        var page = Config.Builder.Pages.GetOrCreate(url);
+        var url = Config.BaseURL.HostURL.Append(path);
+        var relUrl = new RelUrl(Config.BaseURL, url);
+        var page = Config.Builder.Pages.GetOrCreate(relUrl);
 
         //Only Blazor pages would inject a SitePage
         page.IsBlazor = true;
-
+        Debug.Assert(page.Href.EndsWith(".css") == false);
+        Debug.Assert(page.Href.EndsWith(".js") == false);
         return page;
     }
 
@@ -108,7 +109,7 @@ public class SiteBuilder
 
         httpClient = new HttpClient()
         {
-            BaseAddress = new Uri(app.Urls.First())
+            BaseAddress = new Uri(app.Urls.First() + Config.BaseURL.Href + "/")
         };
 
         Config.Target.EmptyDirectory();
@@ -139,7 +140,7 @@ public class SiteBuilder
         }
 
         //Change base url to work with live version
-        Config.BaseURL.Replace(httpClient.BaseAddress);
+        //Config.BaseURL.Replace(httpClient.BaseAddress);
     }
 
     async Task BuildBlazorPages()
@@ -164,6 +165,8 @@ public class SiteBuilder
             {
                 //BuildFinal
                 html = await RenderPage(page);
+                if (html.Length < 10)
+                    throw new Exception("Empty response: " + page.Href + ", Content: " + html);
             }
 
             if (page.InFeed && !page.IsDraftOrNotPublished && page.URL == page.BlogPostRandomURL)
@@ -187,7 +190,9 @@ public class SiteBuilder
                 //BuildFinal
 
                 if (page.IsBlazor)
-                    html = HtmlCleanup.Clean(html);
+                {
+                    html = HtmlCleanup.Clean(html, Config);
+                }
                 //Don't cleanup css,js...
 
                 linkScanner.Scan(html);
@@ -201,11 +206,9 @@ public class SiteBuilder
 
     async Task<string> RenderPage(PageData page)
     {
-        var url = "/" + Config.BaseURL.GetRelativePath(page.URL);
-        Debug.Assert(url != null);
         try
         {
-            return await httpClient.GetStringAsync(url, CancellationToken.None);
+            return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
         }
         catch (HttpRequestException ex)
         {
