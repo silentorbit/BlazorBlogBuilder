@@ -18,17 +18,17 @@
       "content_html": "<p>Any page can have updates that appear in the feed.\nThough a new page itself will not appear in the feed.</p>\n"
     },
     {
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03T12:00",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03T12:00",
+      "title": "Update First Post",
+      "date_published": "2025-07-03T12:00:00",
+      "content_html": "<p>This is an update to a previous post.\nIt will generate a new item in the feed.</p>\n"
+    },
+    {
       "id": "https://www.silentorbit.com/static-online/post/2025-07-03/third_post",
       "url": "https://www.silentorbit.com/static-online/post/2025-07-03/third_post",
       "title": "Third post",
       "date_published": "2025-07-03T00:00:00"
-    },
-    {
-      "id": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03",
-      "url": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03",
-      "title": "Update First Post",
-      "date_published": "2025-07-03T00:00:00",
-      "content_html": "<p>This is an update to a previous post.\nIt will generate a new item in the feed.</p>\n"
     },
     {
       "id": "https://www.silentorbit.com/static-online/blog/second",
