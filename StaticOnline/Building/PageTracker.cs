@@ -6,7 +6,7 @@ namespace SilentOrbit.StaticOnline.Building;
 
 public class PageTracker(SiteBuilder site)
 {
-    readonly Url baseUrl = site.Config.BaseURL;
+    readonly BaseUrl baseUrl = site.Config.BaseURL;
 
     readonly ConcurrentDictionary<Url, PageData> urlPage = new();
 
@@ -38,7 +38,9 @@ public class PageTracker(SiteBuilder site)
             return; //external URL
         }
 
-        GetOrCreate(url);
+        var rel = new RelUrl(baseUrl, baseUrl.GetRelativePath(url));
+
+        GetOrCreate(rel);
     }
 
     #endregion
@@ -147,7 +149,7 @@ public class PageTracker(SiteBuilder site)
 
     #endregion
 
-    public PageData GetOrCreate(Url url, bool build = true)
+    public PageData GetOrCreate(RelUrl url, bool build = true)
     {
         if (urlPage.TryGetValue(url, out var page))
         {
@@ -164,7 +166,8 @@ public class PageTracker(SiteBuilder site)
             //URL has ?query=123&or#fragment
             //Make sure the version without query or fragment exists
             var simple = url.HostURL.Append(new Uri(url).AbsolutePath);
-            GetOrCreate(simple);
+            var simpleRel = new RelUrl(site.Config.BaseURL, simple);
+            GetOrCreate(simpleRel);
         }
         else
         {

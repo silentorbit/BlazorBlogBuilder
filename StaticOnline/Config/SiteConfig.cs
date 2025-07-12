@@ -22,6 +22,15 @@ public abstract class SiteConfig
     /// </summary>
     public SiteBuilder Builder { get; set; } = null!;
 
+    public BaseUrl BaseURL { get; set; } = null!;
+
+    public Type AppType { get; set; } = null!;
+
+    /// <summary>
+    /// Specify explicitly when <see cref="AppType"/> is not a dll next to the wwwroot folder.
+    /// </summary>
+    public DirPath WwwRoot { get; set; } = null!;
+
     /// <summary>
     /// Path to generated files.
     /// </summary>
@@ -43,12 +52,6 @@ public abstract class SiteConfig
     /// Root component type for the Blazor application.
     /// Use <see cref="SiteConfig{App}"/> to specify the Blazor component type.
     /// </summary>
-    public Type AppType { get; set; } = null!;
-    /// <summary>
-    /// Specify explicitly when <see cref="AppType"/> is not a dll next to the wwwroot folder.
-    /// </summary>
-    public DirPath WwwRoot { get; set; } = null!;
-    public Url BaseURL { get; set; } = null!;
     public Favicon? Favicon { get; set; }
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
@@ -80,7 +83,7 @@ public abstract class SiteConfig
     /// </summary>
     internal protected virtual string UpdateTitle(PageData update) => $"Update {update.Title}";
 
-    internal protected virtual Url PostURL(PageData post)
+    internal protected virtual RelUrl PostURL(PageData post)
     {
         var snippet = 
             post.UrlSnippet ??

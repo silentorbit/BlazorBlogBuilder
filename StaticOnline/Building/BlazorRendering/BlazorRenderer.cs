@@ -1,25 +1,38 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
+using System;
 
 namespace SilentOrbit.StaticOnline.BlazorRendering;
 
 partial class BlazorRenderer
 {
+    [return: NotNullIfNotNull(nameof(fragment))]
+    internal static async Task<MarkupString?> RenderFragment(SiteBuilder site, PageData page, RenderFragment? fragment)
+    {
+        if (fragment == null)
+            return null;
+
+        return await new BlazorRenderer(site, page).RenderFragment(fragment);
+    }
+
     readonly SiteBuilder site;
-
+    readonly PageData page;
     readonly StaticNavigation nav;
-    readonly IServiceProvider serviceProvider;
-    readonly ILoggerFactory loggerFactory;
 
-    public BlazorRenderer(SiteBuilder site)
+    public BlazorRenderer(SiteBuilder site, PageData page)
     {
         this.site = site;
-
+        this.page = page;
         nav = new StaticNavigation(site.Config.BaseURL);
+    }
 
+    HtmlRenderer CreateHtmlRenderer()
+    {
         IServiceCollection services = new ServiceCollection();
         services.AddLogging();
         services.AddSingleton<NavigationManager>(nav);
@@ -28,82 +41,39 @@ partial class BlazorRenderer
         services.AddSingleton<IJSRuntime>(new StaticJsRuntime());
         services.AddSingleton<SiteConfig>(site.Config);
         services.AddSingleton<SiteBuilder>(site);
-        services.AddTransient<PageData>(provider => buildPage ?? throw new NullReferenceException());
+        services.AddSingleton<PageData>(page);
 
-        serviceProvider = services.BuildServiceProvider();
-        loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        var serviceProvider = services.BuildServiceProvider();
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+        return new HtmlRenderer(serviceProvider, loggerFactory);
     }
-
-    PageData? buildPage = null;
-
-#if DEBUG
-    /// <summary>
-    /// Replaced with HttpClient downloading full page
-    /// </summary>
-    [Obsolete]
-    public async Task<string?> Build(PageData page, bool presScan)
-    {
-        buildPage = page;
-
-        var relURL = '/' + page.URL.GetRelativePath(site.Config.BaseURL).TrimStart('/');
-        nav.NavigateToRelative(relURL);
-
-        await using var htmlRenderer = new HtmlRenderer(serviceProvider, loggerFactory);
-        var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
-        {
-            var output = await htmlRenderer.RenderComponentAsync(site.Config.AppType);
-            if (presScan)
-                return null;
-
-            return output.ToHtmlString();
-        });
-
-        if (page.IsDraft)
-            return null;
-
-        if (html == null)
-            return null;
-
-        html = HtmlCleanup.Clean(html);
-
-        return html;
-    }
-#endif
 
     /// <summary>
     /// Running the component once to update its <see cref="PageData"/>
     /// </summary>
-    public async Task RenderComponent(Type componentType, PageData page)
+    public async Task RenderComponent()
     {
-        buildPage = page;
-
-        await using var htmlRenderer = new HtmlRenderer(serviceProvider, loggerFactory);
+        await using var htmlRenderer = CreateHtmlRenderer();
         var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
         {
-            var output = await htmlRenderer.RenderComponentAsync(componentType);
+            var output = await htmlRenderer.RenderComponentAsync(page.BlazorType!);
             return output.ToHtmlString();
         });
-        Debug.WriteLine(html);
     }
 
     /// <summary>
     /// Get HTML content of <paramref name="fragment"/>
     /// </summary>
     [return: NotNullIfNotNull(nameof(fragment))]
-    public async Task<string?> RenderFragment(RenderFragment? fragment)
+    public async Task<MarkupString> RenderFragment(RenderFragment fragment)
     {
-        if (fragment == null)
-            return null;
-
-        await using var htmlRenderer = new HtmlRenderer(serviceProvider, loggerFactory);
+        await using var htmlRenderer = CreateHtmlRenderer();
         var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
         {
             var dic = new Dictionary<string, object?>
             {
-                {
-                    nameof(RenderFragmentComponent.Fragment),
-                    fragment
-                }
+                { nameof(RenderFragmentComponent.Fragment), fragment }
             };
             var parameters = ParameterView.FromDictionary(dic);
 
@@ -111,6 +81,8 @@ partial class BlazorRenderer
 
             return output.ToHtmlString();
         });
-        return html;
+
+        return (MarkupString)html;
     }
+
 }

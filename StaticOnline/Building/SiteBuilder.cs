@@ -28,8 +28,7 @@ public class SiteBuilder
     /// </summary>
     internal Target Target { get; }
     internal Hasher Hasher { get; }
-    internal BlazorRenderer Blazor { get; }
-
+    
     readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
@@ -51,8 +50,7 @@ public class SiteBuilder
         //internal
         Target = new(this);
         Hasher = new();
-        Blazor = new(this);
-
+        
         //private
         fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
@@ -148,7 +146,7 @@ public class SiteBuilder
         }
 
         //Change base url to work with live version
-        Config.BaseURL = httpClient.BaseAddress;
+        Config.BaseURL.Replace(httpClient.BaseAddress);
     }
 
     async Task BuildBlazorPages()
@@ -156,7 +154,7 @@ public class SiteBuilder
         while (Pages.Next(out var page, out var finalBuild))
         {
             var prefix = finalBuild ? "Build" : "PreScan";
-            logger.LogInformation($"{prefix}: {page.URL}");
+            logger.LogInformation($"{prefix}: {page.Href}");
 
             var originalURL = page.URL;
             string html = null!;
@@ -167,7 +165,7 @@ public class SiteBuilder
                 if (page.BlazorType == null)
                     await RenderPage(page);
                 else
-                    await Blazor.RenderComponent(page.BlazorType!, page); //Only render the component
+                    await new BlazorRenderer(this, page).RenderComponent(); //Only render the component
             }
             else
             {
@@ -212,7 +210,7 @@ public class SiteBuilder
 
     async Task<string> RenderPage(PageData page)
     {
-        var url = page.URL.GetRelativePath(Config.BaseURL);
+        var url = "/" + Config.BaseURL.GetRelativePath(page.URL);
         try
         {
             return await httpClient.GetStringAsync(url, CancellationToken.None);

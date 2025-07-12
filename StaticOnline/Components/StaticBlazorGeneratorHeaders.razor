@@ -5,12 +5,12 @@
 @code {
     string GetBaseHref()
     {
-        var path = Site.Config.BaseURL.GetRelativePath(Site.Config.BaseURL.HostURL);
-
-        if (path != "")
-            path += "/";
-
-        return "/" + path;
+        var path = Site.Config.BaseURL.Href;
+        Debug.Assert(path != "");
+        if (path == "/")
+            return "/";
+        Debug.Assert(path.StartsWith('/'));
+        return path + "/";
     }
 }
 <base href="@GetBaseHref()" />

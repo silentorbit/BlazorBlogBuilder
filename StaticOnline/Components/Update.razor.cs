@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SilentOrbit.StaticOnline.BlazorRendering;
 
 namespace SilentOrbit.StaticOnline.Components;
 
@@ -51,9 +52,13 @@ public partial class Update
         update.IsUpdate = true;
         update.IsDraft = Page.IsDraftOrNotPublished;
         update.Published = Date;
-        update.Summary = (MarkupString)(await Site.Blazor.RenderFragment(ChildContent))!;
-        if (Markdown ?? Site.Config.Markdown.Update)
-            update.Summary = Components.Markdown.Transform(update.Summary);
+        if (ChildContent != null)
+        {
+            var blazor = new BlazorRenderer(Site, Page);
+            update.Summary = await blazor.RenderFragment(ChildContent);
+            if (Markdown ?? Site.Config.Markdown.Update)
+                update.Summary = Components.Markdown.Transform(update.Summary);
+        }
 
         update.InFeed = true;
         update.BlazorType = Page.BlazorType;

@@ -6,7 +6,7 @@ class Target(SiteBuilder site)
     
     internal void Store(Url url, string content)
     {
-        var urlPath = url.GetRelativePath(site.Config.BaseURL);
+        var urlPath = site.Config.BaseURL.GetRelativePath(url);
 
         var ext = Path.GetExtension(urlPath);
         FilePath target;
@@ -23,7 +23,7 @@ class Target(SiteBuilder site)
 
     public void StoreStatic(Url url, FilePath file)
     {
-        var urlPath = url.GetRelativePath(site.Config.BaseURL);
+        var urlPath = site.Config.BaseURL.GetRelativePath(url);
         var target = rootDir.CombineFile(urlPath);
         target.Parent.CreateDirectory();
         file.CopyTo(target);

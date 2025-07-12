@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SilentOrbit.StaticOnline.BlazorRendering;
 
 namespace SilentOrbit.StaticOnline.Components;
 
@@ -22,11 +23,11 @@ public class Summary : ComponentBase
 
     protected override async Task OnParametersSetAsync()
     {
-        var raw = await Site.Blazor.RenderFragment(ChildContent);
-        if (raw == null)
+        if (ChildContent == null)
             return;
 
-        Page.Summary = (MarkupString)raw;
+        Page.Summary = await new BlazorRenderer(Site, Page)
+            .RenderFragment(ChildContent);
 
         if (Markdown ?? Site.Config.Markdown.Summary)
             Page.Summary = Components.Markdown.Transform(Page.Summary);

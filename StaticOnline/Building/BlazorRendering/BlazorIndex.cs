@@ -41,7 +41,7 @@ public class BlazorIndex(SiteBuilder site)
     /// <summary>
     /// Get URL from @page "" attribute.
     /// </summary>
-    IEnumerable<Url> GetUrls(Type type)
+    IEnumerable<RelUrl> GetUrls(Type type)
     {
         var attr = type.GetCustomAttributes(true)
             .OfType<RouteAttribute>()
@@ -62,13 +62,16 @@ public class BlazorIndex(SiteBuilder site)
         }
     }
 
-    Url BlogPostUrl(Type type)
+    RelUrl BlogPostUrl(Type type)
     {
         var hash =
             Base64Url.EncodeToString(
                 System.Security.Cryptography.SHA1.HashData(
                     Encoding.UTF8.GetBytes(type.FullName!)));
-        var url = site.Config.BaseURL.Append("post/" + hash);
+
+        //Can be anything as it will be replaced after PreScan.
+        const string urlPrefix = "_static_online_post/";
+        var url = site.Config.BaseURL.Append(urlPrefix + hash);
         return url;
     }
 }

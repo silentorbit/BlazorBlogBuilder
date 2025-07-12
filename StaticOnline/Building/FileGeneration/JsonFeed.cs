@@ -5,7 +5,7 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class JsonFeed : FileGeneratorBase
 {
-    public override Url URL => Config.BaseURL + "feed.json";
+    public override RelUrl URL => Config.BaseURL + "feed.json";
 
     public override void Init()
     {

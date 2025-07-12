@@ -4,7 +4,7 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class RssFeed : FeedGeneratorBase
 {
-    public override Url URL => Config.BaseURL.Append("rss.xml");
+    public override RelUrl URL => Config.BaseURL.Append("rss.xml");
 
     public override void Init()
     {

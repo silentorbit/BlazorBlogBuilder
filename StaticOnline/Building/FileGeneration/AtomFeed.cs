@@ -4,7 +4,7 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class AtomFeed : FileGeneratorBase
 {
-    public override Url URL => Config.BaseURL.Append("atom.xml");
+    public override RelUrl URL => Config.BaseURL.Append("atom.xml");
 
     public override void Init()
     {

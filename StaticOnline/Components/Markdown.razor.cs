@@ -15,19 +15,23 @@ public partial class Markdown
 
     [EditorRequired]
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Inject]
-    public SiteBuilder Site { get; set; } = null!;
+    public SiteBuilder Builder { get; set; } = null!;
+
+    [Inject]
+    public PageData Page { get; set; } = null!;
 
     MarkupString? html;
 
     protected override async Task OnParametersSetAsync()
     {
-        var raw = await Site.Blazor.RenderFragment(ChildContent);
-        Debug.Assert(raw != null);
-        if (raw != null)
-            html = Transform((MarkupString)raw);
+        if (ChildContent == null)
+            return;
+
+        var markup = await new BlazorRendering.BlazorRenderer(Builder, Page).RenderFragment(ChildContent);
+        html = Transform(markup);
     }
 
     public static MarkupString? Transform(MarkupString? summary)

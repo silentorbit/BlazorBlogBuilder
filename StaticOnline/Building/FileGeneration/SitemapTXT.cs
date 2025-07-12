@@ -2,7 +2,7 @@
 
 class SitemapTXT : SitemapBase
 {
-    public override Url URL => Config.BaseURL + "sitemap.txt";
+    public override RelUrl URL => Config.BaseURL + "sitemap.txt";
 
     public override string Generate()
     {

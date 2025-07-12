@@ -2,8 +2,17 @@
     [EditorRequired]
     [Parameter]
     public PageData Page { get; set; }
+
+    [Parameter]
+    public bool? Markdown { get; set; }
 }
-@if (Page.Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost)
+@{
+    //Optimize to not render markdown until final render
+    var useMarkdown =
+        (Page.BuildStage == BuildStage.FinalBuild) &&
+        (Markdown ?? Page.Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost);
+}
+@if (useMarkdown)
 {
     <Markdown>
         <DynamicComponent Type="Page.BlazorType" />

@@ -3,23 +3,11 @@
 /// <summary>
 /// Simplify entry of URLs using string values.
 /// </summary>
-public class Url : IComparable<Url>, IEquatable<Url>
+public class Url : IEquatable<Url>
 {
-    readonly string fullURL;
+    public readonly string fullURL;
+
     public bool HasQueryOrFragment { get; }
-    public string Href
-    {
-        get
-        {
-            var baseUrl = SiteBuilder.Instance.Config.BaseURL;
-            if (fullURL.StartsWith(baseUrl.fullURL))
-                return GetRelativePath(baseUrl);
-            else if (StartsWith(baseUrl.HostURL))
-                return GetRelativePath(baseUrl.HostURL);
-            else
-                return fullURL;
-        }
-    }
 
     public override string ToString() => fullURL;
 
@@ -38,11 +26,8 @@ public class Url : IComparable<Url>, IEquatable<Url>
             uri = new Uri($"{uri.Scheme}://{uri.Host}{port}{uri.AbsolutePath.Replace("//", "/").TrimEnd('/')}{query}{uri.Fragment}", UriKind.Absolute);
         }
 
-        Debug.Assert(uri.AbsolutePath == "/" || uri.AbsolutePath.EndsWith('/') == false);
-
         fullURL = uri.AbsoluteUri;
         HasQueryOrFragment = uri.Query != "" || uri.Fragment != "";
-        Debug.Assert(fullURL.Contains("#") == HasQueryOrFragment);
     }
 
     [return: NotNullIfNotNull(nameof(url))]
@@ -53,12 +38,12 @@ public class Url : IComparable<Url>, IEquatable<Url>
         return new Url(new Uri(url));
     }
 
-    [return: NotNullIfNotNull(nameof(url))]
-    public static implicit operator Url?(Uri? url)
+    [return: NotNullIfNotNull(nameof(uri))]
+    public static implicit operator Url?(Uri? uri)
     {
-        if (url is null)
+        if (uri is null)
             return null;
-        return new Url(url);
+        return new Url(uri);
     }
 
     [return: NotNullIfNotNull(nameof(url))]
@@ -96,23 +81,6 @@ public class Url : IComparable<Url>, IEquatable<Url>
 
     #endregion
 
-    public Url Append(string path)
-    {
-        if (HasQueryOrFragment)
-            throw new Exception("Can't append to an URL with query or fragment: " + fullURL);
-
-        return $"{fullURL.TrimEnd('/')}/{path.Trim('/')}";
-    }
-
-    public Url Append(RelDiskPath relDiskPath)
-    {
-        var path = relDiskPath.RelativePath.Replace('\\', '/');
-        return Append(path);
-    }
-
-    public static Url operator +(Url url, string path)
-        => url.Append(path);
-
     public static string operator +(string text, Url url)
         => text + url.fullURL;
 
@@ -121,17 +89,13 @@ public class Url : IComparable<Url>, IEquatable<Url>
         return fullURL.StartsWith(baseUrl.fullURL);
     }
 
-    /// <summary>
-    /// Return the path relative to the <paramref name="baseUrl"/>
-    /// </summary>
-    public string GetRelativePath(Url baseUrl)
+    public Url Append(string path)
     {
-        if (StartsWith(baseUrl) == false)
-            throw new ArgumentException($"URL {fullURL} must start with {baseUrl}");
+        if (HasQueryOrFragment)
+            throw new Exception("Can't append to an URL with query or fragment: " + fullURL);
 
-        return fullURL.Substring(baseUrl.fullURL.Length).TrimStart('/');
+        return $"{fullURL.TrimEnd('/')}/{path.Trim('/')}";
     }
-
 
     #region Equals
 
@@ -139,7 +103,7 @@ public class Url : IComparable<Url>, IEquatable<Url>
     {
         if (other is null)
             return false;
-        return fullURL.Equals(other);
+        return fullURL.Equals(other.fullURL);
     }
 
     public override bool Equals(object? obj)
@@ -177,27 +141,5 @@ public class Url : IComparable<Url>, IEquatable<Url>
 
     #endregion
 
-    #region Compare
-
-    public class Comparer : IComparer<Url>
-    {
-        public int Compare(Url? x, Url? y)
-        {
-            if (x is null && y is null) return 0;
-            if (x is null) return 1;
-            if (y is null) return -1;
-            return x.fullURL.CompareTo(y.fullURL);
-        }
-    }
-
-    int IComparable<Url>.CompareTo(Url? other)
-    {
-        if (other is null)
-            return -1;
-
-        return fullURL.CompareTo(other.fullURL);
-    }
-
-    #endregion
 
 }

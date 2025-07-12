@@ -22,12 +22,16 @@ public class LinkScanner(SiteBuilder site)
             if (href.Contains("://"))
             {
                 //Full URL
-                url = new Uri(href);
+                url = href;
             }
             else if (href.StartsWith('/'))
             {
                 //Root url
-                url = site.Config.BaseURL.HostURL.Append(href);
+                var baseHref = site.Config.BaseURL.Href;
+                if (href.StartsWith(baseHref))
+                    url = site.Config.BaseURL.Append(href.Substring(baseHref.Length));
+                else
+                    url = site.Config.BaseURL.HostURL.Append(href);
             }
             else
             {

@@ -10,7 +10,7 @@ namespace SilentOrbit.StaticOnline.Config;
 /// </summary>
 public sealed class PageData
 {
-    public Url URL { get; set; } = null!;
+    public RelUrl URL { get; set; } = null!;
     public string Href => URL.Href;
 
     /// <summary>
@@ -134,9 +134,14 @@ public sealed class PageData
     }
     void RenderTreeBuilder(RenderTreeBuilder builder)
     {
-        Debug.Assert(BlazorType?.IsAssignableTo(typeof(IComponent)) == true);
+        if (BlazorType == null)
+            return;
 
-        if (Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost)
+        var useMarkdown =
+            (BuildStage == BuildStage.FinalBuild) &&
+            (Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost);
+
+        if (useMarkdown)
         {
             builder.OpenComponent<Markdown>(0);
             builder.AddAttribute(2, nameof(Components.Markdown.ChildContent), (RenderFragment)((b2) =>
@@ -157,6 +162,7 @@ public sealed class PageData
 
     public override string ToString()
     {
-        return $"{Title} ({Href})";
+        var last = BuildLast ? nameof(BuildLast) : null;
+        return $"{Title} ({BlazorType?.Name}, {BuildStage}, {Href}, {last})";
     }
 }

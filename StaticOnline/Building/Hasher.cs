@@ -14,7 +14,7 @@ public class Hasher()
     /// Key: original URL
     /// Value: Hashed URL
     /// </summary>
-    readonly Dictionary<Url, Url> cache = new();
+    readonly Dictionary<RelUrl, RelUrl> cache = new();
 
     static string Hash(byte[] data)
     {
@@ -23,7 +23,7 @@ public class Hasher()
         return hash;
     }
 
-    internal Url GetHashPath(FilePath f, Url original)
+    internal Url GetHashPath(FilePath f, RelUrl original)
     {
         var name = Path.GetFileNameWithoutExtension(original.Href);
         if (name.EndsWith(hashMarker) == false)
@@ -34,8 +34,7 @@ public class Hasher()
 
         var data = f.ReadAllBytes();
         var hash = "-" + Hash(data);
-        var hashUrl = new Uri(
-            original.ToString().Replace(hashMarker, hash));
+        var hashUrl = new RelUrl(original.BaseUrl, original.Href.Replace(hashMarker, hash));
 
         cache.Add(original, hashUrl);
 
@@ -49,9 +48,6 @@ public class Hasher()
     {
         foreach (var kvp in cache)
         {
-            Debug.Assert(html.Contains(kvp.Key.AbsoluteUrl) == false);
-            //Debug.Assert(html.Contains(kvp.Key.Href) == false);
-
             html = html
                 .Replace(
                     $@"""{kvp.Key.Href}""",

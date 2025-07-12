@@ -4,7 +4,7 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class SitemapXML : SitemapBase
 {
-    public override Url URL => Config.BaseURL + "sitemap.xml";
+    public override RelUrl URL => Config.BaseURL + "sitemap.xml";
 
     static readonly XNamespace ns = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9");
 

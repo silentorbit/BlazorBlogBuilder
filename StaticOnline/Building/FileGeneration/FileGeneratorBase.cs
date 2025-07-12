@@ -9,7 +9,7 @@ abstract class FileGeneratorBase
     
     protected SiteConfig Config => Site.Config;
 
-    public abstract Url URL { get; }
+    public abstract RelUrl URL { get; }
 
     public virtual void Init() { }
 
