@@ -24,6 +24,13 @@
       "date_published": "2025-07-03T00:00:00"
     },
     {
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03",
+      "title": "Update First Post",
+      "date_published": "2025-07-03T00:00:00",
+      "content_html": "<p>This is an update to a previous post.\nIt will generate a new item in the feed.</p>\n"
+    },
+    {
       "id": "https://www.silentorbit.com/static-online/blog/second",
       "url": "https://www.silentorbit.com/static-online/blog/second",
       "title": "Second post",

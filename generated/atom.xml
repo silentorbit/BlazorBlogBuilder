@@ -27,6 +27,18 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
     <published>2025-07-03T00:00:00Z</published>
   </entry>
   <entry>
+    <title>Update First Post</title>
+    <link href="https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03" />
+    <id>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03</id>
+    <author>
+      <name>Silent Orbit</name>
+    </author>
+    <summary type="html">&lt;p&gt;This is an update to a previous post.
+It will generate a new item in the feed.&lt;/p&gt;
+</summary>
+    <published>2025-07-03T00:00:00Z</published>
+  </entry>
+  <entry>
     <title>Second post</title>
     <link href="https://www.silentorbit.com/static-online/blog/second" />
     <id>https://www.silentorbit.com/static-online/blog/second</id>

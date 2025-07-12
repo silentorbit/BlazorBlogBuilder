@@ -1,5 +1,7 @@
 https://www.silentorbit.com/static-online
+https://www.silentorbit.com/static-online/blog/full
 https://www.silentorbit.com/static-online/blog/second
+https://www.silentorbit.com/static-online/blog/summary
 https://www.silentorbit.com/static-online/post/2025-07-01/first_post
 https://www.silentorbit.com/static-online/post/2025-07-03/third_post
 https://www.silentorbit.com/static-online/weather
