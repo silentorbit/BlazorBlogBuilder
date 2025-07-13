@@ -35,18 +35,18 @@ public partial class Update : ChildContentPostBase
         if (page.Modified < timestamp ?? true)
             page.Modified = timestamp;
 
-        var update = Site.Pages.GetOrCreate(url, build: false);
+        var update = siteBuilder.Pages.GetOrCreate(url, build: false);
         update.IsUpdate = true;
         update.IsDraft = page.IsDraftOrNotPublished;
         update.Published = Date;
         update.Modified = Date;
         update.Summary = await GetChildContent();
-        if (Markdown ?? Site.Config.Markdown.Update)
+        if (Markdown ?? siteConfig.Markdown.Update)
             update.Summary = Components.Markdown.Transform(update.Summary);
 
         update.InFeed = true;
         //update.BlazorType = BlogPost.BlazorType;
-        update.Title = Title ?? Site.Config.UpdateTitle(page);
+        update.Title = Title ?? siteConfig.UpdateTitle(page);
     }
 
 }

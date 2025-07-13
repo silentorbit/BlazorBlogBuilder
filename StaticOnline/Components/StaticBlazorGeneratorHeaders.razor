@@ -1,11 +1,16 @@
 ﻿@using SilentOrbit.StaticOnline.Building
 @using SilentOrbit.StaticOnline.Config
-@inject SiteBuilder Site
+@inject SiteBuilder Builder
+@inject SiteConfig Config
 @inject PageData Page
 @code {
+
+    SiteBuilder builder => Builder ?? Config.Builder;
+    SiteConfig config => Config ?? Builder.Config;
+
     string GetBaseHref()
     {
-        var path = Site.Config.BaseURL.Href;
+        var path = config.BaseURL.Href;
         Debug.Assert(path != "");
         if (path == "/")
             return "/";
@@ -14,20 +19,20 @@
     }
 }
 <base href="@GetBaseHref()" />
-@if (Site.Config.Favicon != null)
+@if (config.Favicon != null)
 {
     @nl
-    <link rel="icon" type="@Site.Config.Favicon.MimeType" href="@Site.Config.Favicon.URL" />
+    <link rel="icon" type="@config.Favicon.MimeType" href="@config.Favicon.URL" />
 }
 @{
-    var robotsContent = Page.Robots.GetContent(Site.Config);
+    var robotsContent = Page.Robots.GetContent(config);
 }
 @if (robotsContent != null)
 {
     @nl
     <meta name="robots" content="@robotsContent" />
 }
-@foreach (var feed in Site.Feed)
+@foreach (var feed in builder.Feed)
 {
     @nl
     @FeedLink(feed)

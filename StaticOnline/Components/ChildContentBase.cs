@@ -41,7 +41,13 @@ public abstract class ChildContentBase : ComponentBase
     private PageData PageInjected { get; set; } = null!;
 
     [Inject]
-    internal SiteBuilder Site { get; set; } = null!;
+    private SiteBuilder Builder { get; set; } = null!;
+
+    [Inject]
+    private SiteConfig Config { get; set; } = null!;
+
+    protected SiteConfig siteConfig => Config ?? Builder.Config;
+    protected SiteBuilder siteBuilder => Builder ?? Config.Builder;
 
     protected abstract Task OnChildContentParametersSetAsync(PageData page);
 
@@ -66,7 +72,7 @@ public abstract class ChildContentBase : ComponentBase
 
         var page = Page ?? PageCascading ?? PageInjected;
 
-        var blazor = new BlazorRenderer(Site, page);
+        var blazor = new BlazorRenderer(Builder ?? Config.Builder, page);
         MarkupString? c = await blazor.RenderFragment(ChildContent);
         return c;
     }

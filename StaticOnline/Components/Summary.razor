@@ -4,7 +4,7 @@
     {
         page.Summary = await GetChildContent();
         
-        if (Markdown ?? Site.Config.Markdown.Summary)
+        if (Markdown ?? siteConfig.Markdown.Summary)
             page.Summary = Components.Markdown.Transform(page.Summary);
     }
 }
