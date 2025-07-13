@@ -1,6 +1,10 @@
 # Your GitHub workflow file under .github/workflows/
 
-# HowTo: Generate PAT
+# HowTo: Generate a Personal Access Token (PAT)
+# The access token will give the build access to store the generated
+# file in another repo.
+# This is not needed if the generated files are stored in the same repo.
+#
 # 0. Skip ahead and click the link on step 5
 # 1. Click your profile icon in the top right corner on github.com
 # 2. Click Settings
@@ -21,8 +25,7 @@
 #    (https://github.com/user/repo)
 # 9. Click Settings
 #    (https://github.com/user/repo/settings)
-# 10. Left menu,
-#     Under "Security",
+# 10. In the Left menu, under "Security":
 #     Click to expand "Secrets and variables",
 #     Click "Actions"
 # 11. Under "Repository secrets", click "New repository secret"
@@ -32,7 +35,7 @@
 # 13. Click the tab "Variables"
 #     (https://github.com/user/repo/settings/variables/actions)
 # 14. Click "New repository variable" to create the following two variables
-#     OUTPUT_REPO: (github user/repo to store the generated files)
+#     OUTPUT_REPO: (github user and repo to store the generated files, Example: username/reponame)
 #     OUTPUT_PATH: (subdirector in the repo)
 
 name: Publish
@@ -47,7 +50,8 @@ on: workflow_dispatch
 #      - master
 
 env:
-  #Name of csproj for the site
+  # Subdirectiry where the csproj is located
+  # Use dot, "." if csproj is located in the root.
   CSPROJ_NAME: Demo
 
 permissions:
@@ -60,43 +64,44 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: true
-  
+
 jobs:
   build:
     env:
       OUTPUT: _output
       OUTPUT_PATH: _output/${{ vars.OUTPUT_PATH }}
-      PUBLISH_PATH: _publish
     runs-on: ubuntu-latest
     steps:
 
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0'
-    - name: Checkout SOURCE repo
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
-    - run: dotnet publish -o ${{ env.PUBLISH_PATH }} ${{ env.CSPROJ_NAME }}/${{ env.CSPROJ_NAME }}.csproj
-
-    - name: "Checkout OUTPUT repo ${{ vars.OUTPUT_REPO }}"
+    - name: "Checkout OUTPUT_REPO ${{ vars.OUTPUT_REPO }}"
       uses: actions/checkout@v4
       with:
         repository: ${{ vars.OUTPUT_REPO }}
         token: ${{ secrets.pat }}
         path: '${{ env.OUTPUT }}'
-    - name: "Clear output: ${{ vars.OUTPUT_PATH }}"
+    - name: "Clear OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}"
       run: |
         rm -rf ${{ env.OUTPUT_PATH }}
         mkdir ${{ env.OUTPUT_PATH }}
-    - name: Generate static site
-      run: dotnet ${{ env.PUBLISH_PATH }}/${{ env.CSPROJ_NAME }}.dll build ${{ env.OUTPUT_PATH }}
-    - name: Commit changes
+    - name: Build ${{ env.CSPROJ_NAME }}
+      working-directory: ${{ env.CSPROJ_NAME }}
+      run: dotnet build -c Release
+    # Warning dotnet publish will fail to generate certain static resources.
+    - name: Build static site into ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
+      working-directory: ${{ env.CSPROJ_NAME }}
+      run: dotnet run -c Release build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
+    - name: Git commit ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
+      working-directory: ${{ env.OUTPUT_PATH }}
       run: |
-          cd ${{ env.OUTPUT_PATH }}
           git config user.name "${{ github.repository }}"
           git config user.email static-online@silentorbit.com
           git add -A
-          git commit --allow-empty -m "Generated /${{ vars.OUTPUT_PATH }} from https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+          git commit --allow-empty -m "Generated /${{ vars.OUTPUT_PATH }} from ${{ github.repository }}" -m "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
           git push
           
