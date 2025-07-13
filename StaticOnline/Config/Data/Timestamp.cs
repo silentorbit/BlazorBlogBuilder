@@ -17,9 +17,16 @@ public class Timestamp : IComparable<Timestamp>, IEquatable<Timestamp>
     public override string ToString() => ToString(standardFormat);
     public string ToString(string format, IFormatProvider? provider = null) => Value.ToString(format, provider);
 
-    public string ToRFC3339() 
-        => Value.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ssK", 
+    public string ToRFC3339()
+        => Value.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ssK",
             CultureInfo.InvariantCulture);
+
+    /// <summary>
+    /// Using "T" as separator as it is required by Atom feed dates.
+    /// </summary>
+    public string ToAtomRFC3339()
+            => Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK",
+                CultureInfo.InvariantCulture);
 
     #region Implicit casts
 

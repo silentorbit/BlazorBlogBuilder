@@ -35,8 +35,7 @@ class AtomFeed : FileGeneratorBase
                 new XAttribute("href", URL),
                 new XAttribute("rel", "self"))
             );
-        if (lastModified != null)
-            feed.Add(new XElement(ns + "updated", lastModified?.ToRFC3339()));
+        AddElementIf(feed, "updated", lastModified);
 
         foreach (var post in Site.Pages.Feed)
         {
@@ -61,13 +60,14 @@ class AtomFeed : FileGeneratorBase
         return doc.ToString();
     }
 
-    static void AddElementIf(XElement feed, string v, Timestamp? published)
+    static void AddElementIf(XElement feed, string v, Timestamp? timestamp)
     {
-        if (published == null)
+        if (timestamp == null)
             return;
+
         feed.Add(new XElement(
             feed.Name.Namespace + v,
-            published.ToRFC3339()));
+            timestamp.ToAtomRFC3339()));
     }
 
     XElement GetAuthor(PageData post)
