@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="..\README.md" Link="README.md" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\StaticOnline\StaticOnline\StaticOnline.csproj" />
 	</ItemGroup>
 
