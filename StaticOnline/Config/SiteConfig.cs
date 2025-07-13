@@ -102,6 +102,10 @@ public abstract class SiteConfig
             post.BlazorType?.Name.ToLowerInvariant();
         if (snippet == null)
             throw new Exception($"Failed to generate snippet for post {post.URL}, need one of: UrlSnippet, Title or BlazorType");
+        
+        //Fix what would be an invalid filename on Windows.
+        snippet = snippet.Trim('.');
+        
         snippet = Uri.EscapeDataString(snippet);
 
         return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
