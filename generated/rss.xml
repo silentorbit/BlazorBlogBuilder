@@ -41,6 +41,15 @@
       <pubDate>Fri, 11 Jul 2025 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <guid>https://www.silentorbit.com/static-online#2025-07-08</guid>
+      <title>Update Welcome Home</title>
+      <link>https://www.silentorbit.com/static-online#2025-07-08</link>
+      <description>&lt;p&gt;Any page can have updates that appear in the feed.
+Though a new page itself will not appear in the feed.&lt;/p&gt;
+</description>
+      <pubDate>Tue, 08 Jul 2025 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-05T12:00</guid>
       <title>Update First Post</title>
       <link>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-05T12:00</link>
@@ -87,15 +96,6 @@
       <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.</link>
       <description>&lt;p&gt;This summary is not shown on the post.
 Only in the feeds and the summary page.&lt;/p&gt;
-</description>
-      <pubDate>Fri, 04 Jul 2025 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <guid>https://www.silentorbit.com/static-online#2025-07-04</guid>
-      <title>Update Welcome Home</title>
-      <link>https://www.silentorbit.com/static-online#2025-07-04</link>
-      <description>&lt;p&gt;Any page can have updates that appear in the feed.
-Though a new page itself will not appear in the feed.&lt;/p&gt;
 </description>
       <pubDate>Fri, 04 Jul 2025 00:00:00 GMT</pubDate>
     </item>

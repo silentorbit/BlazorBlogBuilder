@@ -44,7 +44,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
-        //await Task.Delay(500);
+        await Task.Delay(500);
 #if DEBUG
         var random = new Random(1); //Fixed seed during debug to not generate new content every build
 #else
