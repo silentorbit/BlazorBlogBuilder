@@ -69,8 +69,9 @@ public class SiteBuilder
 
         //Try to find wwwroot when running in Visual Studio
         dir = asmPath.Parent;
-        if (dir.Path.EndsWith(@"\bin\Debug\net9.0") ||
-            dir.Path.EndsWith(@"\bin\Release\net9.0"))
+        var testPath = dir.Path.Replace('\\', '/');
+        if (testPath.EndsWith("/bin/Debug/net9.0") ||
+            testPath.EndsWith("/bin/Release/net9.0"))
         {
             dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
             if (dir.Exists())
