@@ -6,6 +6,8 @@ namespace SilentOrbit.StaticOnline.Building;
 
 public class PageTracker(SiteBuilder site)
 {
+    readonly ILogger logger = new CompactConsoleLogger<PageTracker>();
+
     readonly BaseUrl baseUrl = site.Config.BaseURL;
 
     readonly ConcurrentDictionary<Url, PageData> urlPage = new();
@@ -21,9 +23,9 @@ public class PageTracker(SiteBuilder site)
     {
         var url = file.URL;
         Debug.Assert(all.Contains(url) == false);
+
         if (all.Contains(url))
             return;
-
         all.Add(url);
     }
 
@@ -34,12 +36,15 @@ public class PageTracker(SiteBuilder site)
 
         if (url.StartsWith(baseUrl) == false)
         {
-            //Console.WriteLine($"External: {url}");
+            logger.LogInformation($"External: {url}");
+            
+            all.Add(url);
             return; //external URL
         }
 
         var rel = new RelUrl(baseUrl, baseUrl.GetRelativePath(url));
 
+        //all.Add inside:
         GetOrCreate(rel);
     }
 
@@ -47,10 +52,8 @@ public class PageTracker(SiteBuilder site)
 
     #region Run Next
 
-    internal bool Next(out PageData page, out bool finalBuild)
+    internal bool Next(out PageData page)
     {
-        finalBuild = false;
-
         if (queuePreScan.TryDequeue(out page!))
         {
             page.BuildStage = BuildStage.PreScan;
@@ -66,14 +69,12 @@ public class PageTracker(SiteBuilder site)
         if (queueFinalBuild.TryDequeue(out page!))
         {
             page.BuildStage = BuildStage.FinalBuild;
-            finalBuild = true;
             return true;
         }
 
         if (queueBuildLast.TryDequeue(out page!))
         {
             page.BuildStage = BuildStage.FinalBuild;
-            finalBuild = true;
             return true;
         }
 
@@ -83,7 +84,6 @@ public class PageTracker(SiteBuilder site)
     internal void DonePreScan(PageData page)
     {
         Debug.Assert(page.BuildStage == BuildStage.PreScan);
-        page.BuildStage = BuildStage.PreScanDone;
 
         if (page.IsDraftOrNotPublished)
             return;
@@ -114,7 +114,6 @@ public class PageTracker(SiteBuilder site)
     internal void DoneFinalBuild(PageData page)
     {
         Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
-        page.BuildStage = BuildStage.FinalBuildDone;
     }
 
     /// <summary>

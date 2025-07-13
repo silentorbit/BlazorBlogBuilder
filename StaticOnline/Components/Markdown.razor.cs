@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SilentOrbit.StaticOnline.Components;
 
-public partial class Markdown
+public partial class Markdown : ChildContentBase
 {
     static readonly MarkdownSharp.Markdown markdownSharp;
 
@@ -13,33 +13,20 @@ public partial class Markdown
         markdownSharp = new(options);
     }
 
-    [EditorRequired]
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-
-    [Inject]
-    public SiteBuilder Builder { get; set; } = null!;
-
-    [Inject]
-    public PageData Page { get; set; } = null!;
-
     MarkupString? html;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnChildContentParametersSetAsync(PageData page)
     {
-        if (ChildContent == null)
-            return;
-
-        var markup = await new BlazorRendering.BlazorRenderer(Builder, Page).RenderFragment(ChildContent);
-        html = Transform(markup);
+        var c = await GetChildContent();
+        html = Transform(c);
     }
 
-    public static MarkupString? Transform(MarkupString? summary)
+    public static MarkupString? Transform(MarkupString? content)
     {
-        if (summary == null)
+        if (content == null)
             return null;
 
-        var html = TrimBlazorSpace(summary.Value.Value);
+        var html = TrimBlazorSpace(content.Value.Value);
         var sharp = markdownSharp.Transform(html);
         return (MarkupString)sharp;
     }
@@ -61,7 +48,7 @@ public partial class Markdown
             var re = ReLeadingWhitespace().Match(line);
             Debug.Assert(re.Success);
             var lineIndent = re.Groups[0].Value;
-            if (indent == null || indent.Length < lineIndent.Length)
+            if (indent == null || lineIndent.Length < indent.Length)
             {
                 Debug.Assert(
                     indent == null ||
@@ -69,6 +56,8 @@ public partial class Markdown
                     "New indent is using other characters");
 
                 indent = lineIndent;
+                //if (indent == "")
+                //    break; //Optimization, no need to look for shorter indents
             }
         }
 

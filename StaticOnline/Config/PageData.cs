@@ -122,42 +122,6 @@ public sealed class PageData
 
     internal Type? BlazorType { get; set; }
 
-    /// <summary>
-    /// Will render the specific Blazor/razor type.
-    /// Will not work on pages that rely on page parameters.
-    /// 
-    /// Same implementation found in <see cref="PageRender"/>
-    /// </summary>
-    public RenderFragment Render()
-    {
-        return RenderTreeBuilder;
-    }
-    void RenderTreeBuilder(RenderTreeBuilder builder)
-    {
-        if (BlazorType == null)
-            return;
-
-        var useMarkdown =
-            (BuildStage == BuildStage.FinalBuild) &&
-            (Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost);
-
-        if (useMarkdown)
-        {
-            builder.OpenComponent<Markdown>(0);
-            builder.AddAttribute(2, nameof(Components.Markdown.ChildContent), (RenderFragment)((b2) =>
-            {
-                b2.OpenComponent(3, BlazorType!);
-                b2.CloseComponent();
-            }));
-            builder.CloseComponent();
-        }
-        else
-        {
-            builder.OpenComponent(4, BlazorType!);
-            builder.CloseComponent();
-        }
-    }
-
     #endregion
 
     public override string ToString()

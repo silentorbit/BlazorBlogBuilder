@@ -11,15 +11,6 @@ namespace SilentOrbit.StaticOnline.BlazorRendering;
 
 partial class BlazorRenderer
 {
-    [return: NotNullIfNotNull(nameof(fragment))]
-    internal static async Task<MarkupString?> RenderFragment(SiteBuilder site, PageData page, RenderFragment? fragment)
-    {
-        if (fragment == null)
-            return null;
-
-        return await new BlazorRenderer(site, page).RenderFragment(fragment);
-    }
-
     readonly SiteBuilder site;
     readonly PageData page;
     readonly StaticNavigation nav;
@@ -34,7 +25,7 @@ partial class BlazorRenderer
     HtmlRenderer CreateHtmlRenderer()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddLogging();
+        services.AddCompactConsoleLogger();
         services.AddSingleton<NavigationManager>(nav);
         services.AddSingleton<INavigationInterception>(nav);
         services.AddSingleton<IScrollToLocationHash>(nav);

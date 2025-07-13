@@ -1,0 +1,14 @@
+﻿@inherits ChildContentPostBase
+@code {
+    protected override async Task OnChildContentParametersSetAsync(PageData page)
+    {
+        page.Summary = await GetChildContent();
+        
+        if (Markdown ?? siteConfig.Markdown.Summary)
+            page.Summary = Components.Markdown.Transform(page.Summary);
+    }
+}
+@if (Render)
+{
+    @pageData.Summary
+}

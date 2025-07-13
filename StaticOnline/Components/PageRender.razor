@@ -5,20 +5,38 @@
 
     [Parameter]
     public bool? Markdown { get; set; }
+
+    public const string CascadingPageName = "Post";
+
+    /// <summary>
+    /// Detect recursion.
+    /// </summary>
+    [CascadingParameter(Name = CascadingPageName)]
+    public PageData? PageRecursion { get; set; }
 }
 @{
+    //Prevent recusion
+    if (PageRecursion != null)
+        return;
+    if (Page.IsUpdate)
+        throw new NotImplementedException($"{nameof(Page)}.{nameof(Page.IsUpdate)} == true, Updates should not be rendered, use their {nameof(Page.Summary)}");
+    if (Page.BlazorType == null)
+        throw new ArgumentException($"{nameof(Page)}.{nameof(Page.BlazorType)} is null.");
+
     //Optimize to not render markdown until final render
     var useMarkdown =
         (Page.BuildStage == BuildStage.FinalBuild) &&
         (Markdown ?? Page.Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost);
 }
-@if (useMarkdown)
-{
-    <Markdown>
+<CascadingValue Name="@CascadingPageName" Value="Page">
+    @if (useMarkdown)
+    {
+        <Markdown>
+            <DynamicComponent Type="Page.BlazorType" />
+        </Markdown>
+    }
+    else
+    {
         <DynamicComponent Type="Page.BlazorType" />
-    </Markdown>
-}
-else
-{
-    <DynamicComponent Type="Page.BlazorType" />
-}
+    }
+</CascadingValue>
