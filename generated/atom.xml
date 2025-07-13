@@ -4,7 +4,7 @@
   <id>https://www.silentorbit.com/static-online</id>
   <link href="https://www.silentorbit.com/static-online" />
   <link href="https://www.silentorbit.com/static-online/atom.xml" rel="self" />
-  <updated>2025-07-13 12:01:00+02:00</updated>
+  <updated>2025-07-13T12:01:00+02:00</updated>
   <entry>
     <title>Update Markdown in &lt;Summary&gt; and &lt;Update&gt;</title>
     <link href="https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E#2025-07-13T12:01" />
@@ -13,8 +13,8 @@
       <name>Silent Orbit</name>
     </author>
     <summary type="html">&lt;p&gt;# The default can be overridden by &lt;code&gt;Markdown="false"&lt;/code&gt; or &lt;code&gt;Markdown="true"&lt;/code&gt;.&lt;/p&gt;</summary>
-    <published>2025-07-13 12:01:00+02:00</published>
-    <updated>2025-07-13 12:01:00+02:00</updated>
+    <published>2025-07-13T12:01:00+02:00</published>
+    <updated>2025-07-13T12:01:00+02:00</updated>
   </entry>
   <entry>
     <title>Update Markdown in &lt;Summary&gt; and &lt;Update&gt;</title>
@@ -25,8 +25,8 @@
     </author>
     <summary type="html">&lt;p&gt;Updates are parsed as Markdown by default if &lt;code&gt;SiteConfig.Markdown.Update = true&lt;/code&gt;&lt;/p&gt;
 </summary>
-    <published>2025-07-13 12:00:00+02:00</published>
-    <updated>2025-07-13 12:00:00+02:00</updated>
+    <published>2025-07-13T12:00:00+02:00</published>
+    <updated>2025-07-13T12:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Markdown in &lt;Summary&gt; and &lt;Update&gt;</title>
@@ -36,8 +36,8 @@
       <name>Silent Orbit</name>
     </author>
     <summary type="html">&lt;p&gt;# The default can be overridden by &lt;code&gt;Markdown="false"&lt;/code&gt; or &lt;code&gt;Markdown="true"&lt;/code&gt;.&lt;/p&gt;</summary>
-    <published>2025-07-13 00:00:00+02:00</published>
-    <updated>2025-07-13 12:01:00+02:00</updated>
+    <published>2025-07-13T00:00:00+02:00</published>
+    <updated>2025-07-13T12:01:00+02:00</updated>
   </entry>
   <entry>
     <title>&lt;Markdown&gt;</title>
@@ -46,7 +46,7 @@
     <author>
       <name>Silent Orbit</name>
     </author>
-    <published>2025-07-12 00:00:00+02:00</published>
+    <published>2025-07-12T00:00:00+02:00</published>
   </entry>
   <entry>
     <title>Markdown by default</title>
@@ -57,7 +57,7 @@
     </author>
     <summary type="html">&lt;p&gt;This post was written in markdown by default thanks to &lt;code&gt;SiteConfig.Markdown.BlogPost = true&lt;/code&gt;.&lt;/p&gt;
 </summary>
-    <published>2025-07-11 00:00:00+02:00</published>
+    <published>2025-07-11T00:00:00+02:00</published>
   </entry>
   <entry>
     <title>Update Welcome Home</title>
@@ -69,8 +69,8 @@
     <summary type="html">&lt;p&gt;Any page can have updates that appear in the feed.
 Though a new page itself will not appear in the feed.&lt;/p&gt;
 </summary>
-    <published>2025-07-08 00:00:00+02:00</published>
-    <updated>2025-07-08 00:00:00+02:00</updated>
+    <published>2025-07-08T00:00:00+02:00</published>
+    <updated>2025-07-08T00:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Update First Post</title>
@@ -83,8 +83,8 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
 
 &lt;p&gt;This one has the attribute &lt;code&gt;Render&lt;/code&gt; which will make it appear in the post itself.&lt;/p&gt;
 </summary>
-    <published>2025-07-05 12:00:00+02:00</published>
-    <updated>2025-07-05 12:00:00+02:00</updated>
+    <published>2025-07-05T12:00:00+02:00</published>
+    <updated>2025-07-05T12:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Render Summary in the post</title>
@@ -96,7 +96,7 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
     <summary type="html">&lt;p&gt;This summary, shown in feeds and summaries, 
 &lt;strong&gt;is also shown&lt;/strong&gt; in the post when using &lt;code&gt;&amp;amp;lt;Summary Render&amp;amp;gt;&lt;/code&gt;.&lt;/p&gt;
 </summary>
-    <published>2025-07-05 00:00:00+02:00</published>
+    <published>2025-07-05T00:00:00+02:00</published>
   </entry>
   <entry>
     <title>Update Summary and updates.</title>
@@ -111,8 +111,8 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
 
 &lt;p&gt;It also appears &lt;strong&gt;in the post&lt;/strong&gt; when using &lt;code&gt;&amp;amp;lt;Update Render&amp;amp;gt;&lt;/code&gt;.&lt;/p&gt;
 </summary>
-    <published>2025-07-04 11:00:00+02:00</published>
-    <updated>2025-07-04 11:00:00+02:00</updated>
+    <published>2025-07-04T11:00:00+02:00</published>
+    <updated>2025-07-04T11:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Update Summary and updates.</title>
@@ -125,8 +125,8 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
 
 &lt;p&gt;It appears in the feed but not in the post itself.&lt;/p&gt;
 </summary>
-    <published>2025-07-04 10:00:00+02:00</published>
-    <updated>2025-07-04 10:00:00+02:00</updated>
+    <published>2025-07-04T10:00:00+02:00</published>
+    <updated>2025-07-04T10:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Summary and updates.</title>
@@ -138,8 +138,8 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
     <summary type="html">&lt;p&gt;This summary is not shown on the post.
 Only in the feeds and the summary page.&lt;/p&gt;
 </summary>
-    <published>2025-07-04 00:00:00+02:00</published>
-    <updated>2025-07-04 11:00:00+02:00</updated>
+    <published>2025-07-04T00:00:00+02:00</published>
+    <updated>2025-07-04T11:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Update First Post</title>
@@ -151,8 +151,8 @@ Only in the feeds and the summary page.&lt;/p&gt;
     <summary type="html">&lt;p&gt;This is an update to the post.
 It will generate a new item in the feed.&lt;/p&gt;
 </summary>
-    <published>2025-07-03 12:00:00+02:00</published>
-    <updated>2025-07-03 12:00:00+02:00</updated>
+    <published>2025-07-03T12:00:00+02:00</published>
+    <updated>2025-07-03T12:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Second post</title>
@@ -163,7 +163,7 @@ It will generate a new item in the feed.&lt;/p&gt;
     </author>
     <summary type="html">&lt;p&gt;Without inheriting the type BlogPost the following is needed to make it appear as a blog post:&lt;/p&gt;
 </summary>
-    <published>2025-07-02 00:00:00+02:00</published>
+    <published>2025-07-02T00:00:00+02:00</published>
   </entry>
   <entry>
     <title>First Post</title>
@@ -174,7 +174,7 @@ It will generate a new item in the feed.&lt;/p&gt;
     </author>
     <summary type="html">&lt;p&gt;By using &lt;code&gt;@inherits BlogPost&lt;/code&gt; the page will be included in the list of &lt;strong&gt;posts and the feeds&lt;/strong&gt;.&lt;/p&gt;
 </summary>
-    <published>2025-07-01 00:00:00+02:00</published>
-    <updated>2025-07-05 12:00:00+02:00</updated>
+    <published>2025-07-01T00:00:00+02:00</published>
+    <updated>2025-07-05T12:00:00+02:00</updated>
   </entry>
 </feed>
