@@ -7,6 +7,7 @@ using SilentOrbit.StaticOnline.Config;
 var config = new SiteConfig<App>
 {
     Language = new() { Code = "en" },
+    TimeZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time"),
     Title = "Demo",
     Description = "This is a Demo",
     //Build static files to be served in the subdirectory

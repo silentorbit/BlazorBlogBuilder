@@ -9,7 +9,7 @@
       <title>Update Markdown in &lt;Summary&gt; and &lt;Update&gt;</title>
       <link>https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E#2025-07-13T12:01</link>
       <description>&lt;p&gt;# The default can be overridden by &lt;code&gt;Markdown="false"&lt;/code&gt; or &lt;code&gt;Markdown="true"&lt;/code&gt;.&lt;/p&gt;</description>
-      <pubDate>Sun, 13 Jul 2025 12:01:00 GMT</pubDate>
+      <pubDate>Sun, 13 Jul 2025 10:01:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E#2025-07-13T12:00</guid>
@@ -17,20 +17,20 @@
       <link>https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E#2025-07-13T12:00</link>
       <description>&lt;p&gt;Updates are parsed as Markdown by default if &lt;code&gt;SiteConfig.Markdown.Update = true&lt;/code&gt;&lt;/p&gt;
 </description>
-      <pubDate>Sun, 13 Jul 2025 12:00:00 GMT</pubDate>
+      <pubDate>Sun, 13 Jul 2025 10:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E</guid>
       <title>Markdown in &lt;Summary&gt; and &lt;Update&gt;</title>
       <link>https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E</link>
       <description>&lt;p&gt;# The default can be overridden by &lt;code&gt;Markdown="false"&lt;/code&gt; or &lt;code&gt;Markdown="true"&lt;/code&gt;.&lt;/p&gt;</description>
-      <pubDate>Sun, 13 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Sat, 12 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-12/%3Cmarkdown%3E</guid>
       <title>&lt;Markdown&gt;</title>
       <link>https://www.silentorbit.com/static-online/post/2025-07-12/%3Cmarkdown%3E</link>
-      <pubDate>Sat, 12 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Fri, 11 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-11/markdown_by_default</guid>
@@ -38,7 +38,7 @@
       <link>https://www.silentorbit.com/static-online/post/2025-07-11/markdown_by_default</link>
       <description>&lt;p&gt;This post was written in markdown by default thanks to &lt;code&gt;SiteConfig.Markdown.BlogPost = true&lt;/code&gt;.&lt;/p&gt;
 </description>
-      <pubDate>Fri, 11 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 10 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online#2025-07-08</guid>
@@ -47,7 +47,7 @@
       <description>&lt;p&gt;Any page can have updates that appear in the feed.
 Though a new page itself will not appear in the feed.&lt;/p&gt;
 </description>
-      <pubDate>Tue, 08 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Mon, 07 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-05T12:00</guid>
@@ -57,7 +57,7 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
 
 &lt;p&gt;This one has the attribute &lt;code&gt;Render&lt;/code&gt; which will make it appear in the post itself.&lt;/p&gt;
 </description>
-      <pubDate>Sat, 05 Jul 2025 12:00:00 GMT</pubDate>
+      <pubDate>Sat, 05 Jul 2025 10:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-05/render_summary_in_the_post</guid>
@@ -66,7 +66,7 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
       <description>&lt;p&gt;This summary, shown in feeds and summaries, 
 &lt;strong&gt;is also shown&lt;/strong&gt; in the post when using &lt;code&gt;&amp;amp;lt;Summary Render&amp;amp;gt;&lt;/code&gt;.&lt;/p&gt;
 </description>
-      <pubDate>Sat, 05 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Fri, 04 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T11:00</guid>
@@ -78,7 +78,7 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
 
 &lt;p&gt;It also appears &lt;strong&gt;in the post&lt;/strong&gt; when using &lt;code&gt;&amp;amp;lt;Update Render&amp;amp;gt;&lt;/code&gt;.&lt;/p&gt;
 </description>
-      <pubDate>Fri, 04 Jul 2025 11:00:00 GMT</pubDate>
+      <pubDate>Fri, 04 Jul 2025 09:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T10:00</guid>
@@ -88,7 +88,7 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
 
 &lt;p&gt;It appears in the feed but not in the post itself.&lt;/p&gt;
 </description>
-      <pubDate>Fri, 04 Jul 2025 10:00:00 GMT</pubDate>
+      <pubDate>Fri, 04 Jul 2025 08:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.</guid>
@@ -97,7 +97,7 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
       <description>&lt;p&gt;This summary is not shown on the post.
 Only in the feeds and the summary page.&lt;/p&gt;
 </description>
-      <pubDate>Fri, 04 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 03 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-01/first_post#2025-07-03T12:00</guid>
@@ -106,7 +106,7 @@ Only in the feeds and the summary page.&lt;/p&gt;
       <description>&lt;p&gt;This is an update to the post.
 It will generate a new item in the feed.&lt;/p&gt;
 </description>
-      <pubDate>Thu, 03 Jul 2025 12:00:00 GMT</pubDate>
+      <pubDate>Thu, 03 Jul 2025 10:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/blog/second</guid>
@@ -114,7 +114,7 @@ It will generate a new item in the feed.&lt;/p&gt;
       <link>https://www.silentorbit.com/static-online/blog/second</link>
       <description>&lt;p&gt;Without inheriting the type BlogPost the following is needed to make it appear as a blog post:&lt;/p&gt;
 </description>
-      <pubDate>Wed, 02 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Tue, 01 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/post/2025-07-01/first_post</guid>
@@ -122,7 +122,7 @@ It will generate a new item in the feed.&lt;/p&gt;
       <link>https://www.silentorbit.com/static-online/post/2025-07-01/first_post</link>
       <description>&lt;p&gt;By using &lt;code&gt;@inherits BlogPost&lt;/code&gt; the page will be included in the list of &lt;strong&gt;posts and the feeds&lt;/strong&gt;.&lt;/p&gt;
 </description>
-      <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+      <pubDate>Mon, 30 Jun 2025 22:00:00 GMT</pubDate>
     </item>
   </channel>
 </rss>
