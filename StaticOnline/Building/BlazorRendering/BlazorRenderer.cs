@@ -34,7 +34,7 @@ partial class BlazorRenderer
     HtmlRenderer CreateHtmlRenderer()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddLogging();
+        services.AddCompactConsoleLogger();
         services.AddSingleton<NavigationManager>(nav);
         services.AddSingleton<INavigationInterception>(nav);
         services.AddSingleton<IScrollToLocationHash>(nav);

@@ -7,8 +7,6 @@ namespace SilentOrbit.StaticOnline.Building;
 
 public class SiteBuilder
 {
-    ILogger logger;
-
     internal static SiteBuilder Instance { get; private set; } = null!;
 
     /// <summary>
@@ -28,6 +26,7 @@ public class SiteBuilder
     /// </summary>
     internal Target Target { get; }
 
+    static readonly ILogger logger = new CompactConsoleLogger<SiteBuilder>();
     readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
@@ -63,7 +62,7 @@ public class SiteBuilder
         var dir = asmPath.Parent.CombineDir("wwwroot");
         if (dir.Exists())
         {
-            Console.WriteLine($"Found {dir} next to {asmPath}");
+            logger.LogInformation($"Found {dir} next to {asmPath}");
             return dir;
         }
 
@@ -76,14 +75,14 @@ public class SiteBuilder
             dir = dir.Parent.Parent.Parent.CombineDir("wwwroot");
             if (dir.Exists())
             {
-                Console.WriteLine($"Found {dir}\n   in project root above {asmPath}");
+                logger.LogInformation($"Found {dir}\n   in project root above {asmPath}");
                 return dir;
             }
         }
 
-        Debug.Fail($"Failed to find wwwroot near\n   {asmPath}");
-        Console.Error.WriteLine($"Failed to find wwwroot near:\n   {asmPath}");
-        Console.Error.WriteLine($"You must configure {nameof(SiteConfig.WwwRoot)} in code.");
+        logger.LogCritical(@$"Failed to find wwwroot near:
+{asmPath}
+You must configure {nameof(SiteConfig.WwwRoot)} in code.");
         throw new ArgumentException("Missing wwwroot path in config.");
     }
 
@@ -106,8 +105,6 @@ public class SiteBuilder
 
     public async Task Build(WebApplication app)
     {
-        logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger<SiteBuilder>();
-
         httpClient = new HttpClient()
         {
             BaseAddress = new Uri(app.Urls.First() + Config.BaseURL.Href + "/")
@@ -146,16 +143,16 @@ public class SiteBuilder
 
     async Task BuildBlazorPages()
     {
-        while (Pages.Next(out var page, out var finalBuild))
+        while (Pages.Next(out var page))
         {
-            var prefix = finalBuild ? "Build" : "PreScan";
-            logger.LogInformation($"{prefix}: {page.Href}");
+            using var scope = logger.BeginScope(page.BuildStage);
+
+            logger.LogDebug($"/{page.Href} (starting...)");
 
             var originalURL = page.URL;
             string html = null!;
 
-            //PreScan
-            if (finalBuild == false)
+            if (page.BuildStage == BuildStage.PreScan)
             {
                 if (page.BlazorType == null)
                     await RenderPage(page);
@@ -164,30 +161,35 @@ public class SiteBuilder
             }
             else
             {
+                Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
                 //BuildFinal
                 html = await RenderPage(page);
-                if (html.Length < 10)
-                    throw new Exception("Empty response: " + page.Href + ", Content: " + html);
             }
 
             if (page.InFeed && !page.IsDraftOrNotPublished && page.URL == page.BlogPostRandomURL)
                 page.URL = Config.PostURL(page);
 
             if (page.URL != originalURL)
+            {
+                logger.LogDebug($"New Path: /{page.Href}");
                 Pages.UpdatePageUrl(oldURL: originalURL, page);
+            }
 
             if (page.IsDraftOrNotPublished)
             {
+                logger.LogInformation($"Draft: /{page.Href}");
                 Pages.RemoveDraft(page);
                 continue;
             }
 
-            if (finalBuild == false)
+            if (page.BuildStage == BuildStage.PreScan)
             {
                 Pages.DonePreScan(page);
             }
             else
             {
+                Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
+
                 //BuildFinal
 
                 if (page.IsBlazor)
@@ -196,9 +198,11 @@ public class SiteBuilder
                 }
                 //Don't cleanup css,js...
 
-                linkScanner.Scan(html);
-
                 Target.Store(page.URL, html);
+
+                logger.LogInformation($"/{page.Href} ({html.Length:#,#} bytes)");
+
+                linkScanner.Scan(html);
 
                 Pages.DoneFinalBuild(page);
             }
