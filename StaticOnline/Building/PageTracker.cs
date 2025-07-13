@@ -84,7 +84,6 @@ public class PageTracker(SiteBuilder site)
     internal void DonePreScan(PageData page)
     {
         Debug.Assert(page.BuildStage == BuildStage.PreScan);
-        page.BuildStage = BuildStage.PreScanDone;
 
         if (page.IsDraftOrNotPublished)
             return;
@@ -115,7 +114,6 @@ public class PageTracker(SiteBuilder site)
     internal void DoneFinalBuild(PageData page)
     {
         Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
-        page.BuildStage = BuildStage.FinalBuildDone;
     }
 
     /// <summary>
