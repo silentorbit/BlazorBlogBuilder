@@ -1,0 +1,29 @@
+﻿@inherits BlogPost
+@{
+    Page.Title = "First Post";
+
+    //For BlogPost, a Published date is required
+    //Use the short form with a string or the full DateTime constructor.
+    Page.Published = "2025-07-01";
+    Page.Published = new DateTime(2025, 7, 1);
+
+    //Tags: Comma separated
+    Page.Tags = "first";
+}
+
+## Making a Blog post
+
+<Summary Render>
+    By using `@@inherits @(nameof(BlogPost))` the page will be included in the list of **posts and the feeds**.
+</Summary>
+
+<MyUpdate Date="2025-07-03 12:00">
+    This is an update to the post.
+    It will generate a new item in the feed.
+</MyUpdate>
+
+<MyUpdate Date="2025-07-05 12:00" Render>
+    This is another update.
+
+    This one has the attribute `Render` which will make it appear in the post itself.
+</MyUpdate>

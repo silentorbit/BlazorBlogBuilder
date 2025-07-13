@@ -29,11 +29,17 @@
         <div class="nav-item px-3" b-d1nlt8xx3s><a href="" class="nav-link"><span class="bi bi-house-door-fill-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Home
             </a></div>
         <div class="nav-item px-3" b-d1nlt8xx3s><a href="weather" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Weather
+            </a></div>
+        
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="updates" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Updates
+            </a></div>
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="blog/summary" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Blog (summary)
+            </a></div>
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="blog/full" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Blog (full)
             </a></div></nav></div></div>
-    <main b-h3yn8j0mrc><article class="content px-4" b-h3yn8j0mrc><p>Without inheriting the type BlogPost a razor page need:</p>
+    <main b-h3yn8j0mrc><article class="content px-4" b-h3yn8j0mrc><p>Without inheriting the type BlogPost the following is needed to make it appear as a blog post:</p>
 <ul>
-<li>A @page directive - to be found.</li>
-<li><code>InFeed = true</code></li>
+<li><code>@page "/path"</code></li>
+<li><code>Page.InFeed = true</code></li>
 </ul>
-<p>This post was written in markdown using <code>@layout MarkdownLayout</code>.</p>
-</article></main></div></body></html>
+ **Also notice** that any Markdown needs to be wrapped in &lt;Markdown&gt;&lt;/Markdown&gt;</article></main></div></body></html>

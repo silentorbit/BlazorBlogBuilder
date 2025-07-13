@@ -1,0 +1,19 @@
+﻿@page "/blog/second"
+@{
+    Page.Title = "Second post";
+    Page.InFeed = true; //Requires a @page directive to be discovered
+    Page.Published = "2025-07-02";
+}
+
+<Summary Render>
+    Without inheriting the type @(nameof(BlogPost)) the following is needed to make it appear as a blog post:
+</Summary>
+
+<Markdown>
+
+    - `@@page "/path"`
+    - `Page.InFeed = true`
+
+</Markdown>
+
+ **Also notice** that any Markdown needs to be wrapped in @("<Markdown></Markdown>")

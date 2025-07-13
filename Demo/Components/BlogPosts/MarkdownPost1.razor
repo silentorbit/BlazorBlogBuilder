@@ -1,0 +1,13 @@
+﻿@inherits BlogPost
+@{
+    Page.Title = "Markdown by default";
+    Page.Published = "2025-07-11";
+    Page.Tags = "markdown";
+}
+
+## Making a Blog post
+
+<Summary Render>
+    This post was written in markdown by default thanks to `@(nameof(SiteConfig)).@(nameof(SiteConfig.Markdown)).@(nameof(SiteConfig.Markdown.BlogPost)) = true`.
+</Summary>
+

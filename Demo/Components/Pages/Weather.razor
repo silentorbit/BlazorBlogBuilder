@@ -1,11 +1,13 @@
 ﻿@page "/weather"
-@attribute [StreamRendering]
+@* @attribute [StreamRendering] *@
 
 <PageTitle>Weather</PageTitle>
 
 <h1>Weather</h1>
 
 <p>This component demonstrates showing data.</p>
+
+<p>Last updated @DateTime.Today.ToString("yyyy-MM-dd")</p>
 
 @if (forecasts == null)
 {
@@ -42,7 +44,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
+        //await Task.Delay(500);
 #if DEBUG
         var random = new Random(1); //Fixed seed during debug to not generate new content every build
 #else

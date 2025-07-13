@@ -29,10 +29,23 @@
         <div class="nav-item px-3" b-d1nlt8xx3s><a href="" class="nav-link"><span class="bi bi-house-door-fill-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Home
             </a></div>
         <div class="nav-item px-3" b-d1nlt8xx3s><a href="weather" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Weather
+            </a></div>
+        
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="updates" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Updates
+            </a></div>
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="blog/summary" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Blog (summary)
+            </a></div>
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="blog/full" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Blog (full)
             </a></div></nav></div></div>
     <main b-h3yn8j0mrc><article class="content px-4" b-h3yn8j0mrc>
 <h1>First Post</h1>
+<div>2025-07-01</div>
 <h2>Making a Blog post</h2>
-<p>By inheriting the type BlogPost the razor page will be included in the list of <strong>posts and the feeds</strong>.</p>
-<p>This post was written in markdown by wrapping it in <code>&amp;lt;Markdown&amp;gt;&amp;lt;/Markdown&amp;gt;</code></p>
+<p>By using <code>@inherits BlogPost</code> the page will be included in the list of <strong>posts and the feeds</strong>.</p>
+<p><a name="2025-07-05T12:00" class="update-anchor"></a>
+    <div style="border:1px solid orange; padding: 1em; margin: 1em auto;">
+    This is another update.</p>
+<pre><code>This one has the attribute `Render` which will make it appear in the post itself.
+</code></pre>
+<p></div></p>
 </article></main></div></body></html>

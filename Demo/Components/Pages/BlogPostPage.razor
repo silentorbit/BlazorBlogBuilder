@@ -6,13 +6,12 @@
 <PageTitle>@Page.Title</PageTitle>
 
 <h1>@Page.Title</h1>
+<div>
+    @Page.Published?.ToString("yyyy-MM-dd")
+    @if (Page.Modified != null)
+    {
+        <text>, Modified: @Page.Modified.ToString("yyyy-MM-dd")</text>
+    }
+</div>
 
-@* 
-    Both does the same thing.
-    Which syntax is easier to understand and work with?
-
-    <PageRender Page="Page" />
-    
-    @Page.Render()
-*@
 <PageRender Page="Page" />

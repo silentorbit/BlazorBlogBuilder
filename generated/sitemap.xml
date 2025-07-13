@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.silentorbit.com/static-online</loc>
+    <lastmod>2025-07-04</lastmod>
   </url>
   <url>
     <loc>https://www.silentorbit.com/static-online/blog/full</loc>
@@ -14,9 +15,27 @@
   </url>
   <url>
     <loc>https://www.silentorbit.com/static-online/post/2025-07-01/first_post</loc>
+    <lastmod>2025-07-05</lastmod>
   </url>
   <url>
-    <loc>https://www.silentorbit.com/static-online/post/2025-07-03/third_post</loc>
+    <loc>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.</loc>
+    <lastmod>2025-07-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/post/2025-07-05/render_summary_in_the_post</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/post/2025-07-11/markdown_by_default</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/post/2025-07-12/%3Cmarkdown%3E</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E</loc>
+    <lastmod>2025-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/updates</loc>
   </url>
   <url>
     <loc>https://www.silentorbit.com/static-online/weather</loc>

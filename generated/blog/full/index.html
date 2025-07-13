@@ -29,8 +29,70 @@
         <div class="nav-item px-3" b-d1nlt8xx3s><a href="" class="nav-link"><span class="bi bi-house-door-fill-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Home
             </a></div>
         <div class="nav-item px-3" b-d1nlt8xx3s><a href="weather" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Weather
+            </a></div>
+        
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="updates" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Updates
+            </a></div>
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="blog/summary" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Blog (summary)
+            </a></div>
+        <div class="nav-item px-3" b-d1nlt8xx3s><a href="blog/full" class="nav-link active" aria-current="page"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-d1nlt8xx3s></span> Blog (full)
             </a></div></nav></div></div>
-    <main b-h3yn8j0mrc><article class="content px-4" b-h3yn8j0mrc><h1>Latest Blog Posts, Summary</h1><h2>Third post</h2><p><a href="post/2025-07-03/third_post">Open in a new page</a></p>
-    <hr><h2>Second post</h2><p><a href="blog/second">Open in a new page</a></p>
-    <hr><h2>First Post</h2><p><a href="post/2025-07-01/first_post">Open in a new page</a></p>
-    <hr></article></main></div></body></html>
+    <main b-h3yn8j0mrc><article class="content px-4" b-h3yn8j0mrc><h1>Latest Blog Posts, Full post content</h1><hr>
+    <h2>First Post</h2>
+    <h2>Making a Blog post</h2>
+<p>By using <code>@inherits BlogPost</code> the page will be included in the list of <strong>posts and the feeds</strong>.</p>
+<p><a name="2025-07-05T12:00" class="update-anchor"></a>
+    <div style="border:1px solid orange; padding: 1em; margin: 1em auto;">
+    This is another update.</p>
+<pre><code>This one has the attribute `Render` which will make it appear in the post itself.
+</code></pre>
+<p></div></p>
+    <p><a href="post/2025-07-01/first_post">Open in a new page</a></p><hr>
+    <h2>Second post</h2>
+    <p>Without inheriting the type BlogPost the following is needed to make it appear as a blog post:</p>
+<ul>
+<li><code>@page "/path"</code></li>
+<li><code>Page.InFeed = true</code></li>
+</ul>
+<p><strong>Also notice</strong> that any Markdown needs to be wrapped in &lt;Markdown&gt;&lt;/Markdown&gt;</p>
+    <p><a href="blog/second">Open in a new page</a></p><hr>
+    <h2>Summary and updates.</h2>
+    <p>This post has a summary that is not shown in the page.</p>
+<h2>These are the updates to the page</h2>
+<p>All updates will also modify the <code>Page.Modified</code>.</p>
+<h3>First one is invisible.</h3>
+<h3>Second one is shown here:</h3>
+<p><a name="2025-07-04T11:00" class="update-anchor"></a>
+    <div style="border:1px solid orange; padding: 1em; margin: 1em auto;">
+    This is the second update.</p>
+<pre><code>It appears in the feed.
+It also appears **in the post** when using `&amp;lt;Update Render&amp;gt;`.
+</code></pre>
+<p></div></p>
+    <p><a href="post/2025-07-04/summary_and_updates.">Open in a new page</a></p><hr>
+    <h2>Render Summary in the post</h2>
+    <p>This summary, shown in feeds and summaries, 
+<strong>is also shown</strong> in the post when using <code>&amp;lt;Summary Render&amp;gt;</code>.</p>
+    <p><a href="post/2025-07-05/render_summary_in_the_post">Open in a new page</a></p><hr>
+    <h2>Markdown by default</h2>
+    <h2>Making a Blog post</h2>
+<p>This post was written in markdown by default thanks to <code>SiteConfig.Markdown.BlogPost = true</code>.</p>
+    <p><a href="post/2025-07-11/markdown_by_default">Open in a new page</a></p><hr>
+    <h2>&lt;Markdown&gt;</h2>
+    <p>With <code>Page.Markdown = false;</code> you will disable the markdown in the page.</p>
+<p>You can still Markdown in some areas by wrapping it in <code>&amp;lt;Markdown&amp;gt;&amp;lt;/Markdown&amp;gt;</code></p>
+    <p><a href="post/2025-07-12/%3Cmarkdown%3E">Open in a new page</a></p><hr>
+    <h2>Markdown in &lt;Summary&gt; and &lt;Update&gt;</h2>
+    <h2>&lt;Summary&gt;</h2>
+<p># The default can be overridden by <code>Markdown="false"</code> or <code>Markdown="true"</code>.</p>
+<h2>&lt;Summary Markdown=&quot;false&quot;&gt;</h2>
+<p># The default can be overridden by <code>Markdown="false"</code> or <code>Markdown="true"</code>.</p>
+<h2>&lt;Update&gt;</h2>
+<p><a name="2025-07-13T12:00" class="update-anchor"></a>
+    <div style="border:1px solid orange; padding: 1em; margin: 1em auto;">
+    Updates are parsed as Markdown by default if <code>SiteConfig.Markdown.Update = true</code>
+</div></p>
+<h2>&lt;Update Markdown=&quot;false&quot;&gt;</h2>
+<p><a name="2025-07-13T12:01" class="update-anchor"></a>
+    <div style="border:1px solid orange; padding: 1em; margin: 1em auto;"><p># The default can be overridden by <code>Markdown="false"</code> or <code>Markdown="true"</code>.</p></div></p>
+    <p><a href="post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E">Open in a new page</a></p></article></main></div></body></html>
