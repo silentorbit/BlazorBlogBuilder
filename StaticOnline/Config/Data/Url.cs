@@ -65,6 +65,7 @@ public class Url : IEquatable<Url>
     #region URL components
 
     public string AbsoluteUrl => new Uri(fullURL).AbsoluteUri;
+    public Uri Uri => new Uri(fullURL);
 
     /// <summary>
     /// Return https://www.exmaple.com:123/

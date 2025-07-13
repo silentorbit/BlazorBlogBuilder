@@ -98,6 +98,8 @@ public abstract class SiteConfig
             post.UrlSnippet ??
             post.Title?.ToLowerInvariant().Replace(" ", "_") ??
             post.BlazorType?.Name.ToLowerInvariant();
+        if (snippet == null)
+            throw new Exception($"Failed to generate snippet for post {post.URL}, need one of: UrlSnippet, Title or BlazorType");
         snippet = Uri.EscapeDataString(snippet);
 
         return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
