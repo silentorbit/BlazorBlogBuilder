@@ -37,7 +37,7 @@ config.TopMenu = new() {
 //For building from a GitHub Action
 if (args.FirstOrDefault() == "build" && args.Length == 2)
 {
-    config.Target = DirPath.GetCurrentDirectory().CombineDir(args[1]);
+    config.Target = new DirPath(args[1]);
     Console.WriteLine($"Target: {args[1]}");
     Console.WriteLine($"Target: {config.Target}");
     config.ExitAfterBuildComplete = true;
