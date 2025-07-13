@@ -24,8 +24,6 @@ class JsonFeed : FileGeneratorBase
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    const string rfc3339 = "yyyy'-'MM'-'dd'T'HH':'mm':'ssK";
-
     public override string Generate()
     {
         var feed = new FeedData();
@@ -43,8 +41,8 @@ class JsonFeed : FileGeneratorBase
                 title = post.Title,
                 url = post.URL.ToString(),
                 authors = Generate(post.Author),
-                date_published = post.Published?.ToString(rfc3339),
-                date_modified = post.Modified?.ToString(rfc3339),
+                date_published = post.Published?.ToRFC3339(),
+                date_modified = post.Modified?.ToRFC3339(),
                 content_html = post.Summary?.Value,
             });
         }

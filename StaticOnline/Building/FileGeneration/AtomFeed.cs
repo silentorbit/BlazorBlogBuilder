@@ -16,8 +16,6 @@ class AtomFeed : FileGeneratorBase
         };
     }
 
-    const string Rfc3339UTCDateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-
     static readonly XNamespace ns
         = XNamespace.Get("http://www.w3.org/2005/Atom");
 
@@ -38,7 +36,7 @@ class AtomFeed : FileGeneratorBase
                 new XAttribute("rel", "self"))
             );
         if (lastModified != null)
-            feed.Add(new XElement(ns + "updated", lastModified?.ToString(Rfc3339UTCDateTimeFormat)));
+            feed.Add(new XElement(ns + "updated", lastModified?.ToRFC3339()));
 
         foreach (var post in Site.Pages.Feed)
         {
@@ -69,7 +67,7 @@ class AtomFeed : FileGeneratorBase
             return;
         feed.Add(new XElement(
             feed.Name.Namespace + v,
-            published.ToString(Rfc3339UTCDateTimeFormat)));
+            published.ToRFC3339()));
     }
 
     XElement GetAuthor(PageData post)

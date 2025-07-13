@@ -24,6 +24,8 @@ public abstract class SiteConfig
 
     public BaseUrl BaseURL { get; set; } = null!;
 
+    public TimeZoneInfo TimeZone { get; set; } = TimeZoneInfo.Local;
+
     public Type AppType { get; set; } = null!;
 
     /// <summary>

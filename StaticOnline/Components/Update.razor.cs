@@ -25,7 +25,7 @@ public partial class Update : ChildContentPostBase
     {
         var timestamp = (Timestamp)Date;
 
-        if (timestamp.DateTime.TimeOfDay.Ticks == 0)
+        if (timestamp.Value.TimeOfDay.Ticks == 0)
             anchorName = timestamp.ToString("yyyy-MM-dd");
         else
             anchorName = timestamp.ToString("yyyy-MM-dd'T'HH:mm");
