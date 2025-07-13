@@ -35,6 +35,7 @@ class JsonFeed : FileGeneratorBase
 
         foreach (var post in Site.Pages.Feed)
         {
+            var content_html = post.Summary?.Value;
             feed.items.Add(new()
             {
                 id = post.URL.ToString(),
@@ -43,7 +44,9 @@ class JsonFeed : FileGeneratorBase
                 authors = Generate(post.Author),
                 date_published = post.Published?.ToRFC3339(),
                 date_modified = post.Modified?.ToRFC3339(),
-                content_html = post.Summary?.Value,
+                //One of the content is required.
+                content_html = content_html,
+                content_text = content_html == null ? "" : null,
             });
         }
         return JsonSerializer.Serialize(feed, options);
