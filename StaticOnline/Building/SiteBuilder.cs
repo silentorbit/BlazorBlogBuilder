@@ -112,6 +112,9 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
         {
             //PreRender all Blazor pages
             //Otherwise the live pages need to be loaded twice
+
+            blazorIndex.Scan();
+
             await BuildBlazorPages();
         }
         else

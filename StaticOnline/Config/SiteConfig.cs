@@ -117,4 +117,9 @@ public abstract class SiteConfig
         return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
     }
 
+    internal protected virtual RelUrl TagURL(string name)
+    {
+        return BaseURL.Append("/tags/" + name);
+    }
+
 }

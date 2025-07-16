@@ -10,7 +10,7 @@ public class FeedList : IEnumerable<FeedList.Item>
     {
         public string MimeType { get; set; } = null!;
         public string Title { get; set; } = null!;
-        public Url URL { get; set; } = null!;
+        public RelUrl URL { get; set; } = null!;
     }
 
     IEnumerator<Item> IEnumerable<Item>.GetEnumerator()

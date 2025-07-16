@@ -4,7 +4,7 @@ public class Tag
 {
     static Dictionary<string, Tag> tags = new();
 
-    public string Href { get; }
+    public RelUrl URL { get; }
     public string ID { get; }
     public string Name { get; }
     /// <summary>
@@ -30,7 +30,7 @@ public class Tag
 
     Tag(string name)
     {
-        Href = SiteBuilder.Instance.Config.BaseURL.Append("/tags/" + name).Href;
+        URL = SiteBuilder.Instance.Config.TagURL(name);
         ID = name.ToLowerInvariant();
         Name = name;
     }
