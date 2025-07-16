@@ -47,7 +47,11 @@ else
 {
     //Generation target and options
     config.BuildConfig.Target = new DirPath("../generated/");
-    //config.ExitAfterBuildComplete = true;
+#if DEBUG
+    config.BuildConfig.GenerateDraft = true;
+#else
+    config.BuildConfig.ExitAfterBuildComplete = true;
+#endif
 }
 
 var builder = WebApplication.CreateBuilder(args);
