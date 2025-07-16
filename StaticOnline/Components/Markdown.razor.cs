@@ -1,17 +1,17 @@
-﻿using MarkdownSharp;
+﻿//using MarkdownSharp;
 using Microsoft.AspNetCore.Components;
 
 namespace SilentOrbit.StaticOnline.Components;
 
 public partial class Markdown : ChildContentBase
 {
-    static readonly MarkdownSharp.Markdown markdownSharp;
+    /*static readonly MarkdownSharp.Markdown markdownSharp;
 
     static Markdown()
     {
         var options = new MarkdownOptions();
         markdownSharp = new(options);
-    }
+    }*/
 
     MarkupString? html;
 
@@ -26,9 +26,10 @@ public partial class Markdown : ChildContentBase
         if (content == null)
             return null;
 
-        var html = TrimBlazorSpace(content.Value.Value);
-        var sharp = markdownSharp.Transform(html);
-        return (MarkupString)sharp;
+        var md = TrimBlazorSpace(content.Value.Value);
+        var html = Markdig.Markdown.ToHtml(md);
+        //var sharp = markdownSharp.Transform(html);
+        return (MarkupString)html;
     }
 
     /// <summary>
@@ -64,17 +65,18 @@ public partial class Markdown : ChildContentBase
         indent ??= "";
 
         //Trim all lines
-        var md = new StringBuilder();
+        var sb = new StringBuilder();
+        using var md = new StringWriter(sb) { NewLine = "\n" };
         foreach (var line in lines)
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                md.AppendLine();
+                md.WriteLine();
             }
             else
             {
                 if (line.StartsWith(indent))
-                    md.AppendLine(line.Substring(indent.Length));
+                    md.WriteLine(line.Substring(indent.Length));
                 else
                     throw new NotImplementedException();
             }

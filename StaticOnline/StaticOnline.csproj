@@ -26,7 +26,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MarkdownSharp" Version="2.0.5" />
+		<PackageReference Include="Markdig" Version="0.41.3" />
+		<!--<PackageReference Include="MarkdownSharp" Version="2.0.5" />-->
 		<PackageReference Include="SilentOrbit.SilentDisk" Version="0.9.0" />
 	</ItemGroup>
 
