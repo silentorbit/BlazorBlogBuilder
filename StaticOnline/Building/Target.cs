@@ -2,11 +2,22 @@
 
 class Target(SiteConfig config)
 {
-    readonly DirPath rootDir = config.BuildConfig.Target;
-    
     internal void Store(Url url, string content)
     {
+        var target = GetTarget(url);
+        target.WriteAllText(content);
+    }
+
+    internal void Store(Url url, byte[] content)
+    {
+        var target = GetTarget(url);
+        target.WriteAllBytes(content);
+    }
+
+    FilePath GetTarget(Url url)
+    {
         var urlPath = config.BaseURL.GetRelativePath(url);
+        var rootDir = config.BuildConfig.Target;
 
         var ext = Path.GetExtension(urlPath);
         FilePath target;
@@ -18,13 +29,14 @@ class Target(SiteConfig config)
         if (target.Exists())
             throw new Exception("File already exists: " + target);
 
-        target.WriteAllText(content);
+        return target;
     }
+
 
     public void StoreStatic(Url url, FilePath file)
     {
         var urlPath = config.BaseURL.GetRelativePath(url);
-        var target = rootDir.CombineFile(urlPath);
+        var target = config.BuildConfig.Target.CombineFile(urlPath);
         target.Parent.CreateDirectory();
         file.CopyTo(target);
     }

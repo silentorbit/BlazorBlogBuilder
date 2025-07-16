@@ -146,12 +146,19 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
             logger.LogDebug($"/{page.Href} (starting...)");
 
             var originalURL = page.URL;
-            string html = null!;
+            byte[] fileContent = null!;
 
             if (page.BuildStage == BuildStage.PreScan)
             {
                 if (page.BlazorType == null)
-                    await RenderPage(page);
+                {
+                    fileContent = await RenderPage(page);
+                    if (page.IsBlazor == false)
+                    {
+                        //No need to run a second stage for non blazor files.
+                        page.BuildStage = BuildStage.FinalBuild;
+                    }
+                }
                 else
                     await new BlazorRenderer(this, page).RenderComponent(); //Only render the component
             }
@@ -159,7 +166,7 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
             {
                 Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
                 //BuildFinal
-                html = await RenderPage(page);
+                fileContent = await RenderPage(page);
             }
 
             if (page.InFeed && !page.IsDraftOrNotPublished && page.URL == page.BlogPostRandomURL)
@@ -190,26 +197,31 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
                 if (page.IsBlazor)
                 {
+                    var html = Encoding.UTF8.GetString(fileContent);
                     html = HtmlCleanup.Clean(html, Config);
+                    fileContent = Encoding.UTF8.GetBytes(html);
+
+                    linkScanner.Scan(html);
                 }
                 //Don't cleanup css,js...
 
-                Target.Store(page.URL, html);
+                Target.Store(page.URL, fileContent);
 
-                logger.LogInformation($"/{page.Href} ({html.Length:#,#} bytes)");
-
-                linkScanner.Scan(html);
+                logger.LogInformation($"/{page.Href} ({fileContent.Length:#,#} bytes)");
 
                 Pages.DoneFinalBuild(page);
             }
         }
     }
 
-    async Task<string> RenderPage(PageData page)
+    async Task<byte[]> RenderPage(PageData page)
     {
         try
         {
-            return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
+            using var resp = await httpClient.GetAsync(page.Href, CancellationToken.None);
+            var data = await resp.Content.ReadAsByteArrayAsync();
+            return data;
+            //return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
         }
         catch (HttpRequestException ex)
         {
