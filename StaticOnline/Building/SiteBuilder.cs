@@ -8,12 +8,6 @@ public class SiteBuilder
 {
     internal static SiteBuilder Instance { get; private set; } = null!;
 
-    /// <summary>
-    /// True: is running as a live Blazor website.
-    /// False: is generating static files.
-    /// </summary>
-    public bool IsLive { get; }
-
     public SiteConfig Config { get; }
     public TagBuilder Tags { get; }
     public FeedList Feed { get; } = new();

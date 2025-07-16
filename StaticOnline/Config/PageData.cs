@@ -84,6 +84,9 @@ public sealed class PageData
     {
         get
         {
+            if (SiteBuilder.Instance.Config.BuildConfig.GenerateDraft)
+                return false; //Override all below settings
+
             if (IsDraft)
                 return true;
             //Missing Published only makes BlogPost a draft.
@@ -119,7 +122,7 @@ public sealed class PageData
 
     internal Type? BlazorType { get; set; }
 
-    #endregion
+#endregion
 
     public override string ToString()
     {

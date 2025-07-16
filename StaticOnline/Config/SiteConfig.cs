@@ -101,6 +101,19 @@ public abstract class SiteConfig
 
         snippet = Uri.EscapeDataString(snippet);
 
+        if (post.Published == null)
+        {
+            var logger = new CompactConsoleLogger<SiteConfig>();
+            var error = $"Page {post.Href} is missing a {nameof(post.Published)} date.";
+
+            if (post.IsDraft)
+                logger.LogWarning(error);
+            else
+                logger.LogError(error);
+
+            return BaseURL.Append($"post/no-date/{snippet}");
+        }
+
         return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
     }
 

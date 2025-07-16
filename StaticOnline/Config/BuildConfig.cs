@@ -37,6 +37,13 @@ public class BuildConfig
     public bool NoGeneration { get; set; }
 
     /// <summary>
+    /// Generate pages with <see cref="PageData.IsDraft"/> and <see cref="PageData.Published"/> in the future.
+    /// Usually only use for testing.
+    /// Suggest you add this withing #if DEBUG to not accidentally publish it.
+    /// </summary>
+    public bool GenerateDraft { get; set; }
+
+    /// <summary>
     /// Shut down immediately after the site is generated.
     /// Set to false when you want to explote the site during development.
     /// Set to true when running in automatic builds such as GitHub Action.
