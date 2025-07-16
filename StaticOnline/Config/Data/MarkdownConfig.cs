@@ -18,6 +18,7 @@ public class MarkdownConfig
             BlogPost = value;
             Update = value;
             Summary = value;
+            Comment = value;
         }
     }
 
@@ -42,4 +43,11 @@ public class MarkdownConfig
     /// Overridden by <see cref="Components.Summary.Markdown"/>
     /// </summary>
     public bool Summary { get; set; }
+
+    /// <summary>
+    /// Parse summary using markdown by default.
+    /// 
+    /// Overridden by <see cref="Components.Comment.Markdown"/>
+    /// </summary>
+    public bool Comment { get; set; }
 }

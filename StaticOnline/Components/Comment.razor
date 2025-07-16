@@ -1,0 +1,22 @@
+﻿@inherits ChildContentPostBase
+@code {
+    [EditorRequired]
+    [Parameter]
+    public string Author { get; set; }
+
+    protected override async Task OnChildContentParametersSetAsync(PageData page)
+    {
+        var c = new Config.Data.Comment();
+        c.Text = await GetChildContent() ?? new MarkupString();
+        c.Author = Author;
+
+        page.Comments.Add(c);
+
+        if (Markdown ?? siteConfig.Markdown.Comment)
+            page.Summary = Components.Markdown.Transform(page.Summary);
+    }
+}
+@if (Render)
+{
+    @pageData.Summary
+}

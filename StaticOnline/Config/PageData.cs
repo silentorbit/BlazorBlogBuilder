@@ -42,8 +42,7 @@ public sealed class PageData
     public Author? Author { get; set; }
 
     public int LikeCount { get; set; }
-    public int CommentCount { get; set; }
-
+    public List<Comment> Comments { get; set; } = new();
 
     public Robots Robots { get; } = new();
 
@@ -122,7 +121,7 @@ public sealed class PageData
 
     internal Type? BlazorType { get; set; }
 
-#endregion
+    #endregion
 
     public override string ToString()
     {
