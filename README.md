@@ -10,6 +10,10 @@ https://www.silentorbit.com/static-online
 
 Clone this repo for the demo site
 
+## Start from scratch
+
+NuGet package: [SilentOrbit.StaticOnline](https://www.nuget.org/packages/SilentOrbit.StaticOnline/)
+
 ## Support
 
 * [Join Discord: SilentOrbit/static-online](https://discord.gg/Tjd5XysYkc)
