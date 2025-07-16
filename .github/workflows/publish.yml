@@ -70,6 +70,7 @@ jobs:
     env:
       OUTPUT: _output
       OUTPUT_PATH: _output/${{ vars.OUTPUT_PATH }}
+      PUBLISH: _publish
     runs-on: ubuntu-latest
     steps:
 
@@ -91,11 +92,10 @@ jobs:
         mkdir ${{ env.OUTPUT_PATH }}
     - name: Build ${{ env.CSPROJ_NAME }}
       working-directory: ${{ env.CSPROJ_NAME }}
-      run: dotnet build -c Release
-    # Warning dotnet publish will fail to generate certain static resources.
+      run: dotnet publish -c Release -o $GITHUB_WORKSPACE/${{ env.PUBLISH }}
     - name: Build static site into ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
-      working-directory: ${{ env.CSPROJ_NAME }}
-      run: dotnet run -c Release build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
+      working-directory: ${{ env.PUBLISH }}
+      run: dotnet ${{ env.CSPROJ_NAME }}.dll build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
     - name: Git commit ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
       working-directory: ${{ env.OUTPUT_PATH }}
       run: |
