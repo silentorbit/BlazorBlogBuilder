@@ -6,7 +6,7 @@
 
 <h1>Latest Blog Posts, Summary</h1>
 
-@foreach (var post in Site.Builder.Pages.BlogPosts.OrderBy(p => p.Published))
+@foreach (var post in SiteBuilder.Pages.BlogPosts.OrderBy(p => p.Published))
 {
     <hr />
     <h2>@post.Title</h2>

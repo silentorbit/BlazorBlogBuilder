@@ -38,15 +38,15 @@ config.TopMenu = new() {
 //For building from a GitHub Action
 if (args.FirstOrDefault() == "build" && args.Length == 2)
 {
-    config.Target = new DirPath(args[1]);
+    config.BuildConfig.Target = new DirPath(args[1]);
     Console.WriteLine($"Target: {args[1]}");
-    Console.WriteLine($"Target: {config.Target}");
-    config.ExitAfterBuildComplete = true;
+    Console.WriteLine($"Target: {config.BuildConfig.Target}");
+    config.BuildConfig.ExitAfterBuildComplete = true;
 }
 else
 {
     //Generation target and options
-    config.Target = new DirPath("../generated/");
+    config.BuildConfig.Target = new DirPath("../generated/");
     //config.ExitAfterBuildComplete = true;
 }
 
