@@ -72,24 +72,24 @@
       "content_html": "<p>This summary, shown in feeds and summaries, \n<strong>is also shown</strong> in the post when using <code>&amp;lt;Summary Render&amp;gt;</code>.</p>\n"
     },
     {
-      "id": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T11:00",
-      "url": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T11:00",
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T11:00",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T11:00",
       "title": "Update Summary and updates.",
       "date_published": "2025-07-04 11:00:00+02:00",
       "date_modified": "2025-07-04 11:00:00+02:00",
       "content_html": "<p>This is the second update.</p>\n\n<p>It appears in the feed.</p>\n\n<p>It also appears <strong>in the post</strong> when using <code>&amp;lt;Update Render&amp;gt;</code>.</p>\n"
     },
     {
-      "id": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T10:00",
-      "url": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T10:00",
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T10:00",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T10:00",
       "title": "Update Summary and updates.",
       "date_published": "2025-07-04 10:00:00+02:00",
       "date_modified": "2025-07-04 10:00:00+02:00",
       "content_html": "<p>This is the first update.</p>\n\n<p>It appears in the feed but not in the post itself.</p>\n"
     },
     {
-      "id": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.",
-      "url": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.",
+      "id": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates",
+      "url": "https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates",
       "title": "Summary and updates.",
       "date_published": "2025-07-04 00:00:00+02:00",
       "date_modified": "2025-07-04 11:00:00+02:00",

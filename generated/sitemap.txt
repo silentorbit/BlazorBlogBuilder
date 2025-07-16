@@ -3,7 +3,7 @@ https://www.silentorbit.com/static-online/blog/full
 https://www.silentorbit.com/static-online/blog/second
 https://www.silentorbit.com/static-online/blog/summary
 https://www.silentorbit.com/static-online/post/2025-07-01/first_post
-https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.
+https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates
 https://www.silentorbit.com/static-online/post/2025-07-05/render_summary_in_the_post
 https://www.silentorbit.com/static-online/post/2025-07-11/markdown_by_default
 https://www.silentorbit.com/static-online/post/2025-07-12/%3Cmarkdown%3E

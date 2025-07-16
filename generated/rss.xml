@@ -69,9 +69,9 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
       <pubDate>Fri, 04 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
-      <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T11:00</guid>
+      <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T11:00</guid>
       <title>Update Summary and updates.</title>
-      <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T11:00</link>
+      <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T11:00</link>
       <description>&lt;p&gt;This is the second update.&lt;/p&gt;
 
 &lt;p&gt;It appears in the feed.&lt;/p&gt;
@@ -81,9 +81,9 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
       <pubDate>Fri, 04 Jul 2025 09:00:00 GMT</pubDate>
     </item>
     <item>
-      <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T10:00</guid>
+      <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T10:00</guid>
       <title>Update Summary and updates.</title>
-      <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.#2025-07-04T10:00</link>
+      <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates#2025-07-04T10:00</link>
       <description>&lt;p&gt;This is the first update.&lt;/p&gt;
 
 &lt;p&gt;It appears in the feed but not in the post itself.&lt;/p&gt;
@@ -91,9 +91,9 @@ Though a new page itself will not appear in the feed.&lt;/p&gt;
       <pubDate>Fri, 04 Jul 2025 08:00:00 GMT</pubDate>
     </item>
     <item>
-      <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.</guid>
+      <guid>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates</guid>
       <title>Summary and updates.</title>
-      <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates.</link>
+      <link>https://www.silentorbit.com/static-online/post/2025-07-04/summary_and_updates</link>
       <description>&lt;p&gt;This summary is not shown on the post.
 Only in the feeds and the summary page.&lt;/p&gt;
 </description>
