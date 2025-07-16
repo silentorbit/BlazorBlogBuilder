@@ -11,6 +11,8 @@ https://www.silentorbit.com/static-online
 Clone the demo site at
 https://github.com/silentorbit/StaticOnlineDemo
 
+NuGet package: [SilentOrbit.StaticOnline](https://www.nuget.org/packages/SilentOrbit.StaticOnline/)
+
 ## Support
 
 * [Join Discord: SilentOrbit/static-online](https://discord.gg/Tjd5XysYkc)
