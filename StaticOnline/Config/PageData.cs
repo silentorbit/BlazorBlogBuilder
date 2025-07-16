@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SilentOrbit.StaticOnline.Components;
 
 namespace SilentOrbit.StaticOnline.Config;
 

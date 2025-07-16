@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SilentOrbit.StaticOnline.BlazorRendering;
 
 namespace SilentOrbit.StaticOnline.Components;
 

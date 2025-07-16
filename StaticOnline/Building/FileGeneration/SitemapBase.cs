@@ -6,7 +6,7 @@ abstract class SitemapBase : FileGeneratorBase
     {
         var defaultRobots = Config.DefaultRobots;
 
-        foreach (var page in Site.Pages.All.OrderBy(p => p.Href))
+        foreach (var page in Builder.Pages.All.OrderBy(p => p.Href))
         {
             //default or page sitemap need to be set
             if ((page.Robots.Sitemap ?? defaultRobots.Sitemap) != true)

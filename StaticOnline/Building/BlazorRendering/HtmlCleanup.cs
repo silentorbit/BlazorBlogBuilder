@@ -5,7 +5,7 @@ public static partial class HtmlCleanup
     public static string Clean(string html, SiteConfig config)
     {
         //Remove Blazor attributes <... b-az09 />
-        if (config.StripBlazorAttributes)
+        if (config.BuildConfig.StripBlazorAttributes)
             html = ReReplaceBlazorAttributes().Replace(html, "$1");
 
         //Remove Blazor comments: <!--/bl:15-->

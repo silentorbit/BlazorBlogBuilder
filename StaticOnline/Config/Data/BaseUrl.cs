@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Data;
-
-namespace SilentOrbit.StaticOnline.Config.Data;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 public class BaseUrl : Url
 {

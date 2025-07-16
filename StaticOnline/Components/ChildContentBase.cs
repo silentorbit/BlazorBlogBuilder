@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SilentOrbit.StaticOnline.BlazorRendering;
 
 namespace SilentOrbit.StaticOnline.Components;
@@ -47,7 +46,7 @@ public abstract class ChildContentBase : ComponentBase
     private SiteConfig Config { get; set; } = null!;
 
     protected SiteConfig siteConfig => Config ?? Builder.Config;
-    protected SiteBuilder siteBuilder => Builder ?? Config.Builder;
+    protected SiteBuilder siteBuilder => Builder ?? Config.SiteBuilder;
 
     protected abstract Task OnChildContentParametersSetAsync(PageData page);
 
@@ -72,7 +71,7 @@ public abstract class ChildContentBase : ComponentBase
 
         var page = Page ?? PageCascading ?? PageInjected;
 
-        var blazor = new BlazorRenderer(Builder ?? Config.Builder, page);
+        var blazor = new BlazorRenderer(Builder ?? Config.SiteBuilder, page);
         MarkupString? c = await blazor.RenderFragment(ChildContent);
         return c;
     }

@@ -8,7 +8,7 @@ class AtomFeed : FileGeneratorBase
 
     public override void Init()
     {
-        Site.Feed.Atom = new FeedList.Item
+        Builder.Feed.Atom = new FeedList.Item
         {
             MimeType = "application/atom+xml",
             Title = Config.Title,
@@ -21,23 +21,23 @@ class AtomFeed : FileGeneratorBase
 
     public override string? Generate()
     {
-        var lastModified = Site.Pages.Feed
+        var lastModified = Builder.Pages.Feed
             .Select(p => p.Modified ?? p.Published)
             .Max();
 
         var feed = new XElement(ns + "feed",
-            new XElement(ns + "title", Site.Config.Title),
-            new XElement(ns + "subtitle", Site.Config.Description),
-            new XElement(ns + "id", Site.Config.BaseURL),
+            new XElement(ns + "title", Builder.Config.Title),
+            new XElement(ns + "subtitle", Builder.Config.Description),
+            new XElement(ns + "id", Builder.Config.BaseURL),
             new XElement(ns + "link",
-                new XAttribute("href", Site.Config.BaseURL)),
+                new XAttribute("href", Builder.Config.BaseURL)),
             new XElement(ns + "link",
                 new XAttribute("href", URL),
                 new XAttribute("rel", "self"))
             );
         AddElementIf(feed, "updated", lastModified);
 
-        foreach (var post in Site.Pages.Feed)
+        foreach (var post in Builder.Pages.Feed)
         {
             var entry = new XElement(ns + "entry",
                 new XElement(ns + "title", post.Title),

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 
@@ -38,15 +37,15 @@ public class SiteBuilder
             throw new Exception($"{nameof(SiteBuilder)} instance already created.");
         Instance = this;
 
-        config.WwwRoot ??= FindWwwRoot(config);
+        config.BuildConfig.WwwRoot ??= FindWwwRoot(config.BuildConfig);
 
         //public
         Config = config;
         Tags = new(this);
-        Pages = new(this);
+        Pages = new(config);
 
         //internal
-        Target = new(this);
+        Target = new(config);
 
         //private
         fileRenderer = new FileBuilder(this);
@@ -55,7 +54,7 @@ public class SiteBuilder
         linkScanner = new(this);
     }
 
-    static DirPath FindWwwRoot(SiteConfig config)
+    static DirPath FindWwwRoot(BuildConfig config)
     {
         var asmPath = new FilePath(config.AppType.Assembly.Location);
 
@@ -82,7 +81,7 @@ public class SiteBuilder
 
         logger.LogCritical(@$"Failed to find wwwroot near:
 {asmPath}
-You must configure {nameof(SiteConfig.WwwRoot)} in code.");
+You must configure {nameof(BuildConfig.WwwRoot)} in code.");
         throw new ArgumentException("Missing wwwroot path in config.");
     }
 
@@ -92,7 +91,7 @@ You must configure {nameof(SiteConfig.WwwRoot)} in code.");
         var path = new Uri(nm.Uri).AbsolutePath;
         var url = Config.BaseURL.HostURL.Append(path);
         var relUrl = new RelUrl(Config.BaseURL, url);
-        var page = Config.Builder.Pages.GetOrCreate(relUrl);
+        var page = Config.SiteBuilder.Pages.GetOrCreate(relUrl);
 
         //Only Blazor pages would inject a SitePage
         page.IsBlazor = true;
@@ -110,12 +109,12 @@ You must configure {nameof(SiteConfig.WwwRoot)} in code.");
             BaseAddress = new Uri(app.Urls.First() + Config.BaseURL.Href + "/")
         };
 
-        Config.Target.EmptyDirectory();
+        Config.BuildConfig.Target.EmptyDirectory();
 
         if (Target == null)
             throw new Exception($"Missing target in new {nameof(SiteBuilder)}().");
 
-        if (Config.NoGeneration)
+        if (Config.BuildConfig.NoGeneration)
         {
             //PreRender all Blazor pages
             //Otherwise the live pages need to be loaded twice

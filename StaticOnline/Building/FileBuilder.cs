@@ -8,11 +8,11 @@ namespace SilentOrbit.StaticOnline.Building;
 /// </summary>
 class FileBuilder
 {
-    readonly SiteBuilder site;
+    readonly SiteBuilder builder;
 
-    public FileBuilder(SiteBuilder site)
+    public FileBuilder(SiteBuilder builder)
     {
-        this.site = site;
+        this.builder = builder;
     }
 
     FileGeneratorBase[] files = null!;
@@ -23,7 +23,7 @@ class FileBuilder
         foreach (var file in files)
         {
             file.Init();
-            site.Pages.AddIndex(file);
+            builder.Pages.AddIndex(file);
         }
     }
 
@@ -35,21 +35,21 @@ class FileBuilder
             if (content == null)
                 continue;
 
-            site.Target.Store(file.URL, content);
-            site.Pages.DoneStatic(file.URL);
+            builder.Target.Store(file.URL, content);
+            builder.Pages.DoneStatic(file.URL);
         }
     }
 
     public IEnumerable<FileGeneratorBase> GetGenerators()
     {
         //Scan site assmebly
-        var types = site.Config.AppType.Assembly.GetTypes();
+        var types = builder.Config.BuildConfig.AppType.Assembly.GetTypes();
         foreach (var type in types)
         {
             if (type.IsAssignableTo(typeof(FileGeneratorBase)))
             {
                 var file = (FileGeneratorBase)Activator.CreateInstance(type)!;
-                file.Site = site;
+                file.Builder = builder;
                 yield return file;
             }
         }
@@ -63,7 +63,7 @@ class FileBuilder
             if (type.IsAssignableTo(typeof(FileGeneratorBase)))
             {
                 var file = (FileGeneratorBase)Activator.CreateInstance(type)!;
-                file.Site = site;
+                file.Builder = builder;
                 yield return file;
             }
         }

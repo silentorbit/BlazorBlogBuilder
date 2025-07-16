@@ -9,7 +9,7 @@ class JsonFeed : FileGeneratorBase
 
     public override void Init()
     {
-        Site.Feed.JSON = new FeedList.Item
+        Builder.Feed.JSON = new FeedList.Item
         {
             MimeType = "application/feed+json",
             Title = Config.Title,
@@ -33,7 +33,7 @@ class JsonFeed : FileGeneratorBase
         feed.feed_url = URL.ToString();
         feed.authors = Generate(Config.Author);
 
-        foreach (var post in Site.Pages.Feed)
+        foreach (var post in Builder.Pages.Feed)
         {
             var content_html = post.Summary?.Value;
             feed.items.Add(new()

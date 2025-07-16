@@ -8,7 +8,7 @@ class RssFeed : FeedGeneratorBase
 
     public override void Init()
     {
-        Site.Feed.RSS = new FeedList.Item
+        Builder.Feed.RSS = new FeedList.Item
         {
             MimeType = "application/rss+xml",
             Title = Config.Title,
@@ -23,9 +23,9 @@ class RssFeed : FeedGeneratorBase
         var rss = new XElement("rss",
             new XAttribute("version", "2.0"));
         var channel = new XElement("channel",
-            new XElement("title", Site.Config.Title),
-            new XElement("description", Site.Config.Description),
-            new XElement("link", Site.Config.BaseURL),
+            new XElement("title", Builder.Config.Title),
+            new XElement("description", Builder.Config.Description),
+            new XElement("link", Builder.Config.BaseURL),
             new XElement(XName.Get("link", "http://www.w3.org/2005/Atom"),
                 new XAttribute("rel", "self"),
                 new XAttribute("href", URL),
@@ -33,7 +33,7 @@ class RssFeed : FeedGeneratorBase
             );
         rss.Add(channel);
 
-        foreach (var post in Site.Pages.Feed)
+        foreach (var post in Builder.Pages.Feed)
         {
             var item = new XElement("item",
                 new XElement("guid", post.URL),

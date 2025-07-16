@@ -1,14 +1,13 @@
 ﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
 using System.Collections.Concurrent;
-using System.Runtime;
 
 namespace SilentOrbit.StaticOnline.Building;
 
-public class PageTracker(SiteBuilder site)
+public class PageTracker(SiteConfig config)
 {
     readonly ILogger logger = new CompactConsoleLogger<PageTracker>();
 
-    readonly BaseUrl baseUrl = site.Config.BaseURL;
+    readonly BaseUrl baseUrl = config.BaseURL;
 
     readonly ConcurrentDictionary<Url, PageData> urlPage = new();
 
@@ -60,7 +59,7 @@ public class PageTracker(SiteBuilder site)
             return true;
         }
 
-        if (site.Config.NoGeneration)
+        if (config.BuildConfig.NoGeneration)
         {
             page = null!;
             return false;
@@ -165,7 +164,7 @@ public class PageTracker(SiteBuilder site)
             //URL has ?query=123&or#fragment
             //Make sure the version without query or fragment exists
             var simple = url.HostURL.Append(new Uri(url).AbsolutePath);
-            var simpleRel = new RelUrl(site.Config.BaseURL, simple);
+            var simpleRel = new RelUrl(config.BaseURL, simple);
             GetOrCreate(simpleRel);
         }
         else

@@ -1,12 +1,12 @@
 ﻿namespace SilentOrbit.StaticOnline.Building;
 
-class Target(SiteBuilder site)
+class Target(SiteConfig config)
 {
-    readonly DirPath rootDir = site.Config.Target;
+    readonly DirPath rootDir = config.BuildConfig.Target;
     
     internal void Store(Url url, string content)
     {
-        var urlPath = site.Config.BaseURL.GetRelativePath(url);
+        var urlPath = config.BaseURL.GetRelativePath(url);
 
         var ext = Path.GetExtension(urlPath);
         FilePath target;
@@ -23,7 +23,7 @@ class Target(SiteBuilder site)
 
     public void StoreStatic(Url url, FilePath file)
     {
-        var urlPath = site.Config.BaseURL.GetRelativePath(url);
+        var urlPath = config.BaseURL.GetRelativePath(url);
         var target = rootDir.CombineFile(urlPath);
         target.Parent.CreateDirectory();
         file.CopyTo(target);

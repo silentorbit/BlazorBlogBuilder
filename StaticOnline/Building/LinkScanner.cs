@@ -1,6 +1,6 @@
 ﻿namespace SilentOrbit.StaticOnline.Building;
 
-public class LinkScanner(SiteBuilder site)
+public class LinkScanner(SiteBuilder builder)
 {
     internal void Scan(string html)
     {
@@ -27,19 +27,19 @@ public class LinkScanner(SiteBuilder site)
             else if (href.StartsWith('/'))
             {
                 //Root url
-                var baseHref = site.Config.BaseURL.Href;
+                var baseHref = builder.Config.BaseURL.Href;
                 if (href.StartsWith(baseHref))
-                    url = site.Config.BaseURL.Append(href.Substring(baseHref.Length));
+                    url = builder.Config.BaseURL.Append(href.Substring(baseHref.Length));
                 else
-                    url = site.Config.BaseURL.HostURL.Append(href);
+                    url = builder.Config.BaseURL.HostURL.Append(href);
             }
             else
             {
                 //Local path, add domain
-                url = site.Config.BaseURL.Append(href);
+                url = builder.Config.BaseURL.Append(href);
             }
 
-            site.Pages.AddLink(url);
+            builder.Pages.AddLink(url);
         }
     }
 }

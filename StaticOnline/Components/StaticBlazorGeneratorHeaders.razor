@@ -5,7 +5,7 @@
 @inject PageData Page
 @code {
 
-    SiteBuilder builder => Builder ?? Config.Builder;
+    SiteBuilder builder => Builder ?? Config.SiteBuilder;
     SiteConfig config => Config ?? Builder.Config;
 
     string GetBaseHref()
