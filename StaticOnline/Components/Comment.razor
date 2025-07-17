@@ -10,10 +10,11 @@
         c.Text = await GetChildContent() ?? new MarkupString();
         c.Author = Author;
 
-        page.Comments.Add(c);
-
         if (Markdown ?? siteConfig.Markdown.Comment)
-            page.Summary = Components.Markdown.Transform(page.Summary);
+            c.Text = Components.Markdown.Transform(c.Text) ?? new();
+
+        if (page.Comments.Contains(c) == false)
+            page.Comments.Add(c);
     }
 }
 @if (Render)
