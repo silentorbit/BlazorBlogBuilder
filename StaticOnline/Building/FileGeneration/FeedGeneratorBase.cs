@@ -12,7 +12,7 @@ abstract class FeedGeneratorBase : FileGeneratorBase
             case FeedContent.None:
                 return null;
             case FeedContent.Summary:
-                return post.Summary?.Value;
+                return post.Summary?.Value + @$"<p><a href=""{post.URL}"">Read more...</a></p>";
             case FeedContent.Full:
                 var html = await new BlazorRenderer(Builder, post).RenderComponent(); //Only render the component
                 return html;
