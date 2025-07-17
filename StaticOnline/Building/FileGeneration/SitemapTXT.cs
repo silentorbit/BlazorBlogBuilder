@@ -4,7 +4,7 @@ class SitemapTXT : SitemapBase
 {
     public override RelUrl URL => Config.BaseURL + "sitemap.txt";
 
-    public override string Generate()
+    public override Task<string> Generate()
     {
         var sb = new StringBuilder();
 
@@ -13,6 +13,6 @@ class SitemapTXT : SitemapBase
             sb.AppendLine(page.URL);
         }
 
-        return sb.ToString();
+        return Task.FromResult(sb.ToString());
     }
 }

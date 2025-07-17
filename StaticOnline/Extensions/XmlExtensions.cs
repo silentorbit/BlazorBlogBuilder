@@ -4,8 +4,12 @@ namespace SilentOrbit.StaticOnline.Extensions;
 
 static class XmlExtensions
 {
+    /// <summary>
+    /// Add element with value if set.
+    /// Adds no element if value is null.
+    /// </summary>
     [return: NotNullIfNotNull(nameof(value))]
-    public static XElement? AddElement(this XElement root, string name, string? value)
+    public static XElement? AddElementIf(this XElement root, string name, string? value)
     {
         if (value == null)
             return null;

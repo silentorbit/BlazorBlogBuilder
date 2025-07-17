@@ -130,7 +130,7 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
             await BuildBlazorPages();
 
             //Render indexes(feeds) last
-            fileRenderer.Generate();
+            await fileRenderer.Generate();
         }
 
         //Change base url to work with live version

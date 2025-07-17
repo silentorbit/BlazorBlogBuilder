@@ -18,7 +18,7 @@ class RssFeed : FeedGeneratorBase
 
     const string dateFormat = "r";
 
-    public override string Generate()
+    public override async Task<string> Generate()
     {
         var rss = new XElement("rss",
             new XAttribute("version", "2.0"));
@@ -40,7 +40,8 @@ class RssFeed : FeedGeneratorBase
                 new XElement("title", post.Title),
                 new XElement("link", post.URL)
             );
-            item.AddElement("description", post.Summary?.Value);
+            var content = await GetPostContent(post);
+            item.AddElementIf("description", content ?? "");
             AddElementIf(item, "pubDate", post.Published);
             channel.Add(item);
         }

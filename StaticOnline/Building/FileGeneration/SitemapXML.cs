@@ -8,7 +8,7 @@ class SitemapXML : SitemapBase
 
     static readonly XNamespace ns = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9");
 
-    public override string Generate()
+    public override Task<string> Generate()
     {
         var urlset = new XElement(ns + "urlset");
 
@@ -20,7 +20,7 @@ class SitemapXML : SitemapBase
             urlset.Add(url);
         }
 
-        return urlset.ToUtf8String(true);
+        return Task.FromResult(urlset.ToUtf8String(true));
     }
 
     const string dateFormat = "yyyy-MM-dd";

@@ -27,11 +27,11 @@ class FileBuilder
         }
     }
 
-    public void Generate()
+    public async Task Generate()
     {
         foreach (var file in files)
         {
-            var content = file.Generate();
+            var content = await file.Generate();
             if (content == null)
                 continue;
 

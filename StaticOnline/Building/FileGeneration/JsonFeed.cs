@@ -1,9 +1,10 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
-class JsonFeed : FileGeneratorBase
+class JsonFeed : FeedGeneratorBase
 {
     public override RelUrl URL => Config.BaseURL + "feed.json";
 
@@ -24,7 +25,7 @@ class JsonFeed : FileGeneratorBase
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    public override string Generate()
+    public override async Task<string?> Generate()
     {
         var feed = new FeedData();
         feed.title = Config.Title;
@@ -35,7 +36,7 @@ class JsonFeed : FileGeneratorBase
 
         foreach (var post in Builder.Pages.Feed)
         {
-            var content_html = post.Summary?.Value;
+            var content_html = await GetPostContent(post);
             feed.items.Add(new()
             {
                 id = post.URL.ToString(),

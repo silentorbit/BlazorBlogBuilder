@@ -40,7 +40,7 @@ partial class BlazorRenderer
     /// <summary>
     /// Running the component once to update its <see cref="PageData"/>
     /// </summary>
-    public async Task RenderComponent()
+    public async Task<string> RenderComponent()
     {
         await using var htmlRenderer = CreateHtmlRenderer();
         var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
@@ -48,6 +48,7 @@ partial class BlazorRenderer
             var output = await htmlRenderer.RenderComponentAsync(page.BlazorType!);
             return output.ToHtmlString();
         });
+        return html;
     }
 
     /// <summary>

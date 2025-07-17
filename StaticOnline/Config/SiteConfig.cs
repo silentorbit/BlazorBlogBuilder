@@ -51,6 +51,8 @@ public abstract class SiteConfig
 
     public List<MenuItem> TopMenu { get; set; } = new();
 
+    public FeedContent FeedContent { get; set; } = FeedContent.Summary;
+
     /// <summary>
     /// Public email address to receive comments.
     /// Public: this address is shown to all visitors.
