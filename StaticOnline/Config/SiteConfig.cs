@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Text.Encodings.Web;
 
 namespace SilentOrbit.StaticOnline.Config;
 
@@ -119,7 +120,7 @@ public abstract class SiteConfig
 
     internal protected virtual RelUrl TagURL(string name)
     {
-        return BaseURL.Append("/tags/" + name);
+        return BaseURL.Append("/tags/" + UrlEncoder.Default.Encode(name));
     }
 
 }
