@@ -216,16 +216,19 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
     async Task<byte[]> RenderPage(PageData page)
     {
+        byte[] data = null!;
         try
         {
             using var resp = await httpClient.GetAsync(page.Href, CancellationToken.None);
-            var data = await resp.Content.ReadAsByteArrayAsync();
+            data = await resp.Content.ReadAsByteArrayAsync();
+            resp.EnsureSuccessStatusCode();
             return data;
             //return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
         }
         catch (HttpRequestException ex)
         {
             logger.LogCritical(ex, page.URL.Href);
+            var htmlResponse = Encoding.UTF8.GetString(data);
             Pages.FailBlazor(page);
             throw;
         }
