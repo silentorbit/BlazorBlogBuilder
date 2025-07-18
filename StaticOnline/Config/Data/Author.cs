@@ -11,11 +11,4 @@ public class Author
     public Url? Twitter { get; set; }
     public Url? Facebook { get; set; }
     public Url? Instagram { get; set; }
-
-    /// <summary>
-    /// https://indielogin.com/setup
-    /// mailto:email@example.com
-    /// https://github.com/username
-    /// </summary>
-    public Url? IndieLogin { get; set; }
 }

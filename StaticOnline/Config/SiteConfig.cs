@@ -35,10 +35,12 @@ public abstract class SiteConfig
     /// </summary>
     public BuildConfig BuildConfig { get; set; } = new();
 
+    public HeaderConfig Head { get; set; } = new HeaderConfig();
+
     /// <summary>
     /// The full URL where the site is built.
     /// 
-    /// Most iportant is the path after the domain, 
+    /// Most important is the path after the domain, 
     /// this is used to generate a site that will work in a subdirectory.
     /// 
     /// The full URL is used in links where the specification requires a full URL.
@@ -47,7 +49,6 @@ public abstract class SiteConfig
 
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
-    public Favicon? Favicon { get; set; }
 
     public List<MenuItem> TopMenu { get; set; } = new();
 
@@ -63,22 +64,10 @@ public abstract class SiteConfig
 
     public Author Author { get; set; } = new();
 
-    public Language Language { get; set; } = new()
-    {
-        Code = "en"
-    };
-
     /// <summary>
     /// Timestamps for page publish and modified fields are parsed using this timestamp.
     /// </summary>
     public TimeZoneInfo TimeZone { get; set; } = TimeZoneInfo.Local;
-
-    /// <summary>
-    /// Default Markdown config.
-    /// Set individually or use <see cref="MarkdownConfig.All"/> to set all at once.
-    /// These default can be overriden by the Markdown property of each page or component.
-    /// </summary>
-    public MarkdownConfig Markdown { get; set; } = new();
 
     /// <summary>
     /// Default title for updates generates with &lt;<see cref="Components.Update"/>&gt;

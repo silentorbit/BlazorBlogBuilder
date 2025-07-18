@@ -39,7 +39,7 @@ public partial class Update : ChildContentPostBase
         update.Published = Date;
         update.Modified = Date;
         update.Summary = await GetChildContent();
-        if (Markdown ?? siteConfig.Markdown.Update)
+        if (Markdown ?? siteConfig.BuildConfig.Markdown.Update)
             update.Summary = Components.Markdown.Transform(update.Summary);
 
         update.InFeed = true;

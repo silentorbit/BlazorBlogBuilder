@@ -15,6 +15,8 @@ public sealed class PageData
     /// </summary>
     internal Url? BlogPostRandomURL { get; set; }
 
+    public HeaderConfig Head { get; set; } = new HeaderConfig();
+
     public string? UrlSnippet { get; set; }
 
     public RelUrl? Image { get; set; }

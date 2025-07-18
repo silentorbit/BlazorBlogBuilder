@@ -19,10 +19,10 @@
     }
 }
 <base href="@GetBaseHref()" />
-@if (config.Favicon != null)
+@if (config.Head.Favicon != null)
 {
     @nl
-    <link rel="icon" type="@config.Favicon.MimeType" href="@config.Favicon.URL" />
+    <link rel="icon" type="@config.Head.Favicon.MimeType" href="@config.Head.Favicon.URL" />
 }
 @{
     var robotsContent = Page.Robots.GetContent(config);
@@ -44,7 +44,7 @@
 }
 @{
     //Enables https://indielogin.com/
-    var indieloginUrl = Page.Author?.IndieLogin ?? Config.Author.IndieLogin;
+    var indieloginUrl = Page.Head.IndieLogin ?? Config.Head.IndieLogin;
 }
 @if (indieloginUrl != null)
 {

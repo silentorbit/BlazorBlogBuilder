@@ -25,7 +25,7 @@ class JsonFeed : FeedGeneratorBase
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    public override async Task<string?> Generate()
+    public override async Task<string> Generate()
     {
         var feed = new FeedData();
         feed.title = Config.Title;

@@ -31,6 +31,13 @@ public class BuildConfig
     public bool StripBlazorAttributes { get; set; }
 
     /// <summary>
+    /// Default Markdown config.
+    /// Set individually or use <see cref="MarkdownConfig.All"/> to set all at once.
+    /// These default can be overriden by the Markdown property of each page or component.
+    /// </summary>
+    public MarkdownConfig Markdown { get; set; } = new();
+
+    /// <summary>
     /// Don't generate static files, only run web server.
     /// Default: false; - Will generate files
     /// </summary>

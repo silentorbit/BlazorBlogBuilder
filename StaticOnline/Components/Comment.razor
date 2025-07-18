@@ -10,7 +10,7 @@
         c.Text = await GetChildContent() ?? new MarkupString();
         c.Author = Author;
 
-        if (Markdown ?? siteConfig.Markdown.Comment)
+        if (Markdown ?? siteConfig.BuildConfig.Markdown.Comment)
             c.Text = Components.Markdown.Transform(c.Text) ?? new();
 
         if (page.Comments.Contains(c) == false)
