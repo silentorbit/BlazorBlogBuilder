@@ -12,6 +12,7 @@ public class SiteBuilder
     public TagBuilder Tags { get; }
     public FeedList Feed { get; } = new();
     public PageTracker Pages { get; }
+    public ImageBuilder Image { get; }
 
     /// <summary>
     /// All urls to build.
@@ -37,6 +38,7 @@ public class SiteBuilder
         Config = config;
         Tags = new(this);
         Pages = new(config);
+        Image = new(config);
 
         //internal
         Target = new(config);

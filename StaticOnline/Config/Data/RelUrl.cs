@@ -3,6 +3,10 @@
 public class RelUrl : Url
 {
     public readonly BaseUrl BaseUrl;
+    
+    /// <summary>
+    /// Relative to <see cref="BaseUrl"/>
+    /// </summary>
     public string Href { get; }
 
     public RelUrl(BaseUrl baseUrl, string path) : base(FullURL(baseUrl, path))

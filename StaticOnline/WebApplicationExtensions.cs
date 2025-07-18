@@ -29,6 +29,9 @@ public static class WebApplicationExtensions
             app.MapGet(file.URL.Href, file.Generate);
         }
 
+        //Images
+        config.SiteBuilder.Image.MapGet(app);
+
         //Start building once the webserver is running
         var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(async () =>

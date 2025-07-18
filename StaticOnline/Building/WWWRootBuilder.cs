@@ -29,7 +29,7 @@ class WWWRootBuilder
             var relDiskPath = file - builder.Config.BuildConfig.WwwRoot;
             var path = relDiskPath.RelativePath.Replace('\\', '/');
             var url = builder.Config.BaseURL.Append(path);
-            builder.Target.StoreStatic(url, file);
+            builder.Target.Store(url, file);
             builder.Pages.DoneStatic(url);
         }
 

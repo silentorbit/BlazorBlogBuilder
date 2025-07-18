@@ -15,7 +15,7 @@
     public PageData? PageRecursion { get; set; }
 }
 @{
-    //Prevent recusion
+    //Prevent recursion
     if (PageRecursion != null)
         return;
     if (Page.IsUpdate)

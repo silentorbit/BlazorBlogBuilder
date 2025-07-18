@@ -36,12 +36,13 @@ public class PageTracker(SiteConfig config)
         if (url.StartsWith(baseUrl) == false)
         {
             logger.LogInformation($"External: {url}");
-            
+
             all.Add(url);
             return; //external URL
         }
 
-        var rel = new RelUrl(baseUrl, baseUrl.GetRelativePath(url));
+        if (url is RelUrl rel == false)
+            rel = new RelUrl(baseUrl, baseUrl.GetRelativePath(url));
 
         //all.Add inside:
         GetOrCreate(rel);
@@ -118,7 +119,7 @@ public class PageTracker(SiteConfig config)
     /// <summary>
     /// Not added before, first reported here when done
     /// </summary>
-    internal void DoneStatic(Url url)
+    internal void DoneStatic(RelUrl url)
     {
         if (all.Contains(url))
             return;

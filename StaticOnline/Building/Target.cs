@@ -2,43 +2,48 @@
 
 class Target(SiteConfig config)
 {
-    internal void Store(Url url, string content)
+    internal void Store(RelUrl url, FilePath file)
     {
-        var target = GetTarget(url);
+        var target = CreateTarget(url);
+        target.Parent.CreateDirectory();
+        file.CopyTo(target);
+    }
+
+    internal void Store(RelUrl url, string content)
+    {
+        var target = CreateTarget(url);
         target.WriteAllText(content);
     }
 
-    internal void Store(Url url, byte[] content)
+    internal void Store(RelUrl url, byte[] content)
     {
-        var target = GetTarget(url);
+        var target = CreateTarget(url);
         target.WriteAllBytes(content);
     }
 
-    FilePath GetTarget(Url url)
+    internal FilePath GetTarget(RelUrl url)
     {
-        var urlPath = config.BaseURL.GetRelativePath(url);
         var rootDir = config.BuildConfig.Target;
 
-        var ext = Path.GetExtension(urlPath);
         FilePath target;
+
+        var ext = Path.GetExtension(url.Href);
         if (ext == "")
-            target = rootDir.CombineFile(urlPath, "index.html");
+            target = rootDir.CombineFile(url.Href, "index.html");
         else
-            target = rootDir.CombineFile(urlPath);
+            target = rootDir.CombineFile(url.Href);
+
+        return target;
+    }
+
+    FilePath CreateTarget(RelUrl url)
+    {
+        var target = GetTarget(url);
 
         if (target.Exists())
             throw new Exception("File already exists: " + target);
 
         return target;
-    }
-
-
-    public void StoreStatic(Url url, FilePath file)
-    {
-        var urlPath = config.BaseURL.GetRelativePath(url);
-        var target = config.BuildConfig.Target.CombineFile(urlPath);
-        target.Parent.CreateDirectory();
-        file.CopyTo(target);
     }
 
 }
