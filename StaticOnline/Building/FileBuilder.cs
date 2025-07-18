@@ -42,7 +42,7 @@ class FileBuilder
 
     public IEnumerable<FileGeneratorBase> GetGenerators()
     {
-        //Scan site assmebly
+        //Scan site assembly
         var types = builder.Config.BuildConfig.AppType.Assembly.GetTypes();
         foreach (var type in types)
         {
@@ -54,7 +54,7 @@ class FileBuilder
             }
         }
 
-        //Scan this assmebly
+        //Scan this assembly
         types = GetType().Assembly.GetTypes();
         foreach (var type in types)
         {
