@@ -7,11 +7,15 @@ public class Author
     public RelUrl? Avatar { get; set; }
     public string? Email { get; set; }
     
-    /// <summary>
-    /// Also used for indielogin.com
-    /// </summary>
     public Url? GitHub { get; set; }
     public Url? Twitter { get; set; }
     public Url? Facebook { get; set; }
     public Url? Instagram { get; set; }
+
+    /// <summary>
+    /// https://indielogin.com/setup
+    /// mailto:email@example.com
+    /// https://github.com/username
+    /// </summary>
+    public Url? IndieLogin { get; set; }
 }
