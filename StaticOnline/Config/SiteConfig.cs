@@ -59,11 +59,6 @@ public abstract class SiteConfig
     /// </summary>
     public string? CommentEmail { get; set; }
 
-    public Url? GitHub { get; set; }
-    public Url? Twitter { get; set; }
-    public Url? Facebook { get; set; }
-    public Url? Instagram { get; set; }
-
     public Robots DefaultRobots { get; set; } = new();
 
     public Author Author { get; set; } = new();

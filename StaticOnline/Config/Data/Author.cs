@@ -6,4 +6,12 @@ public class Author
     public Url? URL { get; set; }
     public RelUrl? Avatar { get; set; }
     public string? Email { get; set; }
+    
+    /// <summary>
+    /// Also used for indielogin.com
+    /// </summary>
+    public Url? GitHub { get; set; }
+    public Url? Twitter { get; set; }
+    public Url? Facebook { get; set; }
+    public Url? Instagram { get; set; }
 }

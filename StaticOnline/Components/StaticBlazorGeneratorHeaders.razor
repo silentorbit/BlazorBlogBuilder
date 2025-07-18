@@ -42,3 +42,12 @@
     @nl
     <meta http-equiv="refresh" content="0; url=@Page.Redirect">
 }
+@{
+    var githubURL = Page.Author?.GitHub ?? Config.Author.GitHub;
+}
+@if (githubURL != null)
+{
+    //Enables https://indielogin.com/
+    @nl
+    <link href="@githubURL" rel="me">
+}
