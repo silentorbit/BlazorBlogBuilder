@@ -19,15 +19,16 @@ public class TagBuilder(SiteBuilder builder)
             tag.Size = 0;
 
         var tags = new List<Tag>();
-        foreach(var p in builder.Pages.All)
+        foreach (var p in builder.Pages.All)
         {
-            foreach(var tag in p.Tags)
+            foreach (var tag in p.Tags)
             {
                 tag.Size++;
                 if (tags.Contains(tag) == false)
                     tags.Add(tag);
             }
         }
+        tags.Sort((a, b) => a.ID.CompareTo(b.ID));
         return tags;
     }
 }

@@ -132,19 +132,24 @@ public class PageTracker(SiteConfig config)
     #region Enumeration
 
     public IEnumerable<PageData> All => urlPage.Values
-        .Where(p => !p.IsDraftOrNotPublished && !p.IsUpdate && p.IsBlazor);
+        .Where(p => !p.IsDraftOrNotPublished && !p.IsUpdate && p.IsBlazor)
+        .OrderByDescending(p => p.Published)
+        .ThenBy(p => p.Href); //Make sure articles published at the same time always appear in the same order
 
     public IEnumerable<PageData> Updates => urlPage.Values
         .Where(p => !p.IsDraftOrNotPublished && p.IsUpdate)
-        .OrderByDescending(p => p.Published);
+        .OrderByDescending(p => p.Published)
+        .ThenBy(p => p.Href); //Make sure articles published at the same time always appear in the same order
 
     public IEnumerable<PageData> BlogPosts => urlPage.Values
         .Where(p => !p.IsDraftOrNotPublished && p.InFeed && !p.IsUpdate)
-        .OrderByDescending(p => p.Published);
+        .OrderByDescending(p => p.Published)
+        .ThenBy(p => p.Href); //Make sure articles published at the same time always appear in the same order
 
     public IEnumerable<PageData> Feed => urlPage.Values
         .Where(p => !p.IsDraftOrNotPublished && p.InFeed)
-        .OrderByDescending(p => p.Published);
+        .OrderByDescending(p => p.Published)
+        .ThenBy(p => p.Href); //Make sure articles published at the same time always appear in the same order
 
     #endregion
 
