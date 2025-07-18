@@ -44,10 +44,18 @@
 }
 @{
     //Enables https://indielogin.com/
-    var indieloginUrl = Page.Head.IndieLogin ?? Config.Head.IndieLogin;
+    var indieLoginUrl = Page.Head.IndieLogin ?? Config.Head.IndieLogin;
 }
-@if (indieloginUrl != null)
+@if (indieLoginUrl != null)
 {
     @nl
-    <link href="@indieloginUrl" rel="me">
+    <link href="@indieLoginUrl" rel="me">
+}
+@{
+    var webmention = Page.Head.WebMention ?? Config.Head.WebMention;
+}
+@if (webmention != null)
+{
+    @nl
+    <link rel="webmention" href="@webmention" />
 }
