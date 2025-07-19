@@ -1,7 +1,16 @@
-﻿namespace SilentOrbit.StaticOnline.Building.FileGeneration;
+﻿using System.Xml.Linq;
+
+namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 abstract class SitemapBase : FileGeneratorBase
 {
+    public abstract RelUrl URL { get; }
+
+    public override void Init()
+    {
+        AddGenerator(URL);
+    }
+
     protected IEnumerable<PageData> SitemapPages()
     {
         var defaultRobots = Config.DefaultRobots;

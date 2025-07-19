@@ -1,4 +1,5 @@
 ﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
+using System.Reflection;
 
 namespace SilentOrbit.StaticOnline.Building;
 
@@ -6,56 +7,31 @@ namespace SilentOrbit.StaticOnline.Building;
 /// Generate other types of files
 /// such as feeds and sitemaps
 /// </summary>
-class FileBuilder
+class FileBuilder(SiteBuilder builder)
 {
-    readonly SiteBuilder builder;
-
-    public FileBuilder(SiteBuilder builder)
+    public void Init()
     {
-        this.builder = builder;
-    }
-
-    FileGeneratorBase[] files = null!;
-
-    public void Scan()
-    {
-        files = GetGenerators().ToArray();
-        foreach (var file in files)
+        foreach (var generator in FindGenerators())
         {
-            file.Init();
-            builder.Pages.AddIndex(file);
+            generator.Init();
         }
     }
 
-    public async Task Generate()
+    public List<FileGeneratorBase> FindGenerators()
     {
-        foreach (var file in files)
-        {
-            var content = await file.Generate();
-            if (content == null)
-                continue;
+        var list = new List<FileGeneratorBase>();
 
-            builder.Target.Store(file.URL, content);
-            builder.Pages.DoneStatic(file.URL);
-        }
-    }
-
-    public IEnumerable<FileGeneratorBase> GetGenerators()
-    {
         //Scan site assembly
-        var types = builder.Config.BuildConfig.AppType.Assembly.GetTypes();
-        foreach (var type in types)
-        {
-            if (type.IsAssignableTo(typeof(FileGeneratorBase)))
-            {
-                var file = (FileGeneratorBase)Activator.CreateInstance(type)!;
-                file.Builder = builder;
-                yield return file;
-            }
-        }
+        AddList(list, builder.Config.BuildConfig.AppType.Assembly);
+        //Scan StaticOnline assembly
+        AddList(list, Assembly.GetExecutingAssembly());
 
-        //Scan this assembly
-        types = GetType().Assembly.GetTypes();
+        return list;
+    }
+
+    void AddList(List<FileGeneratorBase> list, Assembly assembly)
+    {
+        var types = assembly.GetTypes();
         foreach (var type in types)
         {
             if (type.IsAbstract)
@@ -64,8 +40,9 @@ class FileBuilder
             {
                 var file = (FileGeneratorBase)Activator.CreateInstance(type)!;
                 file.Builder = builder;
-                yield return file;
+                list.Add(file);
             }
         }
+
     }
 }

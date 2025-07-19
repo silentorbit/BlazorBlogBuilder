@@ -4,21 +4,20 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class RssFeed : FeedGeneratorBase
 {
-    public override RelUrl URL => Config.BaseURL.Append("rss.xml");
+    protected override string path { get; } = "rss.xml";
 
     public override void Init()
     {
-        Builder.Feed.RSS = new FeedList.Item
+        var item = Config.Head.Feed!.RSS = new FeedList.Item
         {
             MimeType = "application/rss+xml",
             Title = Config.Title,
-            URL = URL
+            URL = Config.BaseURL.Append(path)
         };
+        AddGenerator(item.URL);
     }
 
-    const string dateFormat = "r";
-
-    public override async Task<string> Generate()
+    protected override async Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts)
     {
         var rss = new XElement("rss",
             new XAttribute("version", "2.0"));
@@ -28,12 +27,12 @@ class RssFeed : FeedGeneratorBase
             new XElement("link", Builder.Config.BaseURL),
             new XElement(XName.Get("link", "http://www.w3.org/2005/Atom"),
                 new XAttribute("rel", "self"),
-                new XAttribute("href", URL),
+                new XAttribute("href", url),
                 new XAttribute("type", "application/rss+xml"))
             );
         rss.Add(channel);
 
-        foreach (var post in Builder.Pages.Feed)
+        foreach (var post in posts)
         {
             var item = new XElement("item",
                 new XElement("guid", post.ID ?? post.URL),
@@ -53,9 +52,11 @@ class RssFeed : FeedGeneratorBase
     {
         if (published == null)
             return;
+
         feed.Add(new XElement(
             feed.Name.Namespace + v,
-            published.ToString(dateFormat)));
+            published.ToString("r")));
     }
+
 
 }

@@ -30,4 +30,6 @@ public class HeaderConfig
     /// <link rel="webmention" href="...
     /// </summary>
     public Url? WebMention { get; set; }
+
+    public FeedList? Feed { get; set; }
 }

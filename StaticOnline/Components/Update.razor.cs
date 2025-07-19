@@ -33,7 +33,7 @@ public partial class Update : ChildContentPostBase
         if (page.Modified < timestamp ?? true)
             page.Modified = timestamp;
 
-        var update = siteBuilder.Pages.GetOrCreate(url, build: false);
+        var update = siteBuilder.Pages.GetOrCreate(url);
         update.IsUpdate = true;
         update.IsDraft = page.IsDraftOrNotPublished;
         update.Published = Date;

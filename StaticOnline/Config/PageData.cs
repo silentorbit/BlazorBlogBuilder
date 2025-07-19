@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SilentOrbit.StaticOnline.Building.FileGeneration;
 
 namespace SilentOrbit.StaticOnline.Config;
 
@@ -19,6 +20,11 @@ public sealed class PageData
     /// Unique ID of each post, if set will be used in feeds.
     /// </summary>
     public string? ID { get; set; }
+
+    /// <summary>
+    /// Generator for the specific file content
+    /// </summary>
+    internal FileGeneratorBase? Generator { get; set; }
 
     public HeaderConfig Head { get; set; } = new HeaderConfig();
 
@@ -93,6 +99,8 @@ public sealed class PageData
         {
             if (SiteBuilder.Instance.Config.BuildConfig.GenerateDraft)
                 return false; //Override all below settings
+            if (BuildStage == BuildStage.Added)
+                return false; //Wait for preprocessing
 
             if (IsDraft)
                 return true;
@@ -121,11 +129,12 @@ public sealed class PageData
 
     internal BuildStage BuildStage { get; set; } = BuildStage.Added;
 
+    public bool PreScan => BuildStage == BuildStage.PreScan;
     /// <summary>
     /// False during PreScanning
     /// True when the final file is generated.
     /// </summary>
-    public bool FinalBuild { get; set; }
+    public bool FinalBuild => BuildStage == BuildStage.FinalBuild;
 
     internal Type? BlazorType { get; set; }
 

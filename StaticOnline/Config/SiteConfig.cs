@@ -35,7 +35,10 @@ public abstract class SiteConfig
     /// </summary>
     public BuildConfig BuildConfig { get; set; } = new();
 
-    public HeaderConfig Head { get; set; } = new HeaderConfig();
+    public HeaderConfig Head { get; set; } = new HeaderConfig
+    {
+        Feed = new()
+    };
 
     /// <summary>
     /// The full URL where the site is built.
@@ -104,9 +107,9 @@ public abstract class SiteConfig
         return BaseURL.Append($"post/{post.Published!.ToString("yyyy-MM-dd")}/{snippet}");
     }
 
-    internal protected virtual RelUrl TagURL(string name)
+    internal protected virtual RelUrl TagURL(string id)
     {
-        return BaseURL.Append("/tags/" + UrlEncoder.Default.Encode(name));
+        return BaseURL.Append("/tags/" + id);
     }
 
 }

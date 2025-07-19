@@ -10,7 +10,6 @@ public class SiteBuilder
 
     public SiteConfig Config { get; }
     public TagBuilder Tags { get; }
-    public FeedList Feed { get; } = new();
     public PageTracker Pages { get; }
     public ImageBuilder Image { get; }
 
@@ -21,7 +20,6 @@ public class SiteBuilder
     internal Target Target { get; }
 
     static readonly ILogger logger = new CompactConsoleLogger<SiteBuilder>();
-    readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
     readonly LinkScanner linkScanner;
@@ -44,7 +42,6 @@ public class SiteBuilder
         Target = new(config);
 
         //private
-        fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
         wwwroot = new(this);
         linkScanner = new(this);
@@ -121,18 +118,14 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
         }
         else
         {
-            //Static files first to be able to hash them
             wwwroot.Build();
 
             blazorIndex.Scan();
 
-            fileRenderer.Scan();
+            new FileBuilder(this).Init();
 
             //Render all Blazor pages
             await BuildBlazorPages();
-
-            //Render indexes(feeds) last
-            await fileRenderer.Generate();
         }
 
         //Change base url to work with live version
@@ -174,27 +167,15 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
             if (page.InFeed && !page.IsDraftOrNotPublished && page.URL == page.BlogPostRandomURL)
                 page.URL = Config.PostURL(page);
 
-            if (page.URL != originalURL)
-            {
-                logger.LogDebug($"New Path: /{page.Href}");
-                Pages.UpdatePageUrl(oldURL: originalURL, page);
-            }
-
             if (page.IsDraftOrNotPublished)
             {
                 logger.LogInformation($"Draft: /{page.Href}");
-                Pages.RemoveDraft(page);
+                page.BuildStage = BuildStage.Draft;
                 continue;
             }
 
-            if (page.BuildStage == BuildStage.PreScan)
+            if (page.BuildStage == BuildStage.FinalBuild)
             {
-                Pages.DonePreScan(page);
-            }
-            else
-            {
-                Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
-
                 //BuildFinal
 
                 if (page.IsBlazor)
@@ -210,8 +191,6 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
                 Target.Store(page.URL, fileContent);
 
                 logger.LogInformation($"/{page.Href} ({fileContent.Length:#,#} bytes)");
-
-                Pages.DoneFinalBuild(page);
             }
         }
     }
@@ -231,7 +210,7 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
         {
             logger.LogCritical(ex, page.URL.Href);
             var htmlResponse = Encoding.UTF8.GetString(data);
-            Pages.FailBlazor(page);
+            page.BuildStage = BuildStage.Fail;
             throw;
         }
     }

@@ -12,9 +12,15 @@ abstract class FileGeneratorBase
 
     protected SiteConfig Config => Builder.Config;
 
-    public abstract RelUrl URL { get; }
+    public abstract void Init();
 
-    public virtual void Init() { }
+    protected void AddGenerator(RelUrl url)
+    {
+        var page = Builder.Pages.GetOrCreate(url);
+        page.BuildLast = true;
+        page.Generator = this;
+        page.BuildStage = BuildStage.PreScan; //Ready for FinalBuild
+    }
 
-    public abstract Task<string> Generate();
+    public abstract Task<string> Generate(RelUrl url);
 }

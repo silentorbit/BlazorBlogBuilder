@@ -23,23 +23,35 @@ public static class WebApplicationExtensions
     public static void BuildStaticOnline(this WebApplication app, SiteConfig config)
     {
         //Feeds and sitemap
-        var fr = new FileBuilder(config.SiteBuilder);
-        foreach (var file in fr.GetGenerators())
+        app.Use(async (http, next) =>
         {
-            app.MapGet(file.URL.Href, file.Generate);
-        }
+            var url = config.BaseURL.Append(http.Request.Path);
+            var page = config.SiteBuilder.Pages.GetExisting(url);
+            if (page?.Generator == null)
+            {
+                await next(http);
+                return;
+            }
+
+            var content = await page.Generator.Generate(url);
+            await http.Response.WriteAsync(content);
+        });
 
         //Images
-        config.SiteBuilder.Image.MapGet(app);
+        app.MapGet("media/{filename}", (string filename) => config.SiteBuilder.Image.MapGetContent(filename));
 
         //Start building once the webserver is running
         var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(async () =>
         {
+            var stopwatch = Stopwatch.StartNew();
+
             await config.SiteBuilder.Build(app);
-            
+
+            stopwatch.Stop();
+
             var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
-            logger.LogInformation("Generation complete");
+            logger.LogInformation($"Generation complete in {stopwatch.Elapsed.TotalSeconds:0.00} seconds");
 
             if (config.BuildConfig.ExitAfterBuildComplete)
                 lifetime.StopApplication();

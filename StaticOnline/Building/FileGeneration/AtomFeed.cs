@@ -4,24 +4,25 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class AtomFeed : FeedGeneratorBase
 {
-    public override RelUrl URL => Config.BaseURL.Append("atom.xml");
+    protected override string path { get; } = "atom.xml";
 
     public override void Init()
     {
-        Builder.Feed.Atom = new FeedList.Item
+        var feed = Config.Head.Feed!.Atom = new FeedList.Item
         {
             MimeType = "application/atom+xml",
             Title = Config.Title,
-            URL = URL
+            URL = Config.BaseURL.Append(path),
         };
+        AddGenerator(feed.URL);
     }
 
     static readonly XNamespace ns
         = XNamespace.Get("http://www.w3.org/2005/Atom");
 
-    public override async Task<string> Generate()
+    protected override async Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts)
     {
-        var lastModified = Builder.Pages.Feed
+        var lastModified = posts
             .Select(p => p.Modified ?? p.Published)
             .Max();
 
@@ -32,12 +33,12 @@ class AtomFeed : FeedGeneratorBase
             new XElement(ns + "link",
                 new XAttribute("href", Builder.Config.BaseURL)),
             new XElement(ns + "link",
-                new XAttribute("href", URL),
+                new XAttribute("href", url),
                 new XAttribute("rel", "self"))
             );
         AddElementIf(feed, "updated", lastModified);
 
-        foreach (var post in Builder.Pages.Feed)
+        foreach (var post in posts)
         {
             var entry = new XElement(ns + "entry",
                 new XElement(ns + "title", post.Title),

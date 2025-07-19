@@ -115,12 +115,7 @@ public class ImageBuilder(SiteConfig config)
         return url;
     }
 
-    internal void MapGet(WebApplication app)
-    {
-        app.MapGet("media/{filename}", (string filename) => MapGetContent(filename));
-    }
-
-    IResult MapGetContent(string filename)
+    internal IResult MapGetContent(string filename)
     {
         var rel = new RelUrl(config.BaseURL, "media/" + filename);
         var file = config.SiteBuilder.Target.GetTarget(rel);

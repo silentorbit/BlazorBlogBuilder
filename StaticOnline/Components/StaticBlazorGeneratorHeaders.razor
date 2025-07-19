@@ -32,10 +32,16 @@
     @nl
     <meta name="robots" content="@robotsContent" />
 }
-@foreach (var feed in builder.Feed)
+@{
+    var feedList = Page.Head.Feed ?? Config.Head.Feed;
+}
+@if (feedList != null)
 {
-    @nl
-    @FeedLink(feed)
+    @foreach (var feed in feedList)
+    {
+        @nl
+        @FeedLink(feed)
+    }
 }
 @if (Page.Redirect != null)
 {
