@@ -39,7 +39,7 @@ class JsonFeed : FeedGeneratorBase
             var content_html = await GetPostContent(post);
             feed.items.Add(new()
             {
-                id = post.URL.ToString(),
+                id = post.ID ?? post.URL,
                 title = post.Title,
                 url = post.URL.ToString(),
                 authors = Generate(post.Author),

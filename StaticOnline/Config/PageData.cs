@@ -15,6 +15,11 @@ public sealed class PageData
     /// </summary>
     internal Url? BlogPostRandomURL { get; set; }
 
+    /// <summary>
+    /// Unique ID of each post, if set will be used in feeds.
+    /// </summary>
+    public string? ID { get; set; }
+
     public HeaderConfig Head { get; set; } = new HeaderConfig();
 
     public string? UrlSnippet { get; set; }
@@ -71,6 +76,7 @@ public sealed class PageData
 
     /// <summary>
     /// This page will not be generated if set to true;
+    /// Page is also considered a draft if <see cref="Published"/> is in the future.
     /// </summary>
     public bool IsDraft { get; set; }
 

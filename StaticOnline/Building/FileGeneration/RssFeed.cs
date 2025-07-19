@@ -36,7 +36,7 @@ class RssFeed : FeedGeneratorBase
         foreach (var post in Builder.Pages.Feed)
         {
             var item = new XElement("item",
-                new XElement("guid", post.URL),
+                new XElement("guid", post.ID ?? post.URL),
                 new XElement("title", post.Title),
                 new XElement("link", post.URL)
             );

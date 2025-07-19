@@ -43,7 +43,7 @@ class AtomFeed : FeedGeneratorBase
                 new XElement(ns + "title", post.Title),
                 new XElement(ns + "link",
                     new XAttribute("href", post.URL)),
-                new XElement(ns + "id", post.URL),
+                new XElement(ns + "id", post.ID ?? post.URL),
                 GetAuthor(post)
             );
             if (Config.FeedContent >= FeedContent.Summary)
