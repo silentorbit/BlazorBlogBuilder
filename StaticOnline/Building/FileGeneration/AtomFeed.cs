@@ -4,18 +4,8 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class AtomFeed : FeedGeneratorBase
 {
-    protected override string path { get; } = "atom.xml";
-
-    public override void Init()
-    {
-        var feed = Config.Head.Feed!.Atom = new FeedList.Item
-        {
-            MimeType = "application/atom+xml",
-            Title = Config.Title,
-            URL = Config.BaseURL.Append(path),
-        };
-        AddGenerator(feed.URL);
-    }
+    protected override string Filename { get; } = "atom.xml";
+    protected override string MimeType { get; } = "application/atom+xml";
 
     static readonly XNamespace ns
         = XNamespace.Get("http://www.w3.org/2005/Atom");

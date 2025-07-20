@@ -13,6 +13,25 @@ public class FeedList : IEnumerable<FeedList.Item>
         public RelUrl URL { get; set; } = null!;
     }
 
+    internal void Set(string mimeType, string title, RelUrl url)
+    {
+        Item item = new()
+        {
+            MimeType = mimeType,
+            Title = title,
+            URL = url
+        };
+        switch (item.MimeType)
+        {
+            case "application/rss+xml": RSS = item; break;
+            case "application/atom+xml": Atom = item; break;
+            case "application/feed+json": JSON = item; break;
+
+            default:
+                throw new NotImplementedException(item.MimeType);
+        }
+    }
+
     IEnumerator<Item> IEnumerable<Item>.GetEnumerator()
     {
         if (RSS != null) yield return RSS;

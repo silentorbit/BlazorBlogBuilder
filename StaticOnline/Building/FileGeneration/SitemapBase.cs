@@ -4,9 +4,13 @@ abstract class SitemapBase : FileGeneratorBase
 {
     public abstract RelUrl URL { get; }
 
-    public override void Init()
+    public static void Init()
     {
-        AddGenerator(URL);
+        var txt = new SitemapTXT();
+        txt.AddGenerator(txt.URL);
+
+        var xml = new SitemapXML();
+        xml.AddGenerator(xml.URL);
     }
 
     protected IEnumerable<PageData> SitemapPages()

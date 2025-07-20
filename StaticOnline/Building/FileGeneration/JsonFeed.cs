@@ -5,18 +5,8 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class JsonFeed : FeedGeneratorBase
 {
-    protected override string path { get; } = "feed.json";
-
-    public override void Init()
-    {
-        var feed = Config.Head.Feed!.JSON = new FeedList.Item
-        {
-            MimeType = "application/feed+json",
-            Title = Config.Title,
-            URL = Config.BaseURL + path
-        };
-        AddGenerator(feed.URL);
-    }
+    protected override string Filename { get; } = "feed.json";
+    protected override string MimeType { get; } = "application/feed+json";
 
     JsonSerializerOptions options = new JsonSerializerOptions()
     {

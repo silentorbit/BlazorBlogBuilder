@@ -4,18 +4,8 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class RssFeed : FeedGeneratorBase
 {
-    protected override string path { get; } = "rss.xml";
-
-    public override void Init()
-    {
-        var item = Config.Head.Feed!.RSS = new FeedList.Item
-        {
-            MimeType = "application/rss+xml",
-            Title = Config.Title,
-            URL = Config.BaseURL.Append(path)
-        };
-        AddGenerator(item.URL);
-    }
+    protected override string Filename { get; } = "rss.xml";
+    protected override string MimeType { get; } = "application/rss+xml";
 
     protected override async Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts)
     {

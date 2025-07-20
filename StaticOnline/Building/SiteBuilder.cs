@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
+using SilentOrbit.StaticOnline.Building.FileGeneration;
 
 namespace SilentOrbit.StaticOnline.Building;
 
@@ -122,7 +123,8 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
             blazorIndex.Scan();
 
-            new FileBuilder(this).Init();
+            FeedGeneratorBase.Init();
+            SitemapBase.Init();
 
             //Render all Blazor pages
             await BuildBlazorPages();

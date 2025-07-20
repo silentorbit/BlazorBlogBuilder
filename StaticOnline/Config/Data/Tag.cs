@@ -1,4 +1,5 @@
-﻿using System.Text.Encodings.Web;
+﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
+using System.Text.Encodings.Web;
 
 namespace SilentOrbit.StaticOnline.Config.Data;
 
@@ -12,6 +13,8 @@ public class Tag
     /// </summary>
     public string ID { get; }
     public RelUrl URL { get; }
+
+    public FeedList Feed { get; }
 
     /// <summary>
     /// Number of pages using the tag
@@ -50,6 +53,9 @@ public class Tag
         ID = GetID(name);
         Name = name;
         URL = SiteBuilder.Instance.Config.TagURL(ID);
+
+        Feed = new();
+        FeedGeneratorBase.Init(this);
     }
 
     static string GetID(string name)

@@ -5,11 +5,9 @@
 /// </summary>
 abstract class FileGeneratorBase
 {
-    internal SiteBuilder Builder { get; set; } = null!;
+    internal SiteBuilder Builder => SiteBuilder.Instance;
 
-    protected SiteConfig Config => Builder.Config;
-
-    public abstract void Init();
+    protected SiteConfig Config => SiteBuilder.Instance.Config;
 
     protected void AddGenerator(RelUrl url)
     {

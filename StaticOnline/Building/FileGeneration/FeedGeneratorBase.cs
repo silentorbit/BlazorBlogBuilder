@@ -1,19 +1,51 @@
 ﻿using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Components;
+using SilentOrbit.StaticOnline.Config.Data;
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 abstract class FeedGeneratorBase : FileGeneratorBase
 {
-    protected abstract string path { get; }
+    protected abstract string Filename { get; }
+    protected abstract string MimeType { get; }
 
-    protected abstract Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts);
+    const string feedPath = "feed/";
+
+    public static void Init()
+    {
+        new RssFeed().InitFeed();
+        new AtomFeed().InitFeed();
+        new JsonFeed().InitFeed();
+    }
+
+    void InitFeed()
+    {
+        var config = SiteBuilder.Instance.Config;
+        var url = config.BaseURL.Append(feedPath + Filename);
+        config.Head.Feed!.Set(MimeType, config.Title, url);
+        AddGenerator(url);
+    }
+
+    internal static void Init(Tag tag)
+    {
+        new RssFeed().InitTag(tag);
+        new AtomFeed().InitTag(tag);
+        new JsonFeed().InitTag(tag);
+    }
+
+    void InitTag(Tag tag)
+    {
+        var filename = Path.GetFileNameWithoutExtension(Filename);
+        var ext = Path.GetExtension(Filename);
+
+        var tagURL = Config.BaseURL.Append($"{feedPath}{filename}.{tag.ID}{ext}");
+        tag.Feed.Set(MimeType, tag.Name, tagURL);
+
+        AddGenerator(tagURL);
+    }
 
     public sealed override Task<string> Generate(RelUrl url)
     {
-        if (url.Href == path)
-            InitTags(url);
-
         var parts = url.Href.Split('.');
         if (parts.Length == 2)
             return GenerateFeed(url, Builder.Pages.Feed);
@@ -22,24 +54,13 @@ abstract class FeedGeneratorBase : FileGeneratorBase
         {
             var id = parts[1];
             var tag = Tag.ByID(id);
-            return GenerateFeed(url, Builder.Pages.Feed.Where(p=>p.Tags.Contains(tag)));
+            return GenerateFeed(url, Builder.Pages.Feed.Where(p => p.Tags.Contains(tag)));
         }
 
         throw new NotImplementedException(url.Href);
     }
 
-    void InitTags(RelUrl url)
-    {
-        var filename = Path.GetFileNameWithoutExtension(path);
-        var ext = Path.GetExtension(path);
-
-        foreach (var tag in Builder.Tags.GetTags())
-        {
-            var name = $"{filename}.{tag.ID}{ext}";
-            var tagURL = Config.BaseURL.Append(name);
-            AddGenerator(tagURL);
-        }
-    }
+    protected abstract Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts);
 
     public async Task<string?> GetPostContent(PageData post)
     {
@@ -59,4 +80,6 @@ abstract class FeedGeneratorBase : FileGeneratorBase
                 return html;
         }
     }
+
+
 }
