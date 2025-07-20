@@ -15,7 +15,7 @@ class RssFeed : FeedGeneratorBase
             new XElement("title", Builder.Config.Title),
             new XElement("description", Builder.Config.Description),
             new XElement("link", Builder.Config.BaseURL),
-            new XElement("base", Builder.Config.BaseURL.Href),
+            new XElement("base", Builder.Config.BaseURL.Href + "/"),
             new XElement(XName.Get("link", "http://www.w3.org/2005/Atom"),
                 new XAttribute("rel", "self"),
                 new XAttribute("href", url),

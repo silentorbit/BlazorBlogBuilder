@@ -25,7 +25,7 @@ class AtomFeed : FeedGeneratorBase
             new XElement(ns + "link",
                 new XAttribute("href", url),
                 new XAttribute("rel", "self")),
-            new XElement("base", Builder.Config.BaseURL.Href)
+            new XElement("base", Builder.Config.BaseURL.Href + "/")
             );
         AddElementIf(feed, "updated", lastModified);
 
