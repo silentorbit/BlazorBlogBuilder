@@ -22,20 +22,22 @@ static class XmlExtensions
     /// <summary>
     /// Get with '<?xml' header
     /// </summary>
-    public static string ToUtf8String(this XElement element, bool xmlHeader)
+    public static string ToUtf8String(this XElement element)
     {
-        var doc = new XDocument(new XDeclaration("1.0", "utf-8", null), element);
+        var xml = new XDeclaration("1.0", "utf-8", null);
+        var stylesheet = SiteBuilder.Instance.Config.BaseURL.Href + "/" + (element.Name.LocalName switch
+        {
+            "urlset" => "feed/sitemap.xsl",
+            "feed" => "feed/atom.xsl",
+            "rss" => "feed/rss.xsl",
+            _ => throw new NotImplementedException(element.Name.ToString())
+        });
+        var xsl = new XProcessingInstruction("xml-stylesheet", @$"type=""text/xsl"" href=""{stylesheet}""");
+        var doc = new XDocument(xml, xsl, element);
 
-        if (xmlHeader)
-        {
-            var writer = new Utf8StringWriter();
-            doc.Save(writer);
-            return writer.ToString();
-        }
-        else
-        {
-            return element.ToString();
-        }
+        var writer = new Utf8StringWriter();
+        doc.Save(writer);
+        return writer.ToString();
     }
 
     class Utf8StringWriter : StringWriter

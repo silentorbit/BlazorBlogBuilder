@@ -20,7 +20,7 @@ class SitemapXML : SitemapBase
             urlset.Add(urlElement);
         }
 
-        return Task.FromResult(urlset.ToUtf8String(true));
+        return Task.FromResult(urlset.ToUtf8String());
     }
 
     const string dateFormat = "yyyy-MM-dd";

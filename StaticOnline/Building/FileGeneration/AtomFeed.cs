@@ -34,7 +34,8 @@ class AtomFeed : FeedGeneratorBase
                 new XAttribute("href", Builder.Config.BaseURL)),
             new XElement(ns + "link",
                 new XAttribute("href", url),
-                new XAttribute("rel", "self"))
+                new XAttribute("rel", "self")),
+            new XElement("base", Builder.Config.BaseURL.Href)
             );
         AddElementIf(feed, "updated", lastModified);
 
@@ -59,11 +60,7 @@ class AtomFeed : FeedGeneratorBase
             feed.Add(entry);
         }
 
-        var doc = new XDocument(new XDeclaration("1.0", "utf-8", null), feed);
-
-        //doc.ToString will not include the <?xml version="1.0" encoding="utf-8"?>
-        //Which is needed for RSS feeds
-        return doc.ToString();
+        return feed.ToUtf8String();
     }
 
     static void AddElementIf(XElement feed, string v, Timestamp? timestamp)
