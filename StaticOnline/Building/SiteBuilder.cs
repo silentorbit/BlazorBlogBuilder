@@ -155,7 +155,10 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
                     }
                 }
                 else
-                    await new BlazorRenderer(this, page).RenderComponent(); //Only render the component
+                {
+                    //Only render the component, not the entire page during PreScan
+                    await new BlazorRenderer(this, page).RenderComponent();
+                }
             }
             else
             {

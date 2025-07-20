@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace SilentOrbit.StaticOnline.Building.FileGeneration;
+﻿namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 abstract class SitemapBase : FileGeneratorBase
 {

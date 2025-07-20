@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-
-namespace SilentOrbit.StaticOnline.Building;
+﻿namespace SilentOrbit.StaticOnline.Building;
 
 public class PageTracker(SiteConfig config)
 {

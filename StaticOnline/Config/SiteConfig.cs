@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Text.Encodings.Web;
 
 namespace SilentOrbit.StaticOnline.Config;
 

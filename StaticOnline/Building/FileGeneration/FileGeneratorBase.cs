@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using SilentOrbit.StaticOnline.BlazorRendering;
-
-namespace SilentOrbit.StaticOnline.Building.FileGeneration;
+﻿namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 /// <summary>
 /// Generate other file content

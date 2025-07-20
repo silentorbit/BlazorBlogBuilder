@@ -48,6 +48,7 @@ partial class BlazorRenderer
             var output = await htmlRenderer.RenderComponentAsync(page.BlazorType!);
             return output.ToHtmlString();
         });
+
         return html;
     }
 

@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 

@@ -1,5 +1,4 @@
 ﻿using System.Text.Encodings.Web;
-using System.Xml.Linq;
 
 namespace SilentOrbit.StaticOnline.Config.Data;
 

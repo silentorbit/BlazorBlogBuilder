@@ -1,14 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Components;
-using SilentOrbit.StaticOnline.Config.Data;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System;
 using System.Buffers.Text;
-using System.Diagnostics;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
