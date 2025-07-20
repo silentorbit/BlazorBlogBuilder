@@ -24,9 +24,8 @@
         throw new ArgumentException($"{nameof(Page)}.{nameof(Page.BlazorType)} is null.");
 
     //Optimize to not render markdown until final render
-    var useMarkdown =
-        (Page.BuildStage == BuildStage.FinalBuild) &&
-        (Markdown ?? Page.Markdown ?? SiteBuilder.Instance.Config.BuildConfig.Markdown.BlogPost);
+    var useMarkdown = Components.Markdown.UseMarkdown(Markdown, Page);
+    
 }
 <CascadingValue Name="@CascadingPageName" Value="Page">
     @if (useMarkdown)

@@ -21,15 +21,66 @@ public partial class Markdown : ChildContentBase
         html = Transform(c);
     }
 
+    #region Static
+
+    public static bool UseMarkdown(bool? markdown, PageData page)
+    {
+        //Save work during PreScan.
+        if (page.BuildStage != BuildStage.FinalBuild)
+            return false;
+
+        if (markdown != null)
+            return markdown.Value;
+
+        if (page.Markdown != null)
+            return page.Markdown.Value;
+
+        var markdownDefault = SiteBuilder.Instance.Config.BuildConfig.Markdown;
+        if (page.BlazorType?.IsAssignableTo(typeof(BlogPost)) == true)
+            return markdownDefault.BlogPost;
+
+        return markdownDefault.Page;
+    }
+
+    /// <summary>
+    /// Determine if a layout should be applied at the MainLayout.
+    /// Will assume <see cref="BlogPost"/> markdown is generated at another level.
+    /// </summary>
+    public static bool UseMarkdownLayout(PageData page)
+    {
+        //Don't transform during PreScan.
+        if (page.BuildStage != BuildStage.FinalBuild)
+            return false;
+
+        //BlogPosts are rendered in a special Post.razor page defined by the website.
+        //Known issue, BlogPosts with custom 
+        if (page.BlazorType?.IsAssignableTo(typeof(BlogPost)) == true)
+            return false;
+
+        if (page.Markdown != null)
+            return page.Markdown.Value;
+
+        return SiteBuilder.Instance.Config.BuildConfig.Markdown.Page;
+    }
+
     public static MarkupString? Transform(MarkupString? content)
     {
         if (content == null)
             return null;
 
-        var md = TrimBlazorSpace(content.Value.Value);
+        return (MarkupString)Transform(content.Value.Value);
+    }
+
+    [return: NotNullIfNotNull(nameof(content))]
+    public static string? Transform(string? content)
+    {
+        if (content == null)
+            return null;
+
+        var md = TrimBlazorSpace(content);
         var html = Markdig.Markdown.ToHtml(md);
         //var sharp = markdownSharp.Transform(html);
-        return (MarkupString)html;
+        return html;
     }
 
     /// <summary>
@@ -89,4 +140,6 @@ public partial class Markdown : ChildContentBase
 
     [GeneratedRegex("^[ \t]*")]
     private static partial Regex ReLeadingWhitespace();
+
+    #endregion
 }

@@ -1,5 +1,5 @@
 ﻿using SilentOrbit.StaticOnline.BlazorRendering;
-using SilentOrbit.StaticOnline.Config.Data;
+using SilentOrbit.StaticOnline.Components;
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
@@ -51,7 +51,11 @@ abstract class FeedGeneratorBase : FileGeneratorBase
             case FeedContent.Summary:
                 return post.Summary?.Value + @$"<p><a href=""{post.URL}"">Read more...</a></p>";
             case FeedContent.Full:
-                var html = await new BlazorRenderer(Builder, post).RenderComponent(); //Only render the component
+                var html = await new BlazorRenderer(Builder, post).RenderComponent();
+
+                if (Markdown.UseMarkdown(null, post))
+                    html = Markdown.Transform(html);
+
                 return html;
         }
     }
