@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/static-online/blog/feed/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog/comment/send</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog/Error</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog/post/2025-07-21/spark</loc>
+    <lastmod>2025-07-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog/post/2025-07-22/sticking</loc>
+    <lastmod>2025-07-22</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth</loc>
+    <lastmod>2025-07-23</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/blog/tags</loc>
+  </url>
+</urlset>
