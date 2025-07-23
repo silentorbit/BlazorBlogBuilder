@@ -1,18 +1,9 @@
-﻿//using MarkdownSharp;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace SilentOrbit.StaticOnline.Components;
 
 public partial class Markdown : ChildContentBase
 {
-    /*static readonly MarkdownSharp.Markdown markdownSharp;
-
-    static Markdown()
-    {
-        var options = new MarkdownOptions();
-        markdownSharp = new(options);
-    }*/
-
     MarkupString? html;
 
     protected override async Task OnChildContentParametersSetAsync(PageData page)
