@@ -38,7 +38,7 @@ public class PageTracker(SiteConfig config)
 
     internal bool Next(out PageData page)
     {
-        var removed = pages.RemoveWhere(p => p.IsDraftOrNotPublished || p.URL.HasQueryOrFragment);
+        var removed = pages.RemoveWhere(p => p.IsDraftOrNotPublished);
 
         //PreScan
         page = pages.FirstOrDefault(p => p.BuildStage == BuildStage.Added)!;

@@ -35,6 +35,7 @@ public partial class Update : ChildContentPostBase
 
         var update = siteBuilder.Pages.GetOrCreate(url);
         update.IsUpdate = true;
+        update.InFeed = true;
         update.IsDraft = page.IsDraftOrNotPublished;
         update.Published = Date;
         update.Modified = Date;
@@ -42,8 +43,8 @@ public partial class Update : ChildContentPostBase
         if (Markdown ?? siteConfig.BuildConfig.Markdown.Update)
             update.Summary = Components.Markdown.Transform(update.Summary);
 
-        update.InFeed = true;
         //update.BlazorType = BlogPost.BlazorType;
+        update.BuildStage = BuildStage.PreScan;
         update.Title = Title ?? siteConfig.UpdateTitle(page);
     }
 
