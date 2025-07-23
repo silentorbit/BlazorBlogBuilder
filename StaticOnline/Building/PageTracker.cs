@@ -38,7 +38,7 @@ public class PageTracker(SiteConfig config)
 
     internal bool Next(out PageData page)
     {
-        var removed = pages.RemoveWhere(p => p.IsDraftOrNotPublished);
+        var removed = pages.RemoveWhere(p => p.IsDraftOrNotPublished || p.URL.HasQueryOrFragment);
 
         //PreScan
         page = pages.FirstOrDefault(p => p.BuildStage == BuildStage.Added)!;
@@ -131,7 +131,6 @@ public class PageTracker(SiteConfig config)
             return page;
 
         page = new PageData { URL = url };
-        Debug.Assert(page.Href != "atom.c");
         pages.Add(page);
         allURLs.Add(page.URL);
 
