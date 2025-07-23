@@ -137,6 +137,8 @@ public class PageTracker(SiteConfig config)
         if (url.HasQueryOrFragment)
         {
             //URL has ?query=123&or#fragment
+            page.BuildStage = BuildStage.Skipped;
+
             //Make sure the version without query or fragment exists
             var simple = url.HostURL.Append(new Uri(url).AbsolutePath);
             var simpleRel = new RelUrl(config.BaseURL, simple);

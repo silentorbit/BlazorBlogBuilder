@@ -2,6 +2,7 @@
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.FileGeneration;
+using System;
 
 namespace SilentOrbit.StaticOnline.Building;
 
@@ -199,6 +200,12 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
     async Task<byte[]> RenderPage(PageData page)
     {
+        if (page.URL.HasQueryOrFragment)
+        {
+            Uri uri = page.URL;
+            throw new Exception($"Rendering of page({page.URL}) with Query({uri.Query}) or fragments({uri.Fragment}) is not supported, only render the bare URL({uri.AbsolutePath})");
+        }
+
         byte[] data = null!;
         try
         {

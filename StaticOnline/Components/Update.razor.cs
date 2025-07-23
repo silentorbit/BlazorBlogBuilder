@@ -44,7 +44,7 @@ public partial class Update : ChildContentPostBase
             update.Summary = Components.Markdown.Transform(update.Summary);
 
         //update.BlazorType = BlogPost.BlazorType;
-        update.BuildStage = BuildStage.PreScan;
+        update.BuildStage = BuildStage.FinalBuild; //Already done, will not generate a single page.
         update.Title = Title ?? siteConfig.UpdateTitle(page);
     }
 
