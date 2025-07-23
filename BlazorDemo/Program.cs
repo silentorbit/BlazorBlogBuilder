@@ -38,19 +38,17 @@ builder.Services.AddStaticOnline(config);
 
 var app = builder.Build();
 
-//Required for sites not located at root.
-app.UsePathBase(config.BaseURL.Href + '/');
+#region Static Online
+
+//Add first
+app.BuildStaticOnline(config);
+
+#endregion
 
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 
 app.MapRazorComponents<App>();
-
-#region Static Online
-
-app.BuildStaticOnline(config);
-
-#endregion
 
 app.Run();
