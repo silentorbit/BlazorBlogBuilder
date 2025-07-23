@@ -49,11 +49,6 @@ on: workflow_dispatch
 #    branches:
 #      - master
 
-env:
-  # Subdirectiry where the csproj is located
-  # Use dot, "." if csproj is located in the root.
-  CSPROJ_NAME: Demo
-
 permissions:
   actions: write
   contents: write
@@ -70,7 +65,6 @@ jobs:
     env:
       OUTPUT: _output
       OUTPUT_PATH: _output/${{ vars.OUTPUT_PATH }}
-      PUBLISH: _publish
     runs-on: ubuntu-latest
     steps:
 
@@ -86,16 +80,28 @@ jobs:
         repository: ${{ vars.OUTPUT_REPO }}
         token: ${{ secrets.pat }}
         path: '${{ env.OUTPUT }}'
+
     - name: "Clear OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}"
       run: |
-        rm -rf ${{ env.OUTPUT_PATH }}
-        mkdir ${{ env.OUTPUT_PATH }}
-    - name: Build ${{ env.CSPROJ_NAME }}
-      working-directory: ${{ env.CSPROJ_NAME }}
-      run: dotnet publish -c Release -o $GITHUB_WORKSPACE/${{ env.PUBLISH }}
+        rm -rf ${{ env.OUTPUT_PATH }}/blog
+        mkdir ${{ env.OUTPUT_PATH }}/blog
+        rm -rf ${{ env.OUTPUT_PATH }}/demo
+        mkdir ${{ env.OUTPUT_PATH }}/demo
+
+    - name: Build BlazorDemo
+      working-directory: BlazorDemo
+      run: dotnet publish -c Release -o $GITHUB_WORKSPACE/_publish/blazor
+    - name: Build BlogDemo
+      working-directory: BlogDemo
+      run: dotnet publish -c Release -o $GITHUB_WORKSPACE/_publish/blog
+
     - name: Build static site into ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
-      working-directory: ${{ env.PUBLISH }}
-      run: dotnet ${{ env.CSPROJ_NAME }}.dll build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}
+      working-directory: _publish/blazor
+      run: dotnet BlazorDemo.dll build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/blazor
+    - name: Build static site into ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
+      working-directory: _publish/blog
+      run: dotnet BlogDemo.dll build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/blog
+
     - name: Git commit ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
       working-directory: ${{ env.OUTPUT_PATH }}
       run: |
