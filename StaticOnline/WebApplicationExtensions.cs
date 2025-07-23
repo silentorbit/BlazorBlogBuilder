@@ -46,15 +46,32 @@ public static class WebApplicationExtensions
         {
             var stopwatch = Stopwatch.StartNew();
 
-            await config.SiteBuilder.Build(app);
+            var url = app.Urls.First() + config.BaseURL.Href + "/";
+
+            await config.SiteBuilder.Build(url);
 
             stopwatch.Stop();
 
             var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
             logger.LogInformation($"Generation complete in {stopwatch.Elapsed.TotalSeconds:0.00} seconds");
 
-            if (config.BuildConfig.ExitAfterBuildComplete)
-                lifetime.StopApplication();
+            switch (config.BuildConfig.AfterBuild)
+            {
+                case AfterBuildConfig.Exit:
+                    lifetime.StopApplication();
+                    break;
+
+                case AfterBuildConfig.LaunchBrowser:
+                    var psi = new ProcessStartInfo(url) { UseShellExecute = true };
+                    Process.Start(psi);
+                    break;
+
+                case AfterBuildConfig.KeepRunning:
+                    break;
+
+                default:
+                    throw new NotImplementedException(config.BuildConfig.AfterBuild.ToString());
+            }
         });
     }
 

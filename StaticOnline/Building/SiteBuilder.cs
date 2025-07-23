@@ -96,12 +96,9 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
     private HttpClient httpClient = null!;
 
-    public async Task Build(WebApplication app)
+    public async Task Build(Url url)
     {
-        httpClient = new HttpClient()
-        {
-            BaseAddress = new Uri(app.Urls.First() + Config.BaseURL.Href + "/")
-        };
+        httpClient = new HttpClient() { BaseAddress = new Uri(url.fullURL + "/") };
 
         Config.BuildConfig.Target.EmptyDirectory();
 

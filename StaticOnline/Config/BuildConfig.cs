@@ -51,9 +51,7 @@ public class BuildConfig
     public bool GenerateDraft { get; set; }
 
     /// <summary>
-    /// Shut down immediately after the site is generated.
-    /// Set to false when you want to explote the site during development.
-    /// Set to true when running in automatic builds such as GitHub Action.
+    /// What to do after the build completes
     /// </summary>
-    public bool ExitAfterBuildComplete { get; set; }
+    public AfterBuildConfig AfterBuild { get; set; } = AfterBuildConfig.KeepRunning;
 }

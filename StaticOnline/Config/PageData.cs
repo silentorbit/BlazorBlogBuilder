@@ -136,7 +136,7 @@ public sealed class PageData
     /// </summary>
     public bool FinalBuild => BuildStage == BuildStage.FinalBuild;
 
-    internal Type? BlazorType { get; set; }
+    public Type? BlazorType { get; internal set; }
 
     #endregion
 
