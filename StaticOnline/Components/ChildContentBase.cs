@@ -52,11 +52,13 @@ public abstract class ChildContentBase : ComponentBase
 
     protected PageData pageData = null!;
 
+    protected bool OnlyFinalBuild = true;
+
     protected override sealed async Task OnParametersSetAsync()
     {
         pageData = Page ?? PageCascading ?? PageInjected;
 
-        if (pageData.BuildStage != BuildStage.FinalBuild)
+        if (OnlyFinalBuild && pageData.BuildStage != BuildStage.FinalBuild)
             return;
         if (pageData.IsDraftOrNotPublished)
             return;

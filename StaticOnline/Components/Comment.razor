@@ -2,7 +2,12 @@
 @code {
     [EditorRequired]
     [Parameter]
-    public string Author { get; set; }
+    public string Author { get; set; } = null!;
+
+    public Comment()
+    {
+        OnlyFinalBuild = false;
+    }
 
     protected override async Task OnChildContentParametersSetAsync(PageData page)
     {
