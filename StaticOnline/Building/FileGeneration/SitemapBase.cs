@@ -2,11 +2,22 @@
 
 abstract class SitemapBase : FileGeneratorBase
 {
+    public abstract RelUrl URL { get; }
+
+    public static void Init()
+    {
+        var txt = new SitemapTXT();
+        txt.AddGenerator(txt.URL);
+
+        var xml = new SitemapXML();
+        xml.AddGenerator(xml.URL);
+    }
+
     protected IEnumerable<PageData> SitemapPages()
     {
         var defaultRobots = Config.DefaultRobots;
 
-        foreach (var page in Site.Pages.All.OrderBy(p => p.Href))
+        foreach (var page in Builder.Pages.All.OrderBy(p => p.Href))
         {
             //default or page sitemap need to be set
             if ((page.Robots.Sitemap ?? defaultRobots.Sitemap) != true)

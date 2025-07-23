@@ -7,11 +7,11 @@ public static class WebApplicationExtensions
     /// </summary>
     public static void AddStaticOnline(this IServiceCollection services, SiteConfig config)
     {
-        config.Builder ??= new SiteBuilder(config);
+        config.SiteBuilder ??= new SiteBuilder(config);
 
         services.AddSingleton<SiteConfig>(config);
-        services.AddSingleton<SiteBuilder>(config.Builder);
-        services.AddTransient<PageData>(config.Builder.TransientPage);
+        services.AddSingleton<SiteBuilder>(config.SiteBuilder);
+        services.AddTransient<PageData>(config.SiteBuilder.TransientPage);
     }
 
     /// <summary>
@@ -22,24 +22,62 @@ public static class WebApplicationExtensions
     /// </summary>
     public static void BuildStaticOnline(this WebApplication app, SiteConfig config)
     {
-        //Feeds and sitemap
-        var fr = new FileBuilder(config.Builder);
-        foreach (var file in fr.GetGenerators())
+        if (config.BaseURL.Href != "")
         {
-            app.MapGet(file.URL.Href, file.Generate);
+            //Required for sites not located at root.
+            app.UsePathBase(config.BaseURL.Href + '/');
         }
+
+        //Feeds and sitemap
+        app.Use(async (http, next) =>
+        {
+            var url = config.BaseURL.Append(http.Request.Path);
+            var page = config.SiteBuilder.Pages.GetExisting(url);
+            if (page?.Generator == null)
+            {
+                await next(http);
+                return;
+            }
+
+            var content = await page.Generator.Generate(url);
+            await http.Response.WriteAsync(content);
+        });
+
+        //Images
+        app.MapGet("media/{filename}", (string filename) => config.SiteBuilder.Image.MapGetContent(filename));
 
         //Start building once the webserver is running
         var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(async () =>
         {
-            await config.Builder.Build(app);
-            
-            var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
-            logger.LogInformation("Generation complete");
+            var stopwatch = Stopwatch.StartNew();
 
-            if (config.ExitAfterBuildComplete)
-                lifetime.StopApplication();
+            var url = app.Urls.First() + config.BaseURL.Href + "/";
+
+            await config.SiteBuilder.Build(url);
+
+            stopwatch.Stop();
+
+            var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("StaticOnline");
+            logger.LogInformation($"Generation complete in {stopwatch.Elapsed.TotalSeconds:0.00} seconds");
+
+            switch (config.BuildConfig.AfterBuild)
+            {
+                case AfterBuildConfig.Exit:
+                    lifetime.StopApplication();
+                    break;
+
+                case AfterBuildConfig.LaunchBrowser:
+                    var psi = new ProcessStartInfo(url) { UseShellExecute = true };
+                    Process.Start(psi);
+                    break;
+
+                case AfterBuildConfig.KeepRunning:
+                    break;
+
+                default:
+                    throw new NotImplementedException(config.BuildConfig.AfterBuild.ToString());
+            }
         });
     }
 

@@ -15,7 +15,7 @@
     public PageData? PageRecursion { get; set; }
 }
 @{
-    //Prevent recusion
+    //Prevent recursion
     if (PageRecursion != null)
         return;
     if (Page.IsUpdate)
@@ -24,9 +24,8 @@
         throw new ArgumentException($"{nameof(Page)}.{nameof(Page.BlazorType)} is null.");
 
     //Optimize to not render markdown until final render
-    var useMarkdown =
-        (Page.BuildStage == BuildStage.FinalBuild) &&
-        (Markdown ?? Page.Markdown ?? SiteBuilder.Instance.Config.Markdown.BlogPost);
+    var useMarkdown = Components.Markdown.UseMarkdown(Markdown, Page);
+    
 }
 <CascadingValue Name="@CascadingPageName" Value="Page">
     @if (useMarkdown)

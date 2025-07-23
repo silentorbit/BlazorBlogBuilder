@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SilentOrbit.StaticOnline.Components;
+using SilentOrbit.StaticOnline.Building.FileGeneration;
 
 namespace SilentOrbit.StaticOnline.Config;
 
@@ -17,6 +15,18 @@ public sealed class PageData
     /// Generated URL until the post is first run.
     /// </summary>
     internal Url? BlogPostRandomURL { get; set; }
+
+    /// <summary>
+    /// Unique ID of each post, if set will be used in feeds.
+    /// </summary>
+    public string? ID { get; set; }
+
+    /// <summary>
+    /// Generator for the specific file content
+    /// </summary>
+    internal FileGeneratorBase? Generator { get; set; }
+
+    public HeaderConfig Head { get; set; } = new HeaderConfig();
 
     public string? UrlSnippet { get; set; }
 
@@ -45,8 +55,7 @@ public sealed class PageData
     public Author? Author { get; set; }
 
     public int LikeCount { get; set; }
-    public int CommentCount { get; set; }
-
+    public List<Comment> Comments { get; set; } = new();
 
     public Robots Robots { get; } = new();
 
@@ -73,6 +82,7 @@ public sealed class PageData
 
     /// <summary>
     /// This page will not be generated if set to true;
+    /// Page is also considered a draft if <see cref="Published"/> is in the future.
     /// </summary>
     public bool IsDraft { get; set; }
 
@@ -87,6 +97,11 @@ public sealed class PageData
     {
         get
         {
+            if (SiteBuilder.Instance.Config.BuildConfig.GenerateDraft)
+                return false; //Override all below settings
+            if (BuildStage == BuildStage.Added)
+                return false; //Wait for preprocessing
+
             if (IsDraft)
                 return true;
             //Missing Published only makes BlogPost a draft.
@@ -114,13 +129,14 @@ public sealed class PageData
 
     internal BuildStage BuildStage { get; set; } = BuildStage.Added;
 
+    public bool PreScan => BuildStage == BuildStage.PreScan;
     /// <summary>
     /// False during PreScanning
     /// True when the final file is generated.
     /// </summary>
-    public bool FinalBuild { get; set; }
+    public bool FinalBuild => BuildStage == BuildStage.FinalBuild;
 
-    internal Type? BlazorType { get; set; }
+    public Type? BlazorType { get; internal set; }
 
     #endregion
 

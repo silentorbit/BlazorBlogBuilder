@@ -1,16 +1,25 @@
-﻿namespace SilentOrbit.StaticOnline.Config.Data;
+﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
+using System.Text.Encodings.Web;
+
+namespace SilentOrbit.StaticOnline.Config.Data;
 
 public class Tag
 {
     static Dictionary<string, Tag> tags = new();
 
-    public string Href { get; }
-    public string ID { get; }
     public string Name { get; }
+    /// <summary>
+    /// Lowercase URL safe version of <see cref="Name"/>.
+    /// </summary>
+    public string ID { get; }
+    public RelUrl URL { get; }
+
+    public FeedList Feed { get; }
+
     /// <summary>
     /// Number of pages using the tag
     /// </summary>
-    public int Size { get; set; }
+    public int PageCount { get; set; }
 
     public static IEnumerable<Tag> All => tags.Values;
 
@@ -21,18 +30,45 @@ public class Tag
             name.Contains("\t"))
             throw new ArgumentException("Single tag may not contain separator: space, comma, tab");
 
-        if (tags.TryGetValue(name, out var tag))
+        var id = GetID(name);
+
+        if (tags.TryGetValue(id, out var tag))
             return tag;
 
-        var t = tags[name] = new Tag(name);
+        var t = new Tag(name);
+        tags[id] = t;
         return t;
+    }
+
+    public static Tag ByID(string id)
+    {
+        if (tags.TryGetValue(id, out var tag))
+            return tag;
+
+        throw new NotImplementedException("Must be created by name before it can be found by ID");
     }
 
     Tag(string name)
     {
-        Href = SiteBuilder.Instance.Config.BaseURL.Append("/tags/" + name).Href;
-        ID = name.ToLowerInvariant();
+        ID = GetID(name);
         Name = name;
+        URL = SiteBuilder.Instance.Config.TagURL(ID);
+
+        Feed = new();
+        FeedGeneratorBase.Init(this);
+    }
+
+    static string GetID(string name)
+    {
+        if (name.Contains(" ") ||
+            name.Contains(",") ||
+            name.Contains("\t"))
+            throw new ArgumentException("Single tag may not contain separator: space, comma, tab");
+
+        name = name.ToLowerInvariant();
+        name = UrlEncoder.Default.Encode(name);
+        return name;
+
     }
 
     public static implicit operator Tag(string name)

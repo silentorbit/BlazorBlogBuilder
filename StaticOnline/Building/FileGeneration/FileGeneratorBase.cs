@@ -5,13 +5,17 @@
 /// </summary>
 abstract class FileGeneratorBase
 {
-    internal SiteBuilder Site { get; set; } = null!;
-    
-    protected SiteConfig Config => Site.Config;
+    internal SiteBuilder Builder => SiteBuilder.Instance;
 
-    public abstract RelUrl URL { get; }
+    protected SiteConfig Config => SiteBuilder.Instance.Config;
 
-    public virtual void Init() { }
+    protected void AddGenerator(RelUrl url)
+    {
+        var page = Builder.Pages.GetOrCreate(url);
+        page.BuildLast = true;
+        page.Generator = this;
+        page.BuildStage = BuildStage.PreScan; //Ready for FinalBuild
+    }
 
-    public abstract string? Generate();
+    public abstract Task<string> Generate(RelUrl url);
 }

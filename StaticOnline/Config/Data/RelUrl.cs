@@ -3,11 +3,16 @@
 public class RelUrl : Url
 {
     public readonly BaseUrl BaseUrl;
+    
+    /// <summary>
+    /// Relative to <see cref="BaseUrl"/>
+    /// </summary>
     public string Href { get; }
 
     public RelUrl(BaseUrl baseUrl, string path) : base(FullURL(baseUrl, path))
     {
         this.BaseUrl = baseUrl;
+        Debug.Assert(path.StartsWith('/') == false);
         this.Href = path.TrimEnd('/');
         Debug.Assert(Href.StartsWith('/') == false);
     }
@@ -16,7 +21,6 @@ public class RelUrl : Url
     {
         this.BaseUrl = baseUrl;
         this.Href = baseUrl.GetRelativePath(url);
-        Debug.Assert(Href.StartsWith('/') == false);
     }
 
     static Uri FullURL(BaseUrl baseUrl, string path)

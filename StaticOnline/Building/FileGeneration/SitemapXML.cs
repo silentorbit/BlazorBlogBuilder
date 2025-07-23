@@ -8,19 +8,19 @@ class SitemapXML : SitemapBase
 
     static readonly XNamespace ns = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9");
 
-    public override string Generate()
+    public override Task<string> Generate(RelUrl url)
     {
         var urlset = new XElement(ns + "urlset");
 
         foreach (var page in SitemapPages())
         {
-            var url = new XElement(ns + "url",
+            var urlElement = new XElement(ns + "url",
                 new XElement(ns + "loc", page.URL));
-            AddElementIf(url, "lastmod", page.Modified);
-            urlset.Add(url);
+            AddElementIf(urlElement, "lastmod", page.Modified);
+            urlset.Add(urlElement);
         }
 
-        return urlset.ToUtf8String(true);
+        return Task.FromResult(urlset.ToUtf8String());
     }
 
     const string dateFormat = "yyyy-MM-dd";

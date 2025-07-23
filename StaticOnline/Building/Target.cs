@@ -1,32 +1,49 @@
 ﻿namespace SilentOrbit.StaticOnline.Building;
 
-class Target(SiteBuilder site)
+class Target(SiteConfig config)
 {
-    readonly DirPath rootDir = site.Config.Target;
-    
-    internal void Store(Url url, string content)
+    internal void Store(RelUrl url, FilePath file)
     {
-        var urlPath = site.Config.BaseURL.GetRelativePath(url);
+        var target = CreateTarget(url);
+        target.Parent.CreateDirectory();
+        file.CopyTo(target);
+    }
 
-        var ext = Path.GetExtension(urlPath);
+    internal void Store(RelUrl url, string content)
+    {
+        var target = CreateTarget(url);
+        target.WriteAllText(content);
+    }
+
+    internal void Store(RelUrl url, byte[] content)
+    {
+        var target = CreateTarget(url);
+        target.WriteAllBytes(content);
+    }
+
+    internal FilePath GetTarget(RelUrl url)
+    {
+        var rootDir = config.BuildConfig.Target;
+
         FilePath target;
+
+        var ext = Path.GetExtension(url.Href);
         if (ext == "")
-            target = rootDir.CombineFile(urlPath, "index.html");
+            target = rootDir.CombineFile(url.Href, "index.html");
         else
-            target = rootDir.CombineFile(urlPath);
+            target = rootDir.CombineFile(url.Href);
+
+        return target;
+    }
+
+    FilePath CreateTarget(RelUrl url)
+    {
+        var target = GetTarget(url);
 
         if (target.Exists())
             throw new Exception("File already exists: " + target);
 
-        target.WriteAllText(content);
-    }
-
-    public void StoreStatic(Url url, FilePath file)
-    {
-        var urlPath = site.Config.BaseURL.GetRelativePath(url);
-        var target = rootDir.CombineFile(urlPath);
-        target.Parent.CreateDirectory();
-        file.CopyTo(target);
+        return target;
     }
 
 }

@@ -3,19 +3,10 @@ using System.Text.Json;
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
-class JsonFeed : FileGeneratorBase
+class JsonFeed : FeedGeneratorBase
 {
-    public override RelUrl URL => Config.BaseURL + "feed.json";
-
-    public override void Init()
-    {
-        Site.Feed.JSON = new FeedList.Item
-        {
-            MimeType = "application/feed+json",
-            Title = Config.Title,
-            URL = URL
-        };
-    }
+    protected override string Filename { get; } = "feed.json";
+    protected override string MimeType { get; } = "application/feed+json";
 
     JsonSerializerOptions options = new JsonSerializerOptions()
     {
@@ -24,23 +15,23 @@ class JsonFeed : FileGeneratorBase
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    public override string Generate()
+    protected override async Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts)
     {
         var feed = new FeedData();
         feed.title = Config.Title;
         feed.description = Config.Description;
-        feed.home_page_url = Config.BaseURL.ToString();
-        feed.feed_url = URL.ToString();
+        feed.home_page_url = Config.BaseURL;
+        feed.feed_url = url;
         feed.authors = Generate(Config.Author);
 
-        foreach (var post in Site.Pages.Feed)
+        foreach (var post in posts)
         {
-            var content_html = post.Summary?.Value;
+            var content_html = await GetPostContent(post);
             feed.items.Add(new()
             {
-                id = post.URL.ToString(),
+                id = post.ID ?? post.URL,
                 title = post.Title,
-                url = post.URL.ToString(),
+                url = post.URL,
                 authors = Generate(post.Author),
                 date_published = post.Published?.ToRFC3339(),
                 date_modified = post.Modified?.ToRFC3339(),

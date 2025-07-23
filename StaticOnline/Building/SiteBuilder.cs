@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
+using SilentOrbit.StaticOnline.Building.FileGeneration;
+using System;
 
 namespace SilentOrbit.StaticOnline.Building;
 
@@ -9,16 +10,10 @@ public class SiteBuilder
 {
     internal static SiteBuilder Instance { get; private set; } = null!;
 
-    /// <summary>
-    /// True: is running as a live Blazor website.
-    /// False: is generating static files.
-    /// </summary>
-    public bool IsLive { get; }
-
     public SiteConfig Config { get; }
     public TagBuilder Tags { get; }
-    public FeedList Feed { get; } = new();
     public PageTracker Pages { get; }
+    public ImageBuilder Image { get; }
 
     /// <summary>
     /// All urls to build.
@@ -27,7 +22,6 @@ public class SiteBuilder
     internal Target Target { get; }
 
     static readonly ILogger logger = new CompactConsoleLogger<SiteBuilder>();
-    readonly FileBuilder fileRenderer;
     readonly BlazorIndex blazorIndex;
     readonly WWWRootBuilder wwwroot;
     readonly LinkScanner linkScanner;
@@ -38,24 +32,24 @@ public class SiteBuilder
             throw new Exception($"{nameof(SiteBuilder)} instance already created.");
         Instance = this;
 
-        config.WwwRoot ??= FindWwwRoot(config);
+        config.BuildConfig.WwwRoot ??= FindWwwRoot(config.BuildConfig);
 
         //public
         Config = config;
         Tags = new(this);
-        Pages = new(this);
+        Pages = new(config);
+        Image = new(config);
 
         //internal
-        Target = new(this);
+        Target = new(config);
 
         //private
-        fileRenderer = new FileBuilder(this);
         blazorIndex = new(this);
         wwwroot = new(this);
         linkScanner = new(this);
     }
 
-    static DirPath FindWwwRoot(SiteConfig config)
+    static DirPath FindWwwRoot(BuildConfig config)
     {
         var asmPath = new FilePath(config.AppType.Assembly.Location);
 
@@ -82,7 +76,7 @@ public class SiteBuilder
 
         logger.LogCritical(@$"Failed to find wwwroot near:
 {asmPath}
-You must configure {nameof(SiteConfig.WwwRoot)} in code.");
+You must configure {nameof(BuildConfig.WwwRoot)} in code.");
         throw new ArgumentException("Missing wwwroot path in config.");
     }
 
@@ -92,7 +86,7 @@ You must configure {nameof(SiteConfig.WwwRoot)} in code.");
         var path = new Uri(nm.Uri).AbsolutePath;
         var url = Config.BaseURL.HostURL.Append(path);
         var relUrl = new RelUrl(Config.BaseURL, url);
-        var page = Config.Builder.Pages.GetOrCreate(relUrl);
+        var page = Config.SiteBuilder.Pages.GetOrCreate(relUrl);
 
         //Only Blazor pages would inject a SitePage
         page.IsBlazor = true;
@@ -103,38 +97,35 @@ You must configure {nameof(SiteConfig.WwwRoot)} in code.");
 
     private HttpClient httpClient = null!;
 
-    public async Task Build(WebApplication app)
+    public async Task Build(Url url)
     {
-        httpClient = new HttpClient()
-        {
-            BaseAddress = new Uri(app.Urls.First() + Config.BaseURL.Href + "/")
-        };
+        httpClient = new HttpClient() { BaseAddress = new Uri(url.fullURL + "/") };
 
-        Config.Target.EmptyDirectory();
+        Config.BuildConfig.Target.EmptyDirectory();
 
         if (Target == null)
             throw new Exception($"Missing target in new {nameof(SiteBuilder)}().");
 
-        if (Config.NoGeneration)
+        if (Config.BuildConfig.NoGeneration)
         {
             //PreRender all Blazor pages
             //Otherwise the live pages need to be loaded twice
+
+            blazorIndex.Scan();
+
             await BuildBlazorPages();
         }
         else
         {
-            //Static files first to be able to hash them
             wwwroot.Build();
 
             blazorIndex.Scan();
 
-            fileRenderer.Scan();
+            FeedGeneratorBase.Init();
+            SitemapBase.Init();
 
             //Render all Blazor pages
             await BuildBlazorPages();
-
-            //Render indexes(feeds) last
-            fileRenderer.Generate();
         }
 
         //Change base url to work with live version
@@ -150,75 +141,85 @@ You must configure {nameof(SiteConfig.WwwRoot)} in code.");
             logger.LogDebug($"/{page.Href} (starting...)");
 
             var originalURL = page.URL;
-            string html = null!;
+            byte[] fileContent = null!;
 
             if (page.BuildStage == BuildStage.PreScan)
             {
                 if (page.BlazorType == null)
-                    await RenderPage(page);
+                {
+                    fileContent = await RenderPage(page);
+                    if (page.IsBlazor == false)
+                    {
+                        //No need to run a second stage for non blazor files.
+                        page.BuildStage = BuildStage.FinalBuild;
+                    }
+                }
                 else
-                    await new BlazorRenderer(this, page).RenderComponent(); //Only render the component
+                {
+                    //Only render the component, not the entire page during PreScan
+                    await new BlazorRenderer(this, page).RenderComponent();
+                }
             }
             else
             {
                 Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
                 //BuildFinal
-                html = await RenderPage(page);
+                fileContent = await RenderPage(page);
             }
 
             if (page.InFeed && !page.IsDraftOrNotPublished && page.URL == page.BlogPostRandomURL)
                 page.URL = Config.PostURL(page);
 
-            if (page.URL != originalURL)
-            {
-                logger.LogDebug($"New Path: /{page.Href}");
-                Pages.UpdatePageUrl(oldURL: originalURL, page);
-            }
-
             if (page.IsDraftOrNotPublished)
             {
                 logger.LogInformation($"Draft: /{page.Href}");
-                Pages.RemoveDraft(page);
+                page.BuildStage = BuildStage.Draft;
                 continue;
             }
 
-            if (page.BuildStage == BuildStage.PreScan)
+            if (page.BuildStage == BuildStage.FinalBuild)
             {
-                Pages.DonePreScan(page);
-            }
-            else
-            {
-                Debug.Assert(page.BuildStage == BuildStage.FinalBuild);
-
                 //BuildFinal
 
                 if (page.IsBlazor)
                 {
+                    var html = Encoding.UTF8.GetString(fileContent);
                     html = HtmlCleanup.Clean(html, Config);
+                    fileContent = Encoding.UTF8.GetBytes(html);
+
+                    linkScanner.Scan(html);
                 }
                 //Don't cleanup css,js...
 
-                Target.Store(page.URL, html);
+                Target.Store(page.URL, fileContent);
 
-                logger.LogInformation($"/{page.Href} ({html.Length:#,#} bytes)");
-
-                linkScanner.Scan(html);
-
-                Pages.DoneFinalBuild(page);
+                logger.LogInformation($"/{page.Href} ({fileContent.Length:#,#} bytes)");
             }
         }
     }
 
-    async Task<string> RenderPage(PageData page)
+    async Task<byte[]> RenderPage(PageData page)
     {
+        if (page.URL.HasQueryOrFragment)
+        {
+            Uri uri = page.URL;
+            throw new Exception($"Rendering of page({page.URL}) with Query({uri.Query}) or fragments({uri.Fragment}) is not supported, only render the bare URL({uri.AbsolutePath})");
+        }
+
+        byte[] data = null!;
         try
         {
-            return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
+            using var resp = await httpClient.GetAsync(page.Href, CancellationToken.None);
+            data = await resp.Content.ReadAsByteArrayAsync();
+            resp.EnsureSuccessStatusCode();
+            return data;
+            //return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
         }
         catch (HttpRequestException ex)
         {
             logger.LogCritical(ex, page.URL.Href);
-            Pages.FailBlazor(page);
+            var htmlResponse = Encoding.UTF8.GetString(data);
+            page.BuildStage = BuildStage.Fail;
             throw;
         }
     }

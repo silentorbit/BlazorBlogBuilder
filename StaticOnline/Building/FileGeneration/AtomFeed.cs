@@ -2,62 +2,55 @@
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
-class AtomFeed : FileGeneratorBase
+class AtomFeed : FeedGeneratorBase
 {
-    public override RelUrl URL => Config.BaseURL.Append("atom.xml");
-
-    public override void Init()
-    {
-        Site.Feed.Atom = new FeedList.Item
-        {
-            MimeType = "application/atom+xml",
-            Title = Config.Title,
-            URL = URL
-        };
-    }
+    protected override string Filename { get; } = "atom.xml";
+    protected override string MimeType { get; } = "application/atom+xml";
 
     static readonly XNamespace ns
         = XNamespace.Get("http://www.w3.org/2005/Atom");
 
-    public override string? Generate()
+    protected override async Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts)
     {
-        var lastModified = Site.Pages.Feed
+        var lastModified = posts
             .Select(p => p.Modified ?? p.Published)
             .Max();
 
         var feed = new XElement(ns + "feed",
-            new XElement(ns + "title", Site.Config.Title),
-            new XElement(ns + "subtitle", Site.Config.Description),
-            new XElement(ns + "id", Site.Config.BaseURL),
+            new XElement(ns + "title", Builder.Config.Title),
+            new XElement(ns + "subtitle", Builder.Config.Description),
+            new XElement(ns + "id", Builder.Config.BaseURL),
             new XElement(ns + "link",
-                new XAttribute("href", Site.Config.BaseURL)),
+                new XAttribute("href", Builder.Config.BaseURL)),
             new XElement(ns + "link",
-                new XAttribute("href", URL),
-                new XAttribute("rel", "self"))
+                new XAttribute("href", url),
+                new XAttribute("rel", "self")),
+            new XElement("base", Builder.Config.BaseURL.Href + "/")
             );
         AddElementIf(feed, "updated", lastModified);
 
-        foreach (var post in Site.Pages.Feed)
+        foreach (var post in posts)
         {
             var entry = new XElement(ns + "entry",
                 new XElement(ns + "title", post.Title),
                 new XElement(ns + "link",
                     new XAttribute("href", post.URL)),
-                new XElement(ns + "id", post.URL),
+                new XElement(ns + "id", post.ID ?? post.URL),
                 GetAuthor(post)
             );
-            entry.AddElement("summary", post.Summary?.Value)
+            if (Config.FeedContent >= FeedContent.Summary)
+            {
+                entry.AddElementIf("summary", post.Summary?.Value)
+                    ?.SetAttributeValue("type", "html");
+            }
+            entry.AddElementIf("content", await GetPostContent(post))
                 ?.SetAttributeValue("type", "html");
             AddElementIf(entry, "published", post.Published);
             AddElementIf(entry, "updated", post.Modified);
             feed.Add(entry);
         }
 
-        var doc = new XDocument(new XDeclaration("1.0", "utf-8", null), feed);
-
-        //doc.ToString will not include the <?xml version="1.0" encoding="utf-8"?>
-        //Which is needed for RSS feeds
-        return doc.ToString();
+        return feed.ToUtf8String();
     }
 
     static void AddElementIf(XElement feed, string v, Timestamp? timestamp)

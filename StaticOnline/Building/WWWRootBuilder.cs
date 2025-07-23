@@ -1,19 +1,17 @@
-﻿using SilentOrbit.Disk;
-
-namespace SilentOrbit.StaticOnline.Building;
+﻿namespace SilentOrbit.StaticOnline.Building;
 
 /// <summary>
 /// Copy static files from wwwroot to output.
 /// </summary>
 class WWWRootBuilder
 {
-    readonly SiteBuilder site;
+    readonly SiteBuilder builder;
     readonly DirPath targetRoot;
 
-    public WWWRootBuilder(SiteBuilder site)
+    public WWWRootBuilder(SiteBuilder builder)
     {
-        this.site = site;
-        targetRoot = site.Config.Target;
+        this.builder = builder;
+        targetRoot = builder.Config.BuildConfig.Target;
     }
 
     /// <summary>
@@ -21,18 +19,18 @@ class WWWRootBuilder
     /// </summary>
     internal void Build()
     {
-        CopyDir(site.Config.WwwRoot, targetRoot);
+        CopyDir(builder.Config.BuildConfig.WwwRoot, targetRoot);
     }
 
     void CopyDir(DirPath source, DirPath target)
     {
         foreach (var file in source.GetFiles())
         {
-            var relDiskPath = file - site.Config.WwwRoot;
+            var relDiskPath = file - builder.Config.BuildConfig.WwwRoot;
             var path = relDiskPath.RelativePath.Replace('\\', '/');
-            var url = site.Config.BaseURL.Append(path);
-            site.Target.StoreStatic(url, file);
-            site.Pages.DoneStatic(url);
+            var url = builder.Config.BaseURL.Append(path);
+            builder.Target.Store(url, file);
+            builder.Pages.DoneStatic(url);
         }
 
         //Subdirectories

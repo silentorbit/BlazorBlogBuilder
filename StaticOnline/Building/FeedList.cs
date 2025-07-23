@@ -10,7 +10,26 @@ public class FeedList : IEnumerable<FeedList.Item>
     {
         public string MimeType { get; set; } = null!;
         public string Title { get; set; } = null!;
-        public Url URL { get; set; } = null!;
+        public RelUrl URL { get; set; } = null!;
+    }
+
+    internal void Set(string mimeType, string title, RelUrl url)
+    {
+        Item item = new()
+        {
+            MimeType = mimeType,
+            Title = title,
+            URL = url
+        };
+        switch (item.MimeType)
+        {
+            case "application/rss+xml": RSS = item; break;
+            case "application/atom+xml": Atom = item; break;
+            case "application/feed+json": JSON = item; break;
+
+            default:
+                throw new NotImplementedException(item.MimeType);
+        }
     }
 
     IEnumerator<Item> IEnumerable<Item>.GetEnumerator()

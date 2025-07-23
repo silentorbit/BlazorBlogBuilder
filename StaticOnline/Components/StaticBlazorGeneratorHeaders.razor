@@ -5,7 +5,7 @@
 @inject PageData Page
 @code {
 
-    SiteBuilder builder => Builder ?? Config.Builder;
+    SiteBuilder builder => Builder ?? Config.SiteBuilder;
     SiteConfig config => Config ?? Builder.Config;
 
     string GetBaseHref()
@@ -19,10 +19,10 @@
     }
 }
 <base href="@GetBaseHref()" />
-@if (config.Favicon != null)
+@if (config.Head.Favicon != null)
 {
     @nl
-    <link rel="icon" type="@config.Favicon.MimeType" href="@config.Favicon.URL" />
+    <link rel="icon" type="@config.Head.Favicon.MimeType" href="@config.Head.Favicon.URL" />
 }
 @{
     var robotsContent = Page.Robots.GetContent(config);
@@ -32,13 +32,36 @@
     @nl
     <meta name="robots" content="@robotsContent" />
 }
-@foreach (var feed in builder.Feed)
+@{
+    var feedList = Page.Head.Feed ?? Config.Head.Feed;
+}
+@if (feedList != null)
 {
-    @nl
-    @FeedLink(feed)
+    @foreach (var feed in feedList)
+    {
+        @nl
+        @FeedLink(feed)
+    }
 }
 @if (Page.Redirect != null)
 {
     @nl
     <meta http-equiv="refresh" content="0; url=@Page.Redirect">
+}
+@{
+    //Enables https://indielogin.com/
+    var indieLoginUrl = Page.Head.IndieLogin ?? Config.Head.IndieLogin;
+}
+@if (indieLoginUrl != null)
+{
+    @nl
+    <link href="@indieLoginUrl" rel="me">
+}
+@{
+    var webmention = Page.Head.WebMention ?? Config.Head.WebMention;
+}
+@if (webmention != null)
+{
+    @nl
+    <link rel="webmention" href="@webmention" />
 }

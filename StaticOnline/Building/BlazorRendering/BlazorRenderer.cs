@@ -1,25 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
-using System;
 
 namespace SilentOrbit.StaticOnline.BlazorRendering;
 
 partial class BlazorRenderer
 {
-    readonly SiteBuilder site;
+    readonly SiteBuilder builder;
     readonly PageData page;
     readonly StaticNavigation nav;
 
-    public BlazorRenderer(SiteBuilder site, PageData page)
+    public BlazorRenderer(SiteBuilder builder, PageData page)
     {
-        this.site = site;
+        this.builder = builder;
         this.page = page;
-        nav = new StaticNavigation(site.Config.BaseURL);
+        nav = new StaticNavigation(builder.Config.BaseURL);
     }
 
     HtmlRenderer CreateHtmlRenderer()
@@ -30,8 +27,8 @@ partial class BlazorRenderer
         services.AddSingleton<INavigationInterception>(nav);
         services.AddSingleton<IScrollToLocationHash>(nav);
         services.AddSingleton<IJSRuntime>(new StaticJsRuntime());
-        services.AddSingleton<SiteConfig>(site.Config);
-        services.AddSingleton<SiteBuilder>(site);
+        services.AddSingleton<SiteConfig>(builder.Config);
+        services.AddSingleton<SiteBuilder>(builder);
         services.AddSingleton<PageData>(page);
 
         var serviceProvider = services.BuildServiceProvider();
@@ -43,7 +40,7 @@ partial class BlazorRenderer
     /// <summary>
     /// Running the component once to update its <see cref="PageData"/>
     /// </summary>
-    public async Task RenderComponent()
+    public async Task<string> RenderComponent()
     {
         await using var htmlRenderer = CreateHtmlRenderer();
         var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
@@ -51,6 +48,8 @@ partial class BlazorRenderer
             var output = await htmlRenderer.RenderComponentAsync(page.BlazorType!);
             return output.ToHtmlString();
         });
+
+        return html;
     }
 
     /// <summary>

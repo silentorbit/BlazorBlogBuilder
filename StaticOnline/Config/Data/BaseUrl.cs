@@ -1,21 +1,17 @@
-﻿
-using System;
-using System.Data;
-
-namespace SilentOrbit.StaticOnline.Config.Data;
+﻿namespace SilentOrbit.StaticOnline.Config.Data;
 
 public class BaseUrl : Url
 {
     internal void Replace(Uri baseAddress)
     {
-        Href = baseAddress.AbsolutePath;
+        Href = baseAddress.AbsolutePath.TrimEnd('/');
     }
 
     public string Href { get; private set; }
 
     public BaseUrl(Uri uri) : base(uri)
     {
-        Href = uri.AbsolutePath;
+        Href = uri.AbsolutePath.TrimEnd('/');
     }
 
     [return: NotNullIfNotNull(nameof(url))]

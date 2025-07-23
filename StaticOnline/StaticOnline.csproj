@@ -7,7 +7,7 @@
 		<RootNamespace>SilentOrbit.StaticOnline</RootNamespace>
 		<IsPackable>true</IsPackable>
 		<PackageId>SilentOrbit.StaticOnline</PackageId>
-		<Version>0.1.0.9</Version>
+		<Version>0.1.1.0</Version>
 		<Title>Static blog generation from Blazor</Title>
 		<Authors>SilentOrbit</Authors>
 		<PackageProjectUrl>https://github.com/silentorbit/StaticOnline</PackageProjectUrl>
@@ -26,8 +26,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MarkdownSharp" Version="2.0.5" />
+		<PackageReference Include="Markdig" Version="0.41.3" />
+		<!--<PackageReference Include="MarkdownSharp" Version="2.0.5" />-->
 		<PackageReference Include="SilentOrbit.SilentDisk" Version="0.9.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
 	</ItemGroup>
 
 </Project>

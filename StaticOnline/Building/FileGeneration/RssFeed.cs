@@ -4,57 +4,50 @@ namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 
 class RssFeed : FeedGeneratorBase
 {
-    public override RelUrl URL => Config.BaseURL.Append("rss.xml");
+    protected override string Filename { get; } = "rss.xml";
+    protected override string MimeType { get; } = "application/rss+xml";
 
-    public override void Init()
-    {
-        Site.Feed.RSS = new FeedList.Item
-        {
-            MimeType = "application/rss+xml",
-            Title = Config.Title,
-            URL = URL
-        };
-    }
-
-    const string dateFormat = "r";
-
-    public override string Generate()
+    protected override async Task<string> GenerateFeed(RelUrl url, IEnumerable<PageData> posts)
     {
         var rss = new XElement("rss",
             new XAttribute("version", "2.0"));
         var channel = new XElement("channel",
-            new XElement("title", Site.Config.Title),
-            new XElement("description", Site.Config.Description),
-            new XElement("link", Site.Config.BaseURL),
+            new XElement("title", Builder.Config.Title),
+            new XElement("description", Builder.Config.Description),
+            new XElement("link", Builder.Config.BaseURL),
+            new XElement("base", Builder.Config.BaseURL.Href + "/"),
             new XElement(XName.Get("link", "http://www.w3.org/2005/Atom"),
                 new XAttribute("rel", "self"),
-                new XAttribute("href", URL),
+                new XAttribute("href", url),
                 new XAttribute("type", "application/rss+xml"))
             );
         rss.Add(channel);
 
-        foreach (var post in Site.Pages.Feed)
+        foreach (var post in posts)
         {
             var item = new XElement("item",
-                new XElement("guid", post.URL),
+                new XElement("guid", post.ID ?? post.URL),
                 new XElement("title", post.Title),
                 new XElement("link", post.URL)
             );
-            item.AddElement("description", post.Summary?.Value);
+            var content = await GetPostContent(post);
+            item.AddElementIf("description", content ?? "");
             AddElementIf(item, "pubDate", post.Published);
             channel.Add(item);
         }
 
-        return rss.ToUtf8String(xmlHeader: false);
+        return rss.ToUtf8String();
     }
 
     static void AddElementIf(XElement feed, string v, Timestamp? published)
     {
         if (published == null)
             return;
+
         feed.Add(new XElement(
             feed.Name.Namespace + v,
-            published.ToString(dateFormat)));
+            published.ToString("r")));
     }
+
 
 }

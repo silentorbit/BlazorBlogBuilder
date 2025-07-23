@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SilentOrbit.StaticOnline.BlazorRendering;
 
 namespace SilentOrbit.StaticOnline.Components;
 
@@ -35,17 +33,18 @@ public partial class Update : ChildContentPostBase
         if (page.Modified < timestamp ?? true)
             page.Modified = timestamp;
 
-        var update = siteBuilder.Pages.GetOrCreate(url, build: false);
+        var update = siteBuilder.Pages.GetOrCreate(url);
         update.IsUpdate = true;
+        update.InFeed = true;
         update.IsDraft = page.IsDraftOrNotPublished;
         update.Published = Date;
         update.Modified = Date;
         update.Summary = await GetChildContent();
-        if (Markdown ?? siteConfig.Markdown.Update)
+        if (Markdown ?? siteConfig.BuildConfig.Markdown.Update)
             update.Summary = Components.Markdown.Transform(update.Summary);
 
-        update.InFeed = true;
         //update.BlazorType = BlogPost.BlazorType;
+        update.BuildStage = BuildStage.FinalBuild; //Already done, will not generate a single page.
         update.Title = Title ?? siteConfig.UpdateTitle(page);
     }
 

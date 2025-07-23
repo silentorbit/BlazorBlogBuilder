@@ -3,14 +3,12 @@
 /// <summary>
 /// Track all tags within the site
 /// </summary>
-public class TagBuilder(SiteBuilder site)
+public class TagBuilder(SiteBuilder builder)
 {
-    readonly Dictionary<string, Tag> tags = new();
-
     public PageData[] GetPages(Tag page)
     {
         var pages = new List<PageData>();
-        var list = site.Pages.All.Where(p => p.Tags.Contains(page)).ToArray();
+        var list = builder.Pages.All.Where(p => p.Tags.Contains(page)).ToArray();
         return list;
     }
 
@@ -18,18 +16,19 @@ public class TagBuilder(SiteBuilder site)
     {
         //Reset size
         foreach (var tag in Tag.All)
-            tag.Size = 0;
+            tag.PageCount = 0;
 
         var tags = new List<Tag>();
-        foreach(var p in site.Pages.All)
+        foreach (var p in builder.Pages.All)
         {
-            foreach(var tag in p.Tags)
+            foreach (var tag in p.Tags)
             {
-                tag.Size++;
+                tag.PageCount++;
                 if (tags.Contains(tag) == false)
                     tags.Add(tag);
             }
         }
+        tags.Sort((a, b) => a.ID.CompareTo(b.ID));
         return tags;
     }
 }

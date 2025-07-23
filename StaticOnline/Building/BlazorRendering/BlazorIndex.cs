@@ -6,19 +6,19 @@ namespace SilentOrbit.StaticOnline.Building.BlazorRendering;
 /// <summary>
 /// Initial scan of all razor files with @page attributes
 /// </summary>
-public class BlazorIndex(SiteBuilder site)
+public class BlazorIndex(SiteBuilder builder)
 {
     /// <summary>
     /// Inital scan for all blazor pages
     /// </summary>
     public void Scan()
     {
-        foreach (var type in site.Config.AppType.Assembly.GetTypes())
+        foreach (var type in builder.Config.BuildConfig.AppType.Assembly.GetTypes())
         {
             var urls = GetUrls(type);
             foreach (var url in urls)
             {
-                var page = site.Pages.GetOrCreate(url);
+                var page = builder.Pages.GetOrCreate(url);
                 page.BlazorType = type;
             }
 
@@ -30,7 +30,7 @@ public class BlazorIndex(SiteBuilder site)
             if (type.IsAssignableTo(typeof(BlogPost)))
             {
                 var url = BlogPostUrl(type);
-                var page = site.Pages.GetOrCreate(url);
+                var page = builder.Pages.GetOrCreate(url);
                 page.BlogPostRandomURL = url;
                 page.BlazorType = type;
                 page.InFeed = true;
@@ -58,7 +58,7 @@ public class BlazorIndex(SiteBuilder site)
                 //Skip templates with parameters
                 continue;
             }
-            yield return site.Config.BaseURL.Append(route.Template);
+            yield return builder.Config.BaseURL.Append(route.Template);
         }
     }
 
@@ -71,7 +71,7 @@ public class BlazorIndex(SiteBuilder site)
 
         //Can be anything as it will be replaced after PreScan.
         const string urlPrefix = "_static_online_post/";
-        var url = site.Config.BaseURL.Append(urlPrefix + hash);
+        var url = builder.Config.BaseURL.Append(urlPrefix + hash);
         return url;
     }
 }
