@@ -16,14 +16,14 @@ public class TagBuilder(SiteBuilder builder)
     {
         //Reset size
         foreach (var tag in Tag.All)
-            tag.Size = 0;
+            tag.PageCount = 0;
 
         var tags = new List<Tag>();
         foreach (var p in builder.Pages.All)
         {
             foreach (var tag in p.Tags)
             {
-                tag.Size++;
+                tag.PageCount++;
                 if (tags.Contains(tag) == false)
                     tags.Add(tag);
             }

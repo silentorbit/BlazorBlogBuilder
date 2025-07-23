@@ -19,7 +19,7 @@ public class Tag
     /// <summary>
     /// Number of pages using the tag
     /// </summary>
-    public int Size { get; set; }
+    public int PageCount { get; set; }
 
     public static IEnumerable<Tag> All => tags.Values;
 
