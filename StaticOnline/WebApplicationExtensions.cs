@@ -22,6 +22,12 @@ public static class WebApplicationExtensions
     /// </summary>
     public static void BuildStaticOnline(this WebApplication app, SiteConfig config)
     {
+        if (config.BaseURL.Href != "")
+        {
+            //Required for sites not located at root.
+            app.UsePathBase(config.BaseURL.Href + '/');
+        }
+
         //Feeds and sitemap
         app.Use(async (http, next) =>
         {
