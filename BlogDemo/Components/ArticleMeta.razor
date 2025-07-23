@@ -1,0 +1,18 @@
+﻿@code {
+    [EditorRequired]
+    [Parameter]
+    public PageData Post { get; set; }
+}
+
+<div class="meta">
+    @if (Post.Published != null)
+    {
+        <div>@Post.Published!.ToString("yyyy-MM-dd")</div>
+    }
+    <div class="tags">
+        @foreach (var tag in Post.Tags)
+        {
+            <a href="@tag.URL.Href">#@tag.Name</a>
+        }
+    </div>
+</div>

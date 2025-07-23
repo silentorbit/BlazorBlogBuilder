@@ -16,7 +16,10 @@ public class BlogConfig : SiteConfig<App> //Inherit the generic version of the b
             MimeType = "image/png"
         };
 
-        TimeZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
+        //TimeZone, hardcode your local ID to get a consistent build, regardless where it's building.
+        var timeZoneID = TimeZoneInfo.Local.Id;
+        TimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneID);
+        
         Title = "Blog Demo";
         Description = "This is a Blog built using StaticOnline";
 

@@ -1,7 +1,49 @@
 ﻿@page "/"
+@page "/page/{PaginationIndex:int}"
+@code {
+    [Parameter]
+    public int PaginationIndex { get; set; }
 
+    const int pageSize = 10;
+
+    PageData GetPageLink(string href)
+    {
+        var url = Site.BaseURL.Append(href);
+        return new() { URL = url };
+    }
+}
+@{
+    Page.Title = "Home";
+    Page.BuildLast = true;
+
+    var posts = SiteBuilder.Pages.BlogPosts
+        .Skip(PaginationIndex)
+        .Take(pageSize + 1) //Add one to know if there is need for next
+        .ToList();
+
+    PageData? prev = null;
+    PageData? next = null;
+    if (PaginationIndex > 0)
+        prev = GetPageLink($"/{PaginationIndex - pageSize}");
+    if (posts.Count == pageSize + 1)
+    {
+        next = GetPageLink($"/{PaginationIndex + pageSize}");
+        posts.RemoveAt(pageSize); //Remove extra item used to identify there being more
+    }
+}
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<main>
+    @foreach (var post in posts)
+    {
+        <ArticlePreview Post="post" />
+    }
+</main>
 
-Welcome to your new app.
+<aside id="updates">
+    <h1>Updates</h1>
+    @foreach (var update in SiteBuilder.Pages.Updates)
+    {
+        <ArticlePreview Post="update" />
+    }
+</aside>

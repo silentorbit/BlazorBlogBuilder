@@ -1,0 +1,41 @@
+﻿@page "/tags/"
+@page "/tags/{TagID}/"
+@using SilentOrbit.StaticOnline.Config.Data
+@code {
+    [Parameter]
+    public string? TagID { get; set; }
+}
+@{
+    Page.BuildLast = true;
+}
+@if (TagID == null)
+{
+    Page.Title = "Tags";
+
+    var tags = SiteBuilder.Tags.GetTags();
+
+    <div>
+        @foreach (var tag in tags)
+        {
+            <a class="tag" href="@tag.URL.Href">@tag.Name (@tag.PageCount)</a>
+        }
+    </div>
+}
+else
+{
+    var pageTag = Tag.ByName(TagID);
+    Page.Title = "#" + pageTag.Name;
+    Page.Head.Feed = pageTag.Feed;
+
+    var pages = SiteBuilder.Tags.GetPages(pageTag);
+
+    <article>
+        <h1>@Page.Title</h1>
+        <p>@pages.Length posts.</p>
+    </article>
+
+    @foreach (var p in pages)
+    {
+        <ArticlePreview Post="p" />
+    }
+}

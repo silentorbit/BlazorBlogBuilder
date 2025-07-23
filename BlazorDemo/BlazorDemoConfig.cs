@@ -17,7 +17,10 @@ public class BlazorDemoConfig : SiteConfig<App>
             MimeType = "image/png"
         };
 
-        TimeZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
+        //TimeZone, hardcode your local ID to get a consistent build, regardless where it's building.
+        var timeZoneID = TimeZoneInfo.Local.Id;
+        TimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneID);
+        
         Title = "Demo";
         Description = "This is a Demo";
 

@@ -1,0 +1,28 @@
+﻿@page "/comment/send/"
+<section class="comment">
+    <h1>Sending Comment</h1>
+    <p><a id="comment-link" data-comment-email="@Site.CommentEmail">Click this link to start sending your comment via email...</a></p>
+</section>
+<script>
+    var sendLink = document.getElementById("comment-link");
+    if (sendLink) {
+        var c = JSON.parse(decodeURI(window.location.hash.substring(1)));
+
+        var subject = "Comment on " + c.articleTitle;
+        var body = "Hi\n\n" +
+            "I loved your post at " + c.articleUrl + "\n" +
+            "Specifically...\n\n" +
+            c.comment + "\n\n" +
+            "When posting my comment, please refer to me as: " + c.author;
+
+        var mailto = "mailto:" + sendLink.dataset.commentEmail
+            + "?subject=" + encodeURIComponent(subject)
+            + "&body=" + encodeURIComponent(body);
+
+        sendLink.href = mailto;
+
+        setTimeout(function(){
+            window.location.href = mailto;
+        }, 20);
+    }
+</script>

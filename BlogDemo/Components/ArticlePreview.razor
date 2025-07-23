@@ -1,0 +1,12 @@
+﻿@code {
+    [EditorRequired]
+    [Parameter]
+    public PageData Post { get; set; }
+}
+
+<article>
+    <h1><a href="@Post.Href">@Post.Title</a></h1>
+    @Post.Summary
+    <p><a class="readmore" href="@Post.Href">Read more...</a></p>
+    <ArticleMeta Post="Post" />
+</article>

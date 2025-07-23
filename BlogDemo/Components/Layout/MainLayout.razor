@@ -1,3 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<PageTitle>@Page.Title - @Site.Title</PageTitle>
+
+<header>
+    <h1>@Site.Title</h1>
+    <div>@Site.Description</div>
+    <nav>
+        <a href="">Start</a>
+        <a href="#updates">Updates</a>
+    </nav>
+</header>
+
+@if (Markdown.UseMarkdownLayout(Page))
+{
+    <Markdown>
+        @Body
+    </Markdown>
+}
+else
+{
+    @Body
+}

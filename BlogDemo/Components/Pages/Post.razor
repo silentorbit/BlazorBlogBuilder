@@ -1,0 +1,20 @@
+﻿@page "/post/{Date}/{Snippet}"
+@code {
+    [Parameter]
+    public string Date { get; set; } = null!;
+    [Parameter]
+    public string Snippet { get; set; } = null!;
+}
+<article>
+    <h1>@Page.Title</h1>
+    <PageRender Page="Page" />
+    <ArticleMeta Post="Page" />
+</article>
+
+@if (Site.CommentEmail != null)
+{
+    <div class="comments">
+        <h1>Comments</h1>
+        <Comments></Comments>
+    </div>
+}
