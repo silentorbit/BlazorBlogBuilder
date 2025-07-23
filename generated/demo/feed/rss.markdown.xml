@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/static-online/demo/feed/rss.xsl"?>
+<rss version="2.0">
+  <channel>
+    <title>Demo</title>
+    <description>This is a Demo</description>
+    <link>https://www.silentorbit.com/static-online/demo</link>
+    <base>/static-online/demo/</base>
+    <link rel="self" href="https://www.silentorbit.com/static-online/demo/feed/rss.markdown.xml" type="application/rss+xml" xmlns="http://www.w3.org/2005/Atom" />
+    <item>
+      <guid>https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E</guid>
+      <title>Markdown in &lt;Summary&gt; and &lt;Update&gt;</title>
+      <link>https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E</link>
+      <description>&lt;p&gt;# The default can be overridden by &lt;code&gt;Markdown="false"&lt;/code&gt; or &lt;code&gt;Markdown="true"&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Sat, 12 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E</guid>
+      <title>&lt;Markdown&gt;</title>
+      <link>https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E</link>
+      <description>&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Fri, 11 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default</guid>
+      <title>Markdown by default</title>
+      <link>https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default</link>
+      <description>&lt;p&gt;This post was written in markdown by default thanks to &lt;code&gt;SiteConfig.BuildConfig.Markdown.BlogPost = true&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Thu, 10 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

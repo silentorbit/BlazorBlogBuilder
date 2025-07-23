@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/static-online/demo/feed/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo</loc>
+    <lastmod>2025-07-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/blog/second</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/blog/summary</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post</loc>
+    <lastmod>2025-07-05</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/post/2025-07-04/summary_and_updates</loc>
+    <lastmod>2025-07-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/post/2025-07-05/render_summary_in_the_post</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E</loc>
+    <lastmod>2025-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/updates</loc>
+  </url>
+  <url>
+    <loc>https://www.silentorbit.com/static-online/demo/weather</loc>
+  </url>
+</urlset>

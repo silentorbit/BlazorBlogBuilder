@@ -1,0 +1,11 @@
+https://www.silentorbit.com/static-online/demo
+https://www.silentorbit.com/static-online/demo/blog/second
+https://www.silentorbit.com/static-online/demo/blog/summary
+https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post
+https://www.silentorbit.com/static-online/demo/post/2025-07-04/summary_and_updates
+https://www.silentorbit.com/static-online/demo/post/2025-07-05/render_summary_in_the_post
+https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default
+https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E
+https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E
+https://www.silentorbit.com/static-online/demo/updates
+https://www.silentorbit.com/static-online/demo/weather

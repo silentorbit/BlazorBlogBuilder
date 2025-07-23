@@ -1,0 +1,22 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Demo",
+  "description": "This is a Demo",
+  "home_page_url": "https://www.silentorbit.com/static-online/demo",
+  "feed_url": "https://www.silentorbit.com/static-online/demo/feed/feed.first.json",
+  "authors": [
+    {
+      "name": "Demo"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post",
+      "title": "First Post",
+      "date_published": "2025-07-01 00:00:00+02:00",
+      "date_modified": "2025-07-05 12:00:00+02:00",
+      "content_html": "<p>By using <code>@inherits BlogPost</code> the page will be included in the list of <strong>posts and the feeds</strong>.</p>\n<p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post\">Read more...</a></p>"
+    }
+  ]
+}

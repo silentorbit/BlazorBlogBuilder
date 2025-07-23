@@ -1,0 +1,24 @@
+﻿@page "/updates/"
+@{
+    Page.Title = "Updates";
+    Page.BuildLast = true;
+}
+
+<h1>Updates to blog posts and other pages</h1>
+
+<Markdown>
+    Subscribe via one of the feeds:
+
+    - [RSS](feed/rss.xml)
+    - [Atom](feed/atom.xml)
+    - [JSON](feed/feed.json)
+
+</Markdown>
+
+@foreach (var post in SiteBuilder.Pages.Updates)
+{
+    <hr />
+    <h2>@post.Published?.ToString("yyyy-MM-dd") @post.Title</h2>
+    <div>@post.Summary</div>
+    <p><a href="@post.Href">Read more</a></p>
+}

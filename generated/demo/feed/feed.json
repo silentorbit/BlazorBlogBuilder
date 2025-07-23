@@ -1,0 +1,66 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Demo",
+  "description": "This is a Demo",
+  "home_page_url": "https://www.silentorbit.com/static-online/demo",
+  "feed_url": "https://www.silentorbit.com/static-online/demo/feed/feed.json",
+  "authors": [
+    {
+      "name": "Demo"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E",
+      "title": "Markdown in <Summary> and <Update>",
+      "date_published": "2025-07-13 00:00:00+02:00",
+      "date_modified": "2025-07-13 12:01:00+02:00",
+      "content_html": "<p># The default can be overridden by <code>Markdown=\"false\"</code> or <code>Markdown=\"true\"</code>.</p><p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-13/markdown_in_%3Csummary%3E_and_%3Cupdate%3E\">Read more...</a></p>"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E",
+      "title": "<Markdown>",
+      "date_published": "2025-07-12 00:00:00+02:00",
+      "content_html": "<p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-12/%3Cmarkdown%3E\">Read more...</a></p>"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default",
+      "title": "Markdown by default",
+      "date_published": "2025-07-11 00:00:00+02:00",
+      "content_html": "<p>This post was written in markdown by default thanks to <code>SiteConfig.BuildConfig.Markdown.BlogPost = true</code>.</p>\n<p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-11/markdown_by_default\">Read more...</a></p>"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-05/render_summary_in_the_post",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-05/render_summary_in_the_post",
+      "title": "Render Summary in the post",
+      "date_published": "2025-07-05 00:00:00+02:00",
+      "content_html": "<p>This summary, shown in feeds and summaries,\n<strong>is also shown</strong> in the post when using <code>&amp;lt;Summary Render&amp;gt;</code>.</p>\n<p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-05/render_summary_in_the_post\">Read more...</a></p>"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-04/summary_and_updates",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-04/summary_and_updates",
+      "title": "Summary and updates.",
+      "date_published": "2025-07-04 00:00:00+02:00",
+      "date_modified": "2025-07-04 11:00:00+02:00",
+      "content_html": "<p>This summary is not shown on the post.\nOnly in the feeds and the summary page.</p>\n<p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-04/summary_and_updates\">Read more...</a></p>"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/blog/second",
+      "url": "https://www.silentorbit.com/static-online/demo/blog/second",
+      "title": "Second post",
+      "date_published": "2025-07-02 00:00:00+02:00",
+      "content_html": "<p>Without inheriting the type BlogPost the following is needed to make it appear as a blog post:</p>\n<p><a href=\"https://www.silentorbit.com/static-online/demo/blog/second\">Read more...</a></p>"
+    },
+    {
+      "id": "https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post",
+      "url": "https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post",
+      "title": "First Post",
+      "date_published": "2025-07-01 00:00:00+02:00",
+      "date_modified": "2025-07-05 12:00:00+02:00",
+      "content_html": "<p>By using <code>@inherits BlogPost</code> the page will be included in the list of <strong>posts and the feeds</strong>.</p>\n<p><a href=\"https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post\">Read more...</a></p>"
+    }
+  ]
+}

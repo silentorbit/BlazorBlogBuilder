@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/static-online/demo/feed/atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Demo</title>
+  <subtitle>This is a Demo</subtitle>
+  <id>https://www.silentorbit.com/static-online/demo</id>
+  <link href="https://www.silentorbit.com/static-online/demo" />
+  <link href="https://www.silentorbit.com/static-online/demo/feed/atom.first.xml" rel="self" />
+  <base xmlns="">/static-online/demo/</base>
+  <updated>2025-07-05T12:00:00+02:00</updated>
+  <entry>
+    <title>First Post</title>
+    <link href="https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post" />
+    <id>https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post</id>
+    <author>
+      <name>Demo</name>
+    </author>
+    <summary type="html">&lt;p&gt;By using &lt;code&gt;@inherits BlogPost&lt;/code&gt; the page will be included in the list of &lt;strong&gt;posts and the feeds&lt;/strong&gt;.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;By using &lt;code&gt;@inherits BlogPost&lt;/code&gt; the page will be included in the list of &lt;strong&gt;posts and the feeds&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</content>
+    <published>2025-07-01T00:00:00+02:00</published>
+    <updated>2025-07-05T12:00:00+02:00</updated>
+  </entry>
+</feed>

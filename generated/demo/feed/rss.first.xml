@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/static-online/demo/feed/rss.xsl"?>
+<rss version="2.0">
+  <channel>
+    <title>Demo</title>
+    <description>This is a Demo</description>
+    <link>https://www.silentorbit.com/static-online/demo</link>
+    <base>/static-online/demo/</base>
+    <link rel="self" href="https://www.silentorbit.com/static-online/demo/feed/rss.first.xml" type="application/rss+xml" xmlns="http://www.w3.org/2005/Atom" />
+    <item>
+      <guid>https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post</guid>
+      <title>First Post</title>
+      <link>https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post</link>
+      <description>&lt;p&gt;By using &lt;code&gt;@inherits BlogPost&lt;/code&gt; the page will be included in the list of &lt;strong&gt;posts and the feeds&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/demo/post/2025-07-01/first_post"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Mon, 30 Jun 2025 22:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
