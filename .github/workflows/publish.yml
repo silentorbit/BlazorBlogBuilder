@@ -66,6 +66,7 @@ jobs:
       OUTPUT: _output
       OUTPUT_PATH: _output/${{ vars.OUTPUT_PATH }}
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     steps:
 
     - uses: actions/setup-dotnet@v4
