@@ -1,0 +1,39 @@
+﻿@code {
+    [Inject]
+    public PageData _Page { get; set; } = null!;
+
+    [Inject]
+    public SiteConfig _Site { get; set; } = null!;
+
+    [CascadingParameter]
+    public PageData? Post { get; set; }
+}
+@{
+    var post = Post ?? _Page;
+}
+
+
+@foreach (var comment in post.Comments)
+{
+    <section class="comment">
+        @comment.Text
+        <div class="meta">@comment.Author</div>
+    </section>
+}
+
+<div class="next-comment" data-comment-url="@post.URL"></div>
+
+<section class="comment">
+    <p><a href="@CommentLink()">Send a comment by email...</a></p>
+</section>
+
+<form data-comment-url="@post.URL" data-comment-title="@post.Title">
+    <section class="comment">
+        <textarea placeholder="Write your comment here..." required></textarea>
+        <div class="meta">
+            <input class="comment_author" placeholder="Show me as" required />
+            <button>Preview</button>
+        </div>
+    </section>
+</form>
+
