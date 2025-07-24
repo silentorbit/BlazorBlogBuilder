@@ -7,7 +7,7 @@
 		<RootNamespace>SilentOrbit.StaticOnline</RootNamespace>
 		<IsPackable>true</IsPackable>
 		<PackageId>SilentOrbit.StaticOnline</PackageId>
-		<Version>0.1.0.8</Version>
+		<Version>0.1.1.1</Version>
 		<Title>Static blog generation from Blazor</Title>
 		<Authors>SilentOrbit</Authors>
 		<PackageProjectUrl>https://github.com/silentorbit/StaticOnline</PackageProjectUrl>
