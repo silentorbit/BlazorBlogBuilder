@@ -17,6 +17,8 @@ public class HeaderConfig
 
     public Favicon? Favicon { get; set; }
 
+    public Robots Robots { get; } = new();
+
     /// <summary>
     /// See: https://indielogin.com/setup
     /// 

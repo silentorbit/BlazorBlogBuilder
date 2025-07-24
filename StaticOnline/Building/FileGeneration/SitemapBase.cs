@@ -20,15 +20,15 @@ abstract class SitemapBase : FileGeneratorBase
         foreach (var page in Builder.Pages.All.OrderBy(p => p.Href))
         {
             //default or page sitemap need to be set
-            if ((page.Robots.Sitemap ?? defaultRobots.Sitemap) != true)
+            if ((page.Sitemap ?? Config.DefaultSitemap) == false)
                 continue;
 
             //Remove robots: noindex
-            if ((page.Robots.NoIndex ?? defaultRobots.NoIndex) == true)
+            if ((page.Head.Robots.NoIndex ?? defaultRobots.NoIndex) == true)
                 continue;
 
             //Remove redirects, unless page sitemap is set explicitly
-            if (page.Redirect != null && page.Robots.Sitemap == null)
+            if (page.Redirect != null && page.Sitemap == null)
                 continue;
 
             //Skip updates, links inside of pages.

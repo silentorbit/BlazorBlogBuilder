@@ -25,7 +25,7 @@
     <link rel="icon" type="@config.Head.Favicon.MimeType" href="@config.Head.Favicon.URL" />
 }
 @{
-    var robotsContent = Page.Robots.GetContent(config);
+    var robotsContent = Page.Head.Robots.GetContent(config);
 }
 @if (robotsContent != null)
 {
