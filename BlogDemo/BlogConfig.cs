@@ -19,7 +19,7 @@ public class BlogConfig : SiteConfig<App> //Inherit the generic version of the b
         //TimeZone, hardcode your local ID to get a consistent build, regardless where it's building.
         var timeZoneID = TimeZoneInfo.Local.Id;
         TimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneID);
-        
+
         Title = "Blog Demo";
         Description = "This is a Blog built using StaticOnline";
 
@@ -27,8 +27,8 @@ public class BlogConfig : SiteConfig<App> //Inherit the generic version of the b
         DefaultRobots = new()
         {
             NoTranslate = true,
-            Sitemap = true,
         };
+        DefaultSitemap = true;
         Author = new() { Name = "Blog Author", };
 
         BuildConfig.Markdown.All = true;
