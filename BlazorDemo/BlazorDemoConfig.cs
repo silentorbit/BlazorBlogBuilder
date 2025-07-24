@@ -20,7 +20,7 @@ public class BlazorDemoConfig : SiteConfig<App>
         //TimeZone, hardcode your local ID to get a consistent build, regardless where it's building.
         var timeZoneID = TimeZoneInfo.Local.Id;
         TimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneID);
-        
+
         Title = "Demo";
         Description = "This is a Demo";
 
@@ -28,8 +28,8 @@ public class BlazorDemoConfig : SiteConfig<App>
         DefaultRobots = new()
         {
             NoTranslate = true,
-            Sitemap = true,
         };
+        DefaultSitemap = true;
         Author = new() { Name = "Demo", };
 
         BuildConfig.Markdown.All = true;
