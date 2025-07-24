@@ -17,7 +17,7 @@ public partial class Update : ChildContentPostBase
     [CascadingParameter(Name = PageRender.CascadingPageName)]
     private PageData? PageCascadingUpdate { get; set; }
 
-    string anchorName = null!;
+    protected string anchorName { get; private set; } = null!;
 
     protected override async Task OnChildContentParametersSetAsync(PageData page)
     {
