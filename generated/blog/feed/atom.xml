@@ -7,7 +7,18 @@
   <link href="https://www.silentorbit.com/static-online/blog" />
   <link href="https://www.silentorbit.com/static-online/blog/feed/atom.xml" rel="self" />
   <base xmlns="">/static-online/blog/</base>
-  <updated>2025-07-23T19:00:00+02:00</updated>
+  <updated>2025-07-24T00:00:00+02:00</updated>
+  <entry>
+    <title>Update Home</title>
+    <link href="https://www.silentorbit.com/static-online/blog#2025-07-24" />
+    <id>https://www.silentorbit.com/static-online/blog#2025-07-24</id>
+    <author>
+      <name>Blog Author</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/blog#2025-07-24"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</content>
+    <published>2025-07-24T00:00:00+02:00</published>
+    <updated>2025-07-24T00:00:00+02:00</updated>
+  </entry>
   <entry>
     <title>Update Growth Through Building</title>
     <link href="https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth#2025-07-23T19:00" />
@@ -35,6 +46,20 @@
 &lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth#2025-07-23T06:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</content>
     <published>2025-07-23T06:00:00+02:00</published>
     <updated>2025-07-23T06:00:00+02:00</updated>
+  </entry>
+  <entry>
+    <title>Update Home</title>
+    <link href="https://www.silentorbit.com/static-online/blog#2025-07-23" />
+    <id>https://www.silentorbit.com/static-online/blog#2025-07-23</id>
+    <author>
+      <name>Blog Author</name>
+    </author>
+    <summary type="html">&lt;p&gt;Static pages can also contain updates an will appear in the feeds.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Static pages can also contain updates an will appear in the feeds.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/blog#2025-07-23"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</content>
+    <published>2025-07-23T00:00:00+02:00</published>
+    <updated>2025-07-23T00:00:00+02:00</updated>
   </entry>
   <entry>
     <title>Growth Through Building</title>

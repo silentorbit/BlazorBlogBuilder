@@ -8,6 +8,13 @@
     <base>/static-online/blog/</base>
     <link rel="self" href="https://www.silentorbit.com/static-online/blog/feed/rss.xml" type="application/rss+xml" xmlns="http://www.w3.org/2005/Atom" />
     <item>
+      <guid>https://www.silentorbit.com/static-online/blog#2025-07-24</guid>
+      <title>Update Home</title>
+      <link>https://www.silentorbit.com/static-online/blog#2025-07-24</link>
+      <description>&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/blog#2025-07-24"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Wed, 23 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
       <guid>https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth#2025-07-23T19:00</guid>
       <title>Update Growth Through Building</title>
       <link>https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth#2025-07-23T19:00</link>
@@ -22,6 +29,14 @@
       <description>&lt;p&gt;Don't underestimate the power of showing your work, even if it feels incomplete. Sharing what you've built, and receiving feedback, is an invaluable part of the learning and growth process.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth#2025-07-23T06:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
       <pubDate>Wed, 23 Jul 2025 04:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/static-online/blog#2025-07-23</guid>
+      <title>Update Home</title>
+      <link>https://www.silentorbit.com/static-online/blog#2025-07-23</link>
+      <description>&lt;p&gt;Static pages can also contain updates an will appear in the feeds.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/static-online/blog#2025-07-23"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Tue, 22 Jul 2025 22:00:00 GMT</pubDate>
     </item>
     <item>
       <guid>https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth</guid>
