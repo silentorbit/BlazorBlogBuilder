@@ -14,38 +14,23 @@ public partial class Update : ChildContentPostBase
     [Parameter]
     public string? Title { get; set; }
 
-    protected string anchorName = null!;
-
     [CascadingParameter(Name = PageRender.CascadingPageName)]
     private PageData? PageCascadingUpdate { get; set; }
+
+    string anchorName = null!;
 
     protected override async Task OnChildContentParametersSetAsync(PageData page)
     {
         var timestamp = (Timestamp)Date;
 
-        if (timestamp.Value.TimeOfDay.Ticks == 0)
-            anchorName = timestamp.ToString("yyyy-MM-dd");
-        else
-            anchorName = timestamp.ToString("yyyy-MM-dd'T'HH:mm");
-
-        var url = page.URL.Append("#" + anchorName);
-
-        if (page.Modified < timestamp ?? true)
-            page.Modified = timestamp;
-
-        var update = siteBuilder.Pages.GetOrCreate(url);
-        update.IsUpdate = true;
-        update.InFeed = true;
-        update.IsDraft = page.IsDraftOrNotPublished;
-        update.Published = Date;
-        update.Modified = Date;
+        var update = siteBuilder.Pages.CreateUpdate(page, timestamp);
         update.Summary = await GetChildContent();
         if (Markdown ?? siteConfig.BuildConfig.Markdown.Update)
             update.Summary = Components.Markdown.Transform(update.Summary);
+        if (Title != null)
+            update.Title = Title;
 
-        //update.BlazorType = BlogPost.BlazorType;
-        update.BuildStage = BuildStage.FinalBuild; //Already done, will not generate a single page.
-        update.Title = Title ?? siteConfig.UpdateTitle(page);
+        anchorName = update.URL.Fragment;
     }
 
 }
