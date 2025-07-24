@@ -5,11 +5,6 @@
 /// </summary>
 public class Robots
 {
-    /// <summary>
-    /// Include in sitemap
-    /// </summary>
-    public bool? Sitemap { get; set; }
-
     public bool? NoIndex { get; set; }
     public bool? NoFollow { get; set; }
     public bool? NoSnippet { get; set; }

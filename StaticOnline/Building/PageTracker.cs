@@ -148,5 +148,30 @@ public class PageTracker(SiteConfig config)
         return page;
     }
 
+    public PageData CreateUpdate(PageData page, Timestamp timestamp)
+    {
+        var anchorName = (timestamp.Value.TimeOfDay.Ticks == 0) ?
+            timestamp.ToString("yyyy-MM-dd") :
+            timestamp.ToString("yyyy-MM-dd'T'HH:mm");
+
+        var url = page.URL.Append("#" + anchorName);
+
+        if (page.Modified < timestamp ?? true)
+            page.Modified = timestamp;
+
+        //If the update is already registered, the existing update will be returned.
+        var update = GetOrCreate(url);
+        update.IsUpdate = true;
+        update.InFeed = true;
+        update.IsDraft = page.IsDraftOrNotPublished;
+        update.Published = timestamp;
+        update.Modified = timestamp;
+
+        //update.BlazorType = BlogPost.BlazorType;
+        update.BuildStage = BuildStage.FinalBuild; //Already done, will not generate a single page.
+        update.Title = config.UpdateTitle(page);
+
+        return update;
+    }
 }
 

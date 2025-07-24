@@ -9,6 +9,8 @@ public class Url : IEquatable<Url>
 
     public bool HasQueryOrFragment { get; }
 
+    public string Fragment => new Uri(fullURL).Fragment.TrimStart('#');
+
     public override string ToString() => fullURL;
 
     #region Constructor & casts

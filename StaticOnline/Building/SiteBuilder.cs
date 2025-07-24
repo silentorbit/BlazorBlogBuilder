@@ -2,7 +2,9 @@
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.FileGeneration;
+using SilentOrbit.StaticOnline.Config.Data;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SilentOrbit.StaticOnline.Building;
 
@@ -187,7 +189,15 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
                     html = HtmlCleanup.Clean(html, Config);
                     fileContent = Encoding.UTF8.GetBytes(html);
 
+                    //Find new pages
                     linkScanner.Scan(html);
+
+                    //Find Updates: Modified != Published
+                    if ((page.Modified > page.Published) ?? false)
+                    {
+                        //If Modified was pushed by <Update> no new item will be generated from Modified.
+                        Pages.CreateUpdate(page, page.Modified!);
+                    }
                 }
                 //Don't cleanup css,js...
 

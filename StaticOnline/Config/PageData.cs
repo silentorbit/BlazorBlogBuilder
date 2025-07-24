@@ -27,7 +27,7 @@ public sealed class PageData
     internal FileGeneratorBase? Generator { get; set; }
 
     public HeaderConfig Head { get; set; } = new HeaderConfig();
-
+    
     public string? UrlSnippet { get; set; }
 
     public RelUrl? Image { get; set; }
@@ -51,13 +51,10 @@ public sealed class PageData
     /// </summary>
     public Timestamp? Modified { get; set; }
 
-
     public Author? Author { get; set; }
 
     public int LikeCount { get; set; }
     public List<Comment> Comments { get; set; } = new();
-
-    public Robots Robots { get; } = new();
 
     public Url? Redirect { get; set; }
 
@@ -71,6 +68,11 @@ public sealed class PageData
     /// Published must be set, otherwise any post with <see cref="InFeed"/> == true will not be generated.
     /// </summary>
     public bool InFeed { get; set; }
+
+    /// <summary>
+    /// Include in sitemap
+    /// </summary>
+    public bool? Sitemap { get; set; }
 
     /// <summary>
     /// Link to an existing page, 

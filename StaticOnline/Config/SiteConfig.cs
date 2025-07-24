@@ -64,6 +64,13 @@ public abstract class SiteConfig
 
     public Robots DefaultRobots { get; set; } = new();
 
+    /// <summary>
+    /// Include all pages in the sitemap.
+    /// Default: true.
+    /// Overridden by <see cref="PageData.Sitemap"/>
+    /// </summary>
+    public bool DefaultSitemap { get; set; } = true;
+
     public Author Author { get; set; } = new();
 
     /// <summary>
