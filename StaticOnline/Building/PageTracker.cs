@@ -36,11 +36,17 @@ public class PageTracker(SiteConfig config)
 
     #region Run Next
 
+    /// <summary>
+    /// Controls the build pipeline.
+    /// 1. PreScan: Run all pages once to get local code that modifies Page.Title...
+    /// 2. FinalBuild: Generate the static content that is stored.
+    /// 3. BuildLast: FinalBuild of pages containing index of other pages, such as Index pages and feeds.
+    /// </summary>
     internal bool Next(out PageData page)
     {
         var removed = pages.RemoveWhere(p => p.IsDraftOrNotPublished);
 
-        //PreScan
+        //Added => PreScan
         page = pages.FirstOrDefault(p => p.BuildStage == BuildStage.Added)!;
         if (page != null)
         {
@@ -54,7 +60,7 @@ public class PageTracker(SiteConfig config)
             return false;
         }
 
-        //FinalBuild
+        //PreScan => FinalBuild
         page = pages.FirstOrDefault(p =>
             p.BuildStage == BuildStage.PreScan &&
             p.BuildLast == false)!;

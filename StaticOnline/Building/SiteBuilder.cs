@@ -92,6 +92,7 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
         //Only Blazor pages would inject a SitePage
         page.IsBlazor = true;
+        Debug.Assert(page.BlazorType != null, "Can be null for pages with routing parameters, might look into setting BlazorType in those cases.");
         Debug.Assert(page.Href.EndsWith(".css") == false);
         Debug.Assert(page.Href.EndsWith(".js") == false);
         return page;

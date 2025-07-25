@@ -17,6 +17,9 @@ partial class BlazorRenderer
         this.builder = builder;
         this.page = page;
         nav = new StaticNavigation(builder.Config.BaseURL);
+
+        if (page.BlazorType == null)
+            throw new ArgumentException($"Page must have set {nameof(PageData.BlazorType)}");
     }
 
     HtmlRenderer CreateHtmlRenderer()
