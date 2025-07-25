@@ -162,6 +162,7 @@ public class PageTracker(SiteConfig config)
         //If the update is already registered, the existing update will be returned.
         var update = GetOrCreate(url);
         update.IsUpdate = true;
+        update.IsUpdateOf = page;
         update.InFeed = true;
         update.IsDraft = page.IsDraftOrNotPublished;
         update.Published = timestamp;
