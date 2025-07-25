@@ -79,6 +79,10 @@ abstract class FeedGeneratorBase : FileGeneratorBase
                 if (post.IsUpdate)
                     return post.Summary?.Value + @$"<p><a href=""{post.URL}"">Read more...</a></p>";
 
+                //Cached post content
+                if (post.Full != null)
+                    return post.Full.Value.Value;
+
                 //Generate post content
                 var html = await new BlazorRenderer(Builder, post).RenderComponent();
 

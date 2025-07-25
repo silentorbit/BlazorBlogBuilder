@@ -25,17 +25,19 @@
 
     //Optimize to not render markdown until final render
     var useMarkdown = Components.Markdown.UseMarkdown(Markdown, Page);
-    
+
 }
 <CascadingValue Name="@CascadingPageName" Value="Page">
-    @if (useMarkdown)
-    {
-        <Markdown>
+    <PageRenderCapture Page="Page">
+        @if (useMarkdown)
+        {
+            <Markdown>
+                <DynamicComponent Type="Page.BlazorType" />
+            </Markdown>
+        }
+        else
+        {
             <DynamicComponent Type="Page.BlazorType" />
-        </Markdown>
-    }
-    else
-    {
-        <DynamicComponent Type="Page.BlazorType" />
-    }
+        }
+    </PageRenderCapture>
 </CascadingValue>

@@ -61,6 +61,13 @@ public sealed class PageData
     public MarkupString? Summary { get; internal set; }
 
     /// <summary>
+    /// Cache of full content of page.
+    /// Not including layout and outer elements.
+    /// For use as content in feeds.
+    /// </summary>
+    public MarkupString? Full { get; internal set; }
+
+    /// <summary>
     /// Include this page in the feed.
     /// Automatically set for 
     /// <see cref="BlogPost"/> and <see cref="Components.Update"/>.
