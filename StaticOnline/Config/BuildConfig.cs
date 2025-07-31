@@ -38,6 +38,13 @@ public class BuildConfig
     public MarkdownConfig Markdown { get; set; } = new();
 
     /// <summary>
+    /// Include original filename when generating image filenames:
+    /// True:  myphoto-f43n78.webp
+    /// False: f43n78.webp (default)
+    /// </summary>
+    public bool KeepImageFilename { get; set; }
+
+    /// <summary>
     /// Don't generate static files, only run web server.
     /// Default: false; - Will generate files
     /// </summary>

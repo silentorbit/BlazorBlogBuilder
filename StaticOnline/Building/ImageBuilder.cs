@@ -112,7 +112,13 @@ public class ImageBuilder(SiteConfig config)
     RelUrl HashStreamUrl(FilePath file, Stream stream)
     {
         var hash = Base64Url.EncodeToString(SHA1.HashData(stream));
-        var url = config.BaseURL.Append($"media/{file.NameWithoutExtension}-{hash}{file.Extension}");
+
+        RelUrl url;
+        if (config.BuildConfig.KeepImageFilename)
+            url = config.BaseURL.Append($"media/{file.NameWithoutExtension}-{hash}{file.Extension}");
+        else
+            url = config.BaseURL.Append($"media/{hash}{file.Extension}");
+
         return url;
     }
 
