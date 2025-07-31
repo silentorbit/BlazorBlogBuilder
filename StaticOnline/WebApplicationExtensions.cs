@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.Features;
-using SilentOrbit.StaticOnline.Building.FileGeneration;
+﻿using SilentOrbit.StaticOnline.Building.FileGeneration;
 
 namespace SilentOrbit.StaticOnline;
 

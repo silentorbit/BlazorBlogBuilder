@@ -1,6 +1,5 @@
 ﻿using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Components;
-using SilentOrbit.StaticOnline.Config.Data;
 
 namespace SilentOrbit.StaticOnline.Building.FileGeneration;
 

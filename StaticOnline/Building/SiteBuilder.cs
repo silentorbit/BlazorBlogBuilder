@@ -2,9 +2,6 @@
 using SilentOrbit.StaticOnline.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.BlazorRendering;
 using SilentOrbit.StaticOnline.Building.FileGeneration;
-using SilentOrbit.StaticOnline.Config.Data;
-using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SilentOrbit.StaticOnline.Building;
 
