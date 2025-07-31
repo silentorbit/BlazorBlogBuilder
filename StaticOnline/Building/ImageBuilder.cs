@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Components;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.Processing;
 using System.Buffers.Text;
 using System.Runtime.CompilerServices;
@@ -67,7 +69,12 @@ public class ImageBuilder(SiteConfig config)
 
             //Save image data
             using var ms = new MemoryStream();
-            image.Save(ms, image.Metadata.DecodedImageFormat!);
+
+            //Use this to save in the same format as the source image: image.Metadata.DecodedImageFormat
+
+            //Always save in webp.
+            file = file.GetWithExtension("webp");
+            image.Save(ms, new WebpEncoder());
 
             //Hash
             ms.Seek(0, SeekOrigin.Begin);
