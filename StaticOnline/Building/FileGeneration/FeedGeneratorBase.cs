@@ -54,7 +54,11 @@ abstract class FeedGeneratorBase : FileGeneratorBase
         {
             var id = parts[1];
             var tag = Tag.ByID(id);
-            return GenerateFeed(url, Builder.Pages.Feed.Where(p => p.Tags.Contains(tag)));
+            var pages = Builder.Pages.Feed.Where(p => p.Tags.Contains(tag)).ToArray();
+            if (pages.Length == 0)
+                throw new FileGoneException();
+
+            return GenerateFeed(url, pages);
         }
 
         throw new NotImplementedException(url.Href);

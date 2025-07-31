@@ -1,4 +1,7 @@
-﻿namespace SilentOrbit.StaticOnline;
+﻿using Microsoft.AspNetCore.Http.Features;
+using SilentOrbit.StaticOnline.Building.FileGeneration;
+
+namespace SilentOrbit.StaticOnline;
 
 public static class WebApplicationExtensions
 {
@@ -39,8 +42,15 @@ public static class WebApplicationExtensions
                 return;
             }
 
-            var content = await page.Generator.Generate(url);
-            await http.Response.WriteAsync(content);
+            try
+            {
+                var content = await page.Generator.Generate(url);
+                await http.Response.WriteAsync(content);
+            }
+            catch (FileGoneException)
+            {
+                http.Response.StatusCode = (int)FileGoneException.HttpStatusCodeGone;
+            }
         });
 
         //Images

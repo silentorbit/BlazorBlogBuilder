@@ -92,7 +92,6 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
 
         //Only Blazor pages would inject a SitePage
         page.IsBlazor = true;
-        Debug.Assert(page.BlazorType != null, "Can be null for pages with routing parameters, might look into setting BlazorType in those cases.");
         Debug.Assert(page.Href.EndsWith(".css") == false);
         Debug.Assert(page.Href.EndsWith(".js") == false);
         return page;
@@ -222,6 +221,13 @@ You must configure {nameof(BuildConfig.WwwRoot)} in code.");
         {
             using var resp = await httpClient.GetAsync(page.Href, CancellationToken.None);
             data = await resp.Content.ReadAsByteArrayAsync();
+
+            if (resp.StatusCode == FileGoneException.HttpStatusCodeGone)
+            {
+                page.IsDraft = true;
+                return null!;
+            }
+
             resp.EnsureSuccessStatusCode();
             return data;
             //return await httpClient.GetStringAsync(page.Href, CancellationToken.None);
