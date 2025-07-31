@@ -44,6 +44,16 @@ public class ImageBuilder(SiteConfig config)
         var files = dir.GetFiles(filename + "*");
         var file = files.First();
 
+        //TODO:
+        //- new suffix: modifications, "-100x100-crop"
+        //- Cache key: source path + modifications
+        //- Use only hash of original source
+        //- Separate cache of source hashes
+        //- ImageGenerator - on demand
+        //Why:
+        //- Only generate images in use, ignore images only used in draft
+        //- Save work when image is reused in several places
+
         //No Resize
         if (width == 0 && height == 0)
             return StoreOriginal(file);
@@ -57,7 +67,7 @@ public class ImageBuilder(SiteConfig config)
             if (image.Width <= width && image.Height <= height)
                 return StoreOriginal(file);
 
-            // Resize the given image in place and return it for chaining.
+            // Resize the image
             image.Mutate((imageProcessingContext) =>
             {
                 imageProcessingContext.Resize(new ResizeOptions
