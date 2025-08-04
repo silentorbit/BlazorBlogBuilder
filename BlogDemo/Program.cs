@@ -1,10 +1,10 @@
 using BlogDemo;
 using BlogDemo.Components;
 using SilentOrbit.Disk;
-using SilentOrbit.StaticOnline;
-using SilentOrbit.StaticOnline.Config;
+using SilentOrbit.BlazorBlogBuilder;
+using SilentOrbit.BlazorBlogBuilder.Config;
 
-#region StaticOnline Build Commands
+#region BlazorBlogBuilder Commands
 
 var config = new BlogConfig();
 
@@ -23,27 +23,27 @@ else
     config.BuildConfig.AfterBuild = AfterBuildConfig.LaunchBrowser;
 }
 
-#endregion StaticOnline
+#endregion BlazorBlogBuilder
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
 
-#region StaticOnline
+#region BlazorBlogBuilder
 
-builder.Services.AddStaticOnline(config);
+builder.Services.AddBlazorBlogBuilder(config);
 
-#endregion StaticOnline
+#endregion BlazorBlogBuilder
 
 var app = builder.Build();
 
-#region StaticOnline
+#region BlazorBlogBuilder
 
 //Add first
-app.BuildStaticOnline(config);
+app.RunBlazorBlogBuilder(config);
 
-#endregion StaticOnline
+#endregion BlazorBlogBuilder
 
 app.UseAntiforgery();
 

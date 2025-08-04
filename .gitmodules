@@ -1,4 +1,4 @@
-[submodule "StaticOnline"]
-	path = StaticOnline
-	url = git@github.com:silentorbit/StaticOnline.git
+[submodule "BlazorBlogBuilder"]
+	path = BlazorBlogBuilder
+	url = https://github.com/silentorbit/BlazorBlogBuilder.git
 	branch = main

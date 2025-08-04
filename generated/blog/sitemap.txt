@@ -1,6 +1,7 @@
-https://www.silentorbit.com/static-online/blog
-https://www.silentorbit.com/static-online/blog/comment/send
-https://www.silentorbit.com/static-online/blog/post/2025-07-21/spark
-https://www.silentorbit.com/static-online/blog/post/2025-07-22/sticking
-https://www.silentorbit.com/static-online/blog/post/2025-07-23/growth
-https://www.silentorbit.com/static-online/blog/tags
+https://www.silentorbit.com/blazor-blog-builder/blog
+https://www.silentorbit.com/blazor-blog-builder/blog/comment/send
+https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark
+https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking
+https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth
+https://www.silentorbit.com/blazor-blog-builder/blog/tags
+https://www.silentorbit.com/blazor-blog-builder/blog/updates

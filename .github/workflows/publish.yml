@@ -107,7 +107,7 @@ jobs:
       working-directory: ${{ env.OUTPUT_PATH }}
       run: |
           git config user.name "${{ github.repository }}"
-          git config user.email static-online@silentorbit.com
+          git config user.email blazor-blog-builder@silentorbit.com
           git add -A
           git commit --allow-empty -m "Generated /${{ vars.OUTPUT_PATH }} from ${{ github.repository }}" -m "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
           git push

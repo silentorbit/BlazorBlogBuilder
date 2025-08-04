@@ -2,7 +2,7 @@
   "profiles": {
     "http": {
       "commandName": "Project",
-      "launchUrl": "http://localhost:5228/static-online/",
+      "launchUrl": "http://localhost:5228/blazor-blog-builder/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

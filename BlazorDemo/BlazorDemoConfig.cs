@@ -1,5 +1,5 @@
 ﻿using BlazorDemo.Components;
-using SilentOrbit.StaticOnline.Config;
+using SilentOrbit.BlazorBlogBuilder.Config;
 
 namespace BlazorDemo;
 
@@ -8,7 +8,7 @@ public class BlazorDemoConfig : SiteConfig<App>
     public BlazorDemoConfig()
     {
         //Build static files to be served in the subdirectory
-        BaseURL = "https://www.silentorbit.com/static-online/blazor/";
+        BaseURL = "https://www.silentorbit.com/blazor-blog-builder/blazor/";
 
         Head.Language = new() { Code = "en" };
         Head.Favicon = new()

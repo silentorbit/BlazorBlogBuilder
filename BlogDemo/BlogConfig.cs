@@ -1,5 +1,5 @@
 ﻿using BlogDemo.Components;
-using SilentOrbit.StaticOnline.Config;
+using SilentOrbit.BlazorBlogBuilder.Config;
 
 namespace BlogDemo;
 
@@ -7,7 +7,7 @@ public class BlogConfig : SiteConfig<App> //Inherit the generic version of the b
 {
     public BlogConfig()
     {
-        BaseURL = "https://www.silentorbit.com/static-online/blog/";
+        BaseURL = "https://www.silentorbit.com/blazor-blog-builder/blog/";
 
         Head.Language = new() { Code = "en" };
         Head.Favicon = new()
@@ -21,7 +21,7 @@ public class BlogConfig : SiteConfig<App> //Inherit the generic version of the b
         TimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneID);
 
         Title = "Blog Demo";
-        Description = "This is a Blog built using StaticOnline";
+        Description = "This is a Blog built using BlazorBlogBuilder";
 
         CommentEmail = "blog-demo@silentorbit.com";
         DefaultRobots = new()

@@ -33,7 +33,6 @@
         posts.RemoveAt(pageSize); //Remove extra item used to identify there being more
     }
 }
-<PageTitle>Home</PageTitle>
 
 <main>
     @foreach (var post in posts)
@@ -45,11 +44,3 @@
 <Update Date="2025-07-23" Render>
     Static pages can also contain updates an will appear in the feeds.
 </Update>
-
-<aside id="updates">
-    <h1>Updates</h1>
-    @foreach (var update in SiteBuilder.Pages.Updates)
-    {
-        <ArticlePreview Post="update" />
-    }
-</aside>

@@ -1,0 +1,21 @@
+﻿@page "/updates"
+@code {
+    PageData GetPageLink(string href)
+    {
+        var url = Site.BaseURL.Append(href);
+        return new() { URL = url };
+    }
+}
+@{
+    Page.Title = "Updates";
+    Page.BuildLast = true;
+    Page.Published = "2025-07-20";
+}
+
+<main id="updates">
+    <h1>Updates</h1>
+    @foreach (var update in SiteBuilder.Pages.Updates)
+    {
+        <ArticlePreview Post="update" />
+    }
+</main>
