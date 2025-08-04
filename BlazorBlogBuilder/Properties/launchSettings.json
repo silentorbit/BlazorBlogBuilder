@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "BlazorBlogBuilder": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62072;http://localhost:62073"
+    }
+  }
+}
