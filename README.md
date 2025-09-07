@@ -35,10 +35,10 @@ Write your blazor app and have it generated into a static website or blog.
 * GitHub Action generation and publishing
   * See instructions at `.github/workflows/publish.yml`
 
-## Online Demo
+## Examples
 
-- https://www.silentorbit.com/blazor-blog-builder/blazor/
-- https://www.silentorbit.com/blazor-blog-builder/blog/
+- https://www.silentorbit.com/blazor-blog-builder/blazor/ ([source](https://github.com/silentorbit/BlazorBlogBuilderDemo/tree/main/BlazorDemo))
+- https://www.silentorbit.com/blazor-blog-builder/blog/ ([source](https://github.com/silentorbit/BlazorBlogBuilderDemo/tree/main/BlogDemo))
 
 ## Getting started
 
@@ -46,7 +46,7 @@ Write your blazor app and have it generated into a static website or blog.
 2. Mark `BlogDemo` as the startup project
 3. Run the project
 
-After the build is completed (in about 2 seconds),
+After the build is completed (in less than 2 seconds),
 the website will load in the browser.
 
 ## Start from scratch
@@ -56,7 +56,7 @@ Create a new Blazor app or modify an existing one.
 Use either the NuGet package or clone the latest version from git.
 
 * NuGet: https://www.nuget.org/packages/SilentOrbit.BlazorBlogBuilder/
-  * Add the NuGet package to your Blazor app
+  * Add the NuGet package `SilentOrbit.BlazorBlogBuilder` to your Blazor app
 * Git: https://github.com/silentorbit/BlazorBlogBuilder
   * Reference the project BlazorBlogBuilder
 
@@ -70,5 +70,4 @@ Look for `#region BlazorBlogBuilder` in:
 ## Support
 
 * [Discord: SilentOrbit/blazor-blog-builder](https://discord.gg/Tjd5XysYkc)
-* [GitHub discussions](https://github.com/silentorbit/support/discussions)
 * [GitHub Issues: Bugs, features and pull requests](https://github.com/silentorbit/BlazorBlogBuilderDemo/issues)
