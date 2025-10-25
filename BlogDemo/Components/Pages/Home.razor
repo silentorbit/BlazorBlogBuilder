@@ -1,0 +1,46 @@
+﻿@page "/"
+@page "/page/{PaginationIndex:int}"
+@code {
+    [Parameter]
+    public int PaginationIndex { get; set; }
+
+    const int pageSize = 10;
+
+    PageData GetPageLink(string href)
+    {
+        var url = Site.BaseURL.Append(href);
+        return new() { URL = url };
+    }
+}
+@{
+    Page.Title = "Home";
+    Page.BuildLast = true;
+    Page.Published = "2025-07-20";
+    Page.Modified = "2025-07-24"; //Will generate an update in the feed.
+
+    var posts = SiteBuilder.Pages.BlogPosts
+        .Skip(PaginationIndex)
+        .Take(pageSize + 1) //Add one to know if there is need for next
+        .ToList();
+
+    PageData? prev = null;
+    PageData? next = null;
+    if (PaginationIndex > 0)
+        prev = GetPageLink($"/{PaginationIndex - pageSize}");
+    if (posts.Count == pageSize + 1)
+    {
+        next = GetPageLink($"/{PaginationIndex + pageSize}");
+        posts.RemoveAt(pageSize); //Remove extra item used to identify there being more
+    }
+}
+
+<main>
+    @foreach (var post in posts)
+    {
+        <ArticlePreview Post="post" />
+    }
+</main>
+
+<Update Date="2025-07-23" Render>
+    Static pages can also contain updates an will appear in the feeds.
+</Update>

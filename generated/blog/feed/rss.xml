@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/blazor-blog-builder/blog/feed/rss.xsl"?>
+<rss version="2.0">
+  <channel>
+    <title>Blog Demo</title>
+    <description>This is a Blog built using BlazorBlogBuilder</description>
+    <link>https://www.silentorbit.com/blazor-blog-builder/blog</link>
+    <base>/blazor-blog-builder/blog/</base>
+    <link rel="self" href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/rss.xml" type="application/rss+xml" xmlns="http://www.w3.org/2005/Atom" />
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog#2025-07-24</guid>
+      <title>Update Home</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog#2025-07-24</link>
+      <description>&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog#2025-07-24"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Wed, 23 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth#2025-07-23T19:00</guid>
+      <title>Update Growth Through Building</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth#2025-07-23T19:00</link>
+      <description>&lt;p&gt;To truly accelerate growth, try to build something that solves a personal problem you have. The direct benefit and immediate feedback loop will make the learning experience far more engaging and effective.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth#2025-07-23T19:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Wed, 23 Jul 2025 17:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth#2025-07-23T06:00</guid>
+      <title>Update Growth Through Building</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth#2025-07-23T06:00</link>
+      <description>&lt;p&gt;Don't underestimate the power of showing your work, even if it feels incomplete. Sharing what you've built, and receiving feedback, is an invaluable part of the learning and growth process.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth#2025-07-23T06:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Wed, 23 Jul 2025 04:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog#2025-07-23</guid>
+      <title>Update Home</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog#2025-07-23</link>
+      <description>&lt;p&gt;Static pages can also contain updates an will appear in the feeds.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog#2025-07-23"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Tue, 22 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth</guid>
+      <title>Growth Through Building</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth</link>
+      <description>&lt;p&gt;The world around us is constantly evolving, and so should we. The most effective way to truly understand a concept isn't just to read about it, but to actively engage with it, to build something with your own hands.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-23/growth"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Tue, 22 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking#2025-07-22T17:00</guid>
+      <title>Update The Art of Sticking With It</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking#2025-07-22T17:00</link>
+      <description>&lt;p&gt;It's worth emphasizing the &amp;quot;break into smaller parts&amp;quot; advice. This isn't just about managing complexity, but also about building momentum. Each small success, even if it's just fixing a tiny piece, fuels your motivation to tackle the next.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking#2025-07-22T17:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Tue, 22 Jul 2025 15:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking#2025-07-22T10:00</guid>
+      <title>Update The Art of Sticking With It</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking#2025-07-22T10:00</link>
+      <description>&lt;p&gt;A common pitfall is trying the same thing repeatedly and expecting a different result. When facing a wall, a powerful strategy is to step away entirely, even for a short walk. Your subconscious often works wonders in the background.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking#2025-07-22T10:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Tue, 22 Jul 2025 08:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking</guid>
+      <title>The Art of Sticking With It</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking</link>
+      <description>&lt;p&gt;There will be moments when the path ahead seems obscured, when the pieces don't quite fit, and frustration looms large. This is not a sign to quit; it's an invitation to persevere.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-22/sticking"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Mon, 21 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark#2025-07-21T18:00</guid>
+      <title>Update The Spark of Discovery</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark#2025-07-21T18:00</link>
+      <description>&lt;p&gt;Adding to the idea of curiosity – remember that documenting your discoveries, even small ones, can be incredibly valuable. What seems trivial today might be the key to a larger breakthrough down the line. Keep a &amp;quot;discovery log&amp;quot;!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark#2025-07-21T18:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Mon, 21 Jul 2025 16:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark#2025-07-21T08:00</guid>
+      <title>Update The Spark of Discovery</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark#2025-07-21T08:00</link>
+      <description>&lt;p&gt;Just a quick thought on this: it's not just about uncovering new things, but also about seeing familiar things from a completely different angle. Sometimes the most significant discoveries are right in front of us, just waiting for a shift in perspective.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark#2025-07-21T08:00"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Mon, 21 Jul 2025 06:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <guid>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark</guid>
+      <title>The Spark of Discovery</title>
+      <link>https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark</link>
+      <description>&lt;p&gt;Every great journey begins with a question, a &amp;quot;what if?&amp;quot; It's that moment when a flicker of curiosity catches hold, urging you to explore a new idea, a different way of doing things, or an uncharted path.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.silentorbit.com/blazor-blog-builder/blog/post/2025-07-21/spark"&gt;Read more...&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Sun, 20 Jul 2025 22:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

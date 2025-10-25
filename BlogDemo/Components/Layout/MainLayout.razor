@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>@Page.Title - @Site.Title</PageTitle>
+
+<header>
+    <h1>@Site.Title</h1>
+    <div>@Site.Description</div>
+    <nav>
+        <a href="">Blog</a>
+        <a href="updates">Updates</a>
+        <a href="@Site.Head.Feed!.Atom.URL">Atom Feed</a>
+        <a href="@Site.Head.Feed.RSS.URL">RSS Feed</a>
+        <a href="@Site.Head.Feed.JSON.URL">JSON Feed</a>
+        <a href="https://github.com/silentorbit/BlazorBlogBuilderDemo">GitHub</a>
+    </nav>
+</header>
+
+@if (Markdown.UseMarkdownLayout(Page))
+{
+    <Markdown>
+        @Body
+    </Markdown>
+}
+else
+{
+    @Body
+}

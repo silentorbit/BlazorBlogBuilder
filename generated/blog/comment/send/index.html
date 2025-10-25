@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/blazor-blog-builder/blog/" />
+    <link rel="icon" type="image/png" href="https://www.silentorbit.com/favicon.png" />
+    <meta name="robots" content="notranslate" />
+    <link rel="alternate" type="application/rss+xml" title="Blog Demo" href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/rss.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Blog Demo" href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/atom.xml" />
+    <link rel="alternate" type="application/feed+json" title="Blog Demo" href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/feed.json" />
+    <link rel="stylesheet" href="app.k839jh7497.css" />
+    <link rel="stylesheet" href="BlogDemo.v0cnwxqe4u.styles.css" />
+    <script src="script.y208itwn4e.js" defer></script>
+    <script type="importmap">{
+  "imports": {
+    "./script.js": "./script.y208itwn4e.js"
+  }
+}</script>
+    <title> - Blog Demo</title></head>
+<body>
+<header b-m95nro9inv><h1 b-m95nro9inv>Blog Demo</h1>
+    <div b-m95nro9inv>This is a Blog built using BlazorBlogBuilder</div>
+    <nav b-m95nro9inv><a href b-m95nro9inv>Start</a>
+        <a href="updates" b-m95nro9inv>Updates</a>
+        <a href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/atom.xml" b-m95nro9inv>Atom Feed</a>
+        <a href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/rss.xml" b-m95nro9inv>RSS Feed</a>
+        <a href="https://www.silentorbit.com/blazor-blog-builder/blog/feed/feed.json" b-m95nro9inv>JSON Feed</a>
+        <a href="https://github.com/silentorbit/BlazorBlogBuilderDemo" b-m95nro9inv>GitHub</a></nav></header><section class="comment"><h1>Sending Comment</h1>
+    <p><a id="comment-link" data-comment-email="blog-demo@silentorbit.com">Click this link to start sending your comment via email...</a></p></section>
+<script>
+    var sendLink = document.getElementById("comment-link");
+    if (sendLink) {
+        var c = JSON.parse(decodeURI(window.location.hash.substring(1)));
+        var subject = "Comment on " + c.articleTitle;
+        var body = "Hi\n\n" +
+            "I loved your post at " + c.articleUrl + "\n" +
+            "Specifically...\n\n" +
+            c.comment + "\n\n" +
+            "When posting my comment, please refer to me as: " + c.author;
+        var mailto = "mailto:" + sendLink.dataset.commentEmail
+            + "?subject=" + encodeURIComponent(subject)
+            + "&body=" + encodeURIComponent(body);
+        sendLink.href = mailto;
+        setTimeout(function(){
+            window.location.href = mailto;
+        }, 20);
+    }
+</script></body></html>

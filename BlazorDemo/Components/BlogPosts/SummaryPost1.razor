@@ -1,0 +1,34 @@
+﻿@inherits BlogPost
+@{
+    Page.Title = "Summary and updates.";
+    Page.Published = "2025-07-04";
+}
+
+This post has a summary that is not shown in the page.
+
+<Summary>
+    This summary is not shown on the post.
+    Only in the feeds and the summary page.
+</Summary>
+
+## These are the updates to the page
+
+All updates will also modify the `Page.Modified`.
+
+### First one is invisible.
+
+<MyUpdate Date="2025-07-04 10:00">
+    This is the first update.
+
+    It appears in the feed but not in the post itself.
+</MyUpdate>
+
+### Second one is shown here:
+
+<MyUpdate Date="2025-07-04 11:00" Render>
+    This is the second update.
+
+    It appears in the feed.
+
+    It also appears **in the post** when using `@($"<{nameof(Update)} {nameof(Update.Render)}>")`.
+</MyUpdate>

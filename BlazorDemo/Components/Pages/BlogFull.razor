@@ -1,0 +1,15 @@
+﻿@page "/blog/full/"
+@{
+    Page.Title = "Blog summaries";
+    Page.BuildLast = true;
+}
+
+<h1>Latest Blog Posts, Full post content</h1>
+
+@foreach (var post in SiteBuilder.Pages.BlogPosts.OrderBy(p => p.Published))
+{
+    <hr />
+    <h2>@post.Title</h2>
+    <PageRender Page="post" />
+    <p><a href="@post.Href">Open in a new page</a></p>
+}

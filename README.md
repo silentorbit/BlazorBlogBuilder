@@ -69,5 +69,4 @@ Look for `#region BlazorBlogBuilder` in:
 
 ## Support
 
-* [Discord: SilentOrbit/blazor-blog-builder](https://discord.gg/Tjd5XysYkc)
 * [GitHub Issues: Bugs, features and pull requests](https://github.com/silentorbit/BlazorBlogBuilderDemo/issues)

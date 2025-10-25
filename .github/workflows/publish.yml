@@ -1,0 +1,114 @@
+# Your GitHub workflow file under .github/workflows/
+
+# HowTo: Generate a Personal Access Token (PAT)
+# The access token will give the build access to store the generated
+# file in another repo.
+# This is not needed if the generated files are stored in the same repo.
+#
+# 0. Skip ahead and click the link on step 5
+# 1. Click your profile icon in the top right corner on github.com
+# 2. Click Settings
+#    (https://github.com/settings/profile)
+# 3. In the menu to the left, click "Developer Settings" at the bottom
+#    (https://github.com/settings/apps)
+# 4. Expand "Personal access tokens" and click Fine-grained tokens
+#    (https://github.com/settings/personal-access-tokens)
+# 5. Click "Generate new token"
+#    (https://github.com/settings/personal-access-tokens/new)
+# 6. Fill out all fields
+# 6.a Under "Repository access", choose "Only selected repositories"
+#     Select the repository to contain the generated static files.
+# 6.b Under "Permissions", click to expand "Repository permissions"
+#     Change "Contents" to "Access: Read and write"
+# 7. Click "Generate token" and copy the secret
+# 8. Go to the github repo that will contain the final generated files 
+#    (https://github.com/user/repo)
+# 9. Click Settings
+#    (https://github.com/user/repo/settings)
+# 10. In the Left menu, under "Security":
+#     Click to expand "Secrets and variables",
+#     Click "Actions"
+# 11. Under "Repository secrets", click "New repository secret"
+# 12. Fill out the form
+#     Name/YOUR_SECRET_NAME: pat
+#     Secret: (paste token copied in step 7)
+# 13. Click the tab "Variables"
+#     (https://github.com/user/repo/settings/variables/actions)
+# 14. Click "New repository variable" to create the following two variables
+#     OUTPUT_REPO: (github user and repo to store the generated files, Example: username/reponame)
+#     OUTPUT_PATH: (subdirector in the repo)
+
+name: Publish
+
+# Manually triggered
+on: workflow_dispatch
+
+# Trigger the action on push to master
+#on:
+#  push:
+#    branches:
+#      - master
+
+permissions:
+  actions: write
+  contents: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    env:
+      OUTPUT: _output
+      OUTPUT_PATH: _output/${{ vars.OUTPUT_PATH }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0'
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - name: "Checkout OUTPUT_REPO ${{ vars.OUTPUT_REPO }}"
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ vars.OUTPUT_REPO }}
+        token: ${{ secrets.pat }}
+        path: '${{ env.OUTPUT }}'
+
+    - name: "Clear OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}"
+      run: |
+        rm -rf ${{ env.OUTPUT_PATH }}/blog
+        mkdir ${{ env.OUTPUT_PATH }}/blog
+        rm -rf ${{ env.OUTPUT_PATH }}/demo
+        mkdir ${{ env.OUTPUT_PATH }}/demo
+
+    - name: Build BlazorDemo
+      working-directory: BlazorDemo
+      run: dotnet publish -c Release -o $GITHUB_WORKSPACE/_publish/blazor
+    - name: Build BlogDemo
+      working-directory: BlogDemo
+      run: dotnet publish -c Release -o $GITHUB_WORKSPACE/_publish/blog
+
+    - name: Build static site into ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
+      working-directory: _publish/blazor
+      run: dotnet BlazorDemo.dll build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/blazor
+    - name: Build static site into ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
+      working-directory: _publish/blog
+      run: dotnet BlogDemo.dll build $GITHUB_WORKSPACE/${{ env.OUTPUT_PATH }}/blog
+
+    - name: Git commit ${{ vars.OUTPUT_REPO }}/${{ vars.OUTPUT_PATH }}
+      working-directory: ${{ env.OUTPUT_PATH }}
+      run: |
+          git config user.name "${{ github.repository }}"
+          git config user.email blazor-blog-builder@silentorbit.com
+          git add -A
+          git commit --allow-empty -m "Generated /${{ vars.OUTPUT_PATH }} from ${{ github.repository }}" -m "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+          git push
+          

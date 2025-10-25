@@ -1,0 +1,10 @@
+﻿@inherits BlogPost
+@{
+    Page.Title = "Render Summary in the post";
+    Page.Published = "2025-07-05";
+}
+
+<Summary Render>
+    This summary, shown in feeds and summaries, 
+    **is also shown** in the post when using `@($"<{nameof(Summary)} {nameof(Summary.Render)}>")`.
+</Summary>

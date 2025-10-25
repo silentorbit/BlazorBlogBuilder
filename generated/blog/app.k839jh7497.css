@@ -1,0 +1,307 @@
+h1:focus {
+    outline: none;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid #e50000;
+}
+
+.validation-message {
+    color: #e50000;
+}
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred."
+    }
+
+.darker-border-checkbox.form-check-input {
+    border-color: #929292;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* AI Generated follows */
+
+/* Basic Reset & Box-Sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: 'Arial', sans-serif; /* A clear, readable font */
+    line-height: 1.6;
+    color: #333; /* Dark grey for text */
+    background-color: #f4f4f4; /* Light grey background */
+    margin: 0 auto; /* Center the body content */
+    max-width: 960px; /* Max width for readability, adjust as needed */
+    padding: 20px; /* Padding around the main content */
+}
+
+/* Header (Your <head> element acts as the header here) */
+head[b-m95nro9inv] { /* Targeting the specific attribute from your HTML */
+    background: #2c3e50; /* Dark blue/grey */
+    color: #fff;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+    head[b-m95nro9inv] h1 {
+        margin: 0;
+        font-size: 2.8rem;
+        padding-bottom: 10px;
+    }
+
+    head[b-m95nro9inv] div {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+/* Article Styles (for single post view) */
+article {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 30px; /* Space before comments */
+}
+
+    article h1 { /* Post title */
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        line-height: 1.2;
+    }
+
+        article h1 a { /* In case you link the title back to itself */
+            text-decoration: none;
+            color: inherit; /* Keep the color of the h1 */
+        }
+
+/* Meta information (date, tags) */
+.meta {
+    font-size: 0.9rem;
+    color: #777;
+    display: flex; /* Aligns date and tags horizontally */
+    justify-content: space-between; /* Pushes them to ends */
+    margin-top: 10px;
+    margin-bottom: 25px; /* Space after meta info before content */
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #eee;
+}
+
+    .meta .tags {
+        font-style: italic;
+    }
+
+/* Basic Paragraphs within the post content */
+article p {
+    margin-bottom: 1em; /* Standard paragraph spacing */
+    font-size: 1.1rem;
+}
+
+/* --- Comments Section --- */
+.comments {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+    .comments h1 { /* "Comments" title */
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .comments .next-comment {
+        margin-bottom: 20px; /* Space between the next-comment div and actual comments */
+    }
+
+    .comments .comment { /* Individual comment or "send comment by email" section */
+        background-color: #f9f9f9; /* Slightly different background for comments */
+        border: 1px solid #eee;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+        .comments .comment p {
+            margin-bottom: 0; /* No extra margin for comment paragraphs */
+        }
+
+        .comments .comment a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .comments .comment a:hover {
+                text-decoration: underline;
+            }
+
+    /* Comment Form */
+    .comments form {
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px dashed #ddd; /* Separator for the form */
+    }
+
+        .comments form textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        .comments form .meta { /* Re-using .meta for author input and button */
+            border-top: none; /* Remove border if inherited */
+            padding-top: 0;
+            margin-top: 0;
+            justify-content: flex-start; /* Align elements to the start */
+            gap: 15px; /* Space between input and button */
+        }
+
+            .comments form .meta .comment_author {
+                flex-grow: 1; /* Allow input to take available space */
+                padding: 8px 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
+
+            .comments form .meta button {
+                background-color: #28a745; /* Green for preview button */
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: background-color 0.3s ease;
+            }
+
+                .comments form .meta button:hover {
+                    background-color: #218838; /* Darker green on hover */
+                }
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    head[b-m95nro9inv] h1 {
+        font-size: 2.2rem;
+    }
+
+    article, .comments {
+        padding: 20px;
+    }
+
+        article h1 {
+            font-size: 2rem;
+        }
+
+    .meta {
+        flex-direction: column; /* Stack date and tags on small screens */
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .comments form .meta {
+        flex-direction: column; /* Stack input and button */
+        gap: 10px;
+    }
+
+        .comments form .meta .comment_author,
+        .comments form .meta button {
+            width: 100%; /* Make them full width */
+        }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    head[b-m95nro9inv] h1 {
+        font-size: 1.8rem;
+    }
+
+    head[b-m95nro9inv] div {
+        font-size: 1rem;
+    }
+
+    article, .comments {
+        padding: 15px;
+    }
+
+        article h1 {
+            font-size: 1.8rem;
+        }
+}
+/* Header Navigation Styles */
+header nav {
+    margin-top: 15px; /* Space between description and nav */
+}
+
+    header nav a {
+        color: #000;
+        text-decoration: none;
+        margin: 0 15px; /* Space between navigation items */
+        font-weight: bold;
+        font-size: 1.1rem;
+        padding: 5px 0;
+        transition: color 0.3s ease;
+    }
+
+        header nav a:hover {
+            color: #ffd700; /* Gold on hover for a subtle highlight */
+        }
+
+/* Adjustments for the main header to accommodate nav */
+head[b-m95nro9inv] {
+    padding: 1.5rem 0 1rem 0; /* Slightly reduce bottom padding if needed, or adjust as desired */
+}
+
+/* Responsive adjustments for header nav */
+@media (max-width: 768px) {
+    header nav {
+        margin-top: 10px;
+    }
+
+        header nav a {
+            display: block; /* Stack links vertically on small screens */
+            margin: 8px 0; /* Vertical spacing */
+            font-size: 1rem;
+        }
+}

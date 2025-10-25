@@ -1,0 +1,17 @@
+﻿@page "/post/{*PostID}"
+@code {
+    [Parameter]
+    public string PostID { get; set; } = null!;
+}
+<PageTitle>@Page.Title</PageTitle>
+
+<h1>@Page.Title</h1>
+<div>
+    @Page.Published?.ToString("yyyy-MM-dd")
+    @if (Page.Modified != null)
+    {
+        <text>, Modified: @Page.Modified.ToString("yyyy-MM-dd")</text>
+    }
+</div>
+
+<PageRender Page="Page" />
