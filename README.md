@@ -42,8 +42,8 @@ Write your blazor app and have it generated into a static website or blog.
 
 ## Getting started
 
-1. Download the demo at https://github.com/silentorbit/BlazorBlogBuilderDemo
-2. Mark `BlogDemo` as the startup project
+1. Download this repo
+2. Open `Demo.sln`
 3. Run the project
 
 After the build is completed (in about 2 seconds),
@@ -69,4 +69,4 @@ Look for `#region BlazorBlogBuilder` in:
 
 ## Support
 
-* [GitHub Issues: Bugs, features and pull requests](https://github.com/silentorbit/BlazorBlogBuilderDemo/issues)
+* [GitHub Issues: Bugs, features and pull requests](https://github.com/silentorbit/BlazorBlogBuilder/issues)

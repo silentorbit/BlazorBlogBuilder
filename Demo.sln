@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorDemo", "BlazorDemo\Bl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogDemo", "BlogDemo\BlogDemo.csproj", "{CF93958F-6D84-4B53-BF3D-853540546871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBlogBuilder", "BlazorBlogBuilder\BlazorBlogBuilder\BlazorBlogBuilder.csproj", "{AFD0C5EB-73DE-5903-B8EE-87EC7FF35E75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBlogBuilder", "BlazorBlogBuilder\BlazorBlogBuilder.csproj", "{7785CDFF-D668-CDC5-3595-16B4B35FD8E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{CF93958F-6D84-4B53-BF3D-853540546871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF93958F-6D84-4B53-BF3D-853540546871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF93958F-6D84-4B53-BF3D-853540546871}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFD0C5EB-73DE-5903-B8EE-87EC7FF35E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFD0C5EB-73DE-5903-B8EE-87EC7FF35E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFD0C5EB-73DE-5903-B8EE-87EC7FF35E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFD0C5EB-73DE-5903-B8EE-87EC7FF35E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7785CDFF-D668-CDC5-3595-16B4B35FD8E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7785CDFF-D668-CDC5-3595-16B4B35FD8E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7785CDFF-D668-CDC5-3595-16B4B35FD8E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7785CDFF-D668-CDC5-3595-16B4B35FD8E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,10 +18,10 @@
 # 6. Fill out all fields
 # 6.a Under "Repository access", choose "Only selected repositories"
 #     Select the repository to contain the generated static files.
-# 6.b Under "Permissions", click to expand "Repository permissions"
+# 6.b Under "Permissions", click "Add permission" and check "Contents"
 #     Change "Contents" to "Access: Read and write"
 # 7. Click "Generate token" and copy the secret
-# 8. Go to the github repo that will contain the final generated files 
+# 8. Go to the github repo that will generate the content (this repo)
 #    (https://github.com/user/repo)
 # 9. Click Settings
 #    (https://github.com/user/repo/settings)
@@ -30,7 +30,7 @@
 #     Click "Actions"
 # 11. Under "Repository secrets", click "New repository secret"
 # 12. Fill out the form
-#     Name/YOUR_SECRET_NAME: pat
+#     Name/YOUR_SECRET_NAME: publish
 #     Secret: (paste token copied in step 7)
 # 13. Click the tab "Variables"
 #     (https://github.com/user/repo/settings/variables/actions)
@@ -47,7 +47,7 @@ on: workflow_dispatch
 #on:
 #  push:
 #    branches:
-#      - master
+#      - publish
 
 permissions:
   actions: write
@@ -73,13 +73,11 @@ jobs:
       with:
         dotnet-version: '9.0'
     - uses: actions/checkout@v4
-      with:
-        submodules: recursive
     - name: "Checkout OUTPUT_REPO ${{ vars.OUTPUT_REPO }}"
       uses: actions/checkout@v4
       with:
         repository: ${{ vars.OUTPUT_REPO }}
-        token: ${{ secrets.pat }}
+        token: ${{ secrets.publish }}
         path: '${{ env.OUTPUT }}'
 
     - name: "Clear OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}"
